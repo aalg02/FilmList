@@ -52,6 +52,7 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
 
                 return new MyFragment(R.layout.inicio_layout);
             case 1:
+
                 return new MyFragment(R.layout.listas_layout);
             case 2:
                 Controlador.getInstance().getPrevision(main,url2,2);

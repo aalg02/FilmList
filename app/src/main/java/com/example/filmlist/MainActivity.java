@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         gestor=new gestorvistas();
         gestor.setActivity(this);
         gestor.listeners();
-        gestor.framelayout(0);
+        gestor.framelayoutinicio(0);
         miControlador.setVistamanager(gestor);
 
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        gestor.framelayout(0);
+        gestor.framelayoutinicio(0);
     }
 
 }

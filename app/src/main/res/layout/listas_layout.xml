@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#000000">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -10,7 +11,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -24,9 +25,11 @@
                     android:fontFamily="@font/roboto_condensed_bold"
                     android:padding="10dp"
                     android:text=" VISTAS"
+                    android:textColor="#FFFFFF"
                     android:textSize="40dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_listavistas"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </LinearLayout>
@@ -43,11 +46,14 @@
                     android:fontFamily="@font/roboto_condensed_bold"
                     android:padding="10dp"
                     android:text=" FAVORITAS"
+                    android:textColor="#FFFFFF"
                     android:textSize="40dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_listafavoritas"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="#000000" />
             </LinearLayout>
 
             <LinearLayout
@@ -62,9 +68,11 @@
                     android:fontFamily="@font/roboto_condensed_bold"
                     android:padding="10dp"
                     android:text=" PENDIENTES"
+                    android:textColor="#FFFFFF"
                     android:textSize="40dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_listapendientes"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </LinearLayout>

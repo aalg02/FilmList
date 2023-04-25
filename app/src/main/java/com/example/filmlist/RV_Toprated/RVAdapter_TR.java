@@ -39,7 +39,7 @@ public class RVAdapter_TR extends RecyclerView.Adapter<RVViewHolder_TR> {
     public void onBindViewHolder(@NonNull RVViewHolder_TR holder, int position) {
         //holder.titulo.setText(informe.getListaP().get(position).getName());
         Glide.with(context).load(informe.getListaP(5).get(position).getImg_path()).into(holder.poster);
-        Controlador.getInstance().clicPeli(holder.poster,position,5);
+        Controlador.getInstance().clicPeli(holder.poster,position,5,informe.getListaP(5).get(position));
 
 
     }

@@ -12,6 +12,8 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
+        renderscriptTargetApi 19
+        renderscriptSupportModeEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -44,4 +46,5 @@ dependencies {
     //implementation 'com.squareup.picasso:picasso:2.71828'
     //implementation 'com.xwray:groupie:2.9.0'
     implementation 'androidx.viewpager:viewpager:1.0.0'
+    implementation 'com.google.android.material:material:1.4.0'
 }

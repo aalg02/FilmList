@@ -15,14 +15,18 @@ import com.bumptech.glide.Glide;
 import com.example.filmlist.FragmentManager.MyFragment;
 import com.example.filmlist.FragmentManager.MyPagerAdapter;
 import com.example.filmlist.GestionVistas.gestorvistas;
+import com.example.filmlist.JsonRead.Film;
 import com.example.filmlist.JsonRead.LeerJsonGenerosPelis;
 import com.example.filmlist.JsonRead.LeerJsonPelisCartelera;
+import com.example.filmlist.JsonRead.ListasPropias;
 import com.example.filmlist.PeticionWeb.peticion2;
 import com.example.filmlist.RVPopulares.RVunion_P;
 import com.example.filmlist.RV_Estrenos.RVunion_E;
 import com.example.filmlist.RV_Inicial.RVunion;
 import com.example.filmlist.RV_Busqueda.RVunionBusqueda;
 import com.example.filmlist.RV_Toprated.RVunion_TR;
+import com.example.filmlist.RV_listaVistas.RVAdapter_LV;
+import com.example.filmlist.RV_listaVistas.RVunion_LV;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
@@ -46,6 +50,8 @@ public class Controlador {
     public gestorvistas gestorvistas;
 
     public SegundaActivity miau=new SegundaActivity();
+
+    public ListasPropias LISTAS=new ListasPropias();
 
 
 
@@ -206,11 +212,12 @@ public class Controlador {
 
     //----------------------------CLICK EN LA PELICULA---------------------//
 
-    public void clicPeli(View recycler, int position,int n){
+    public void clicPeli(View recycler, int position, int n, Film f){
 
         recycler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                // Toast.makeText(miActivity, "TONTO", Toast.LENGTH_SHORT).show();
                 if(n==1) {
                     gestorvistas.cargainfoInicio(position);
@@ -223,13 +230,26 @@ public class Controlador {
                 }if(n==5) {
                     gestorvistas.cargaInfoToprated(position);
                 }
-                gestorvistas.framelayout(1);
+                gestorvistas.framelayoutinicio(1);
+                gestorvistas.floatingMenu(f);
+
 
 
             }
         });
 
 
+    }
+
+
+   //-----------------GESTION DE LA PAGINA DE LISTAS------------------------------//
+
+
+    public void RefrescaVistas(){
+
+        new RVunion_LV(miActivity,  LISTAS.getListaFvistas(),1);
+        new RVunion_LV(miActivity,  LISTAS.getListaFfavoritas(),2);
+        new RVunion_LV(miActivity,  LISTAS.getListaFpendientes(),3);
     }
 
 

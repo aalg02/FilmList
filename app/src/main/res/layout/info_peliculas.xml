@@ -7,6 +7,7 @@
     android:background="#000000">
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -22,6 +23,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/flecha" />
+
         </LinearLayout>
 
         <ScrollView
@@ -110,9 +112,24 @@
                         app:backgroundTint="#919090"
                         app:rippleColor="#ECE8E8"
                         app:srcCompat="@drawable/mas" />
+
+
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
+
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/framelayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            layout="@layout/floating_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

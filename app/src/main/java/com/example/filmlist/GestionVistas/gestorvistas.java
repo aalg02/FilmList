@@ -1,22 +1,27 @@
 package com.example.filmlist.GestionVistas;
 
+import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.filmlist.Controlador;
 import com.example.filmlist.FragmentManager.MyPagerAdapter;
+import com.example.filmlist.JsonRead.Film;
 import com.example.filmlist.JsonRead.LeerJsonPelisCartelera;
 import com.example.filmlist.MainActivity;
 import com.example.filmlist.R;
 import com.example.filmlist.SegundaActivity;
 import com.example.filmlist.StringManager;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.uwetrottmann.tmdb2.entities.Image;
 
 import java.io.FileReader;
@@ -70,7 +75,7 @@ public class gestorvistas {
 
                 Controlador.getInstance().adapter.getItem(1);
                 Controlador.getInstance().viewPager.setCurrentItem(1);
-
+                Controlador.getInstance().RefrescaVistas();
             }
         });
         ImageButton myButton1 = mainActivity.findViewById(R.id.icon_2);
@@ -106,6 +111,7 @@ public class gestorvistas {
                     case 1:
                         // Actualizar información para la página 2
                         Controlador.getInstance().adapter.getItem(1);
+                        Controlador.getInstance().RefrescaVistas();
                         break;
                     case 2:
                         // Actualizar información para la página 3
@@ -259,7 +265,7 @@ public class gestorvistas {
 
     }
 
-    public void framelayout(int n){
+    public void framelayoutinicio(int n){
         FrameLayout FM=mainActivity.findViewById(R.id.framelayout);
 
         if(n==0){
@@ -268,6 +274,79 @@ public class gestorvistas {
             FM.setVisibility(View.VISIBLE);}
     }
 
+    public void framelayoutpelis(int n){
+        FrameLayout FM=mainActivity.findViewById(R.id.framelayout2);
+
+        if(n==0){
+            FM.setVisibility(View.INVISIBLE);}
+        if(n==1){
+            FM.setVisibility(View.VISIBLE);}
+    }
+
+
+    public void floatingMenu(Film f){
+        FloatingActionButton fabMain = mainActivity.findViewById(R.id.floatingActionButton);
+
+        framelayoutpelis(0);
+
+
+// Configura un clic para el botón principal
+        fabMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(mainActivity, "SELECIONA LA LISTA A LA QUE QUIERES AÑADIRLA", Toast.LENGTH_SHORT).show();
+                framelayoutpelis(1);
+                listenersMenu(f);
+
+
+            }
+        });
+
+    }
+
+
+    public void listenersMenu(Film f){
+
+        FloatingActionButton butonvistas = mainActivity.findViewById(R.id.FBvistas);
+        FloatingActionButton butonfavoritas = mainActivity.findViewById(R.id.FBfavoritas);
+        FloatingActionButton butonpendientes = mainActivity.findViewById(R.id.FBpendientes);
+
+        butonvistas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(mainActivity, "AÑADIDA A VISTAS", Toast.LENGTH_SHORT).show();
+                Controlador.getInstance().LISTAS.addvistas(f);
+                framelayoutpelis(0);
+
+
+            }
+        });
+        butonfavoritas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(mainActivity, "AÑADIDA A FAVORITAS", Toast.LENGTH_SHORT).show();
+                Controlador.getInstance().LISTAS.addfavoritas(f);
+                framelayoutpelis(0);
+
+
+            }
+        });
+        butonpendientes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(mainActivity, "AÑADIDA A PENDIENTES", Toast.LENGTH_SHORT).show();
+                Controlador.getInstance().LISTAS.addpendientes(f);
+                framelayoutpelis(0);
+
+
+            }
+        });
+
+    }
 
 
 

@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 public class Film {
 
+
+
+    public String id;
     public String Name;
     public String Description;
     public String Valoration;
@@ -13,12 +16,17 @@ public class Film {
     public String img_path="https://image.tmdb.org/t/p/original";
     public String releasedate;
 
-    public  Film(String Name ,String Description,String Valoration,String path,String releasedate){
+    public  Film(String id,String Name ,String Description,String Valoration,String path,String releasedate){
+        this.id=id;
       this.Name=Name;
       this.Description=Description;
       this.Valoration=Valoration;
       this.img_path=getImg_path()+path;
       this.releasedate=releasedate;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {

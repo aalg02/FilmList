@@ -31,6 +31,7 @@
                     android:fontFamily="@font/roboto_condensed_bold"
                     android:gravity="center"
                     android:text="AHORA EN CINES"
+                    android:textColor="#FFFFFF"
                     android:textSize="40dp" />
 
                 <LinearLayout
@@ -63,6 +64,7 @@
                     android:fontFamily="@font/roboto_condensed_bold"
                     android:gravity="center"
                     android:text="POPULARES AHORA"
+                    android:textColor="#FFFFFF"
                     android:textSize="40dp" />
 
                 <LinearLayout
@@ -92,6 +94,7 @@
                     android:fontFamily="@font/roboto_condensed_bold"
                     android:gravity="center"
                     android:text=" HISTORICOS"
+                    android:textColor="#FFFFFF"
                     android:textSize="40dp" />
 
                 <LinearLayout
@@ -121,6 +124,7 @@
                     android:fontFamily="@font/roboto_condensed_bold"
                     android:gravity="center"
                     android:text=" ESTRENOS"
+                    android:textColor="#FFFFFF"
                     android:textSize="40dp" />
 
                 <LinearLayout
