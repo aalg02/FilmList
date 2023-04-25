@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FilmList</string>
+    <string name="apiUrl">https://api.themoviedb.org/3/movie/</string>
+    <string name="apiKey">18f552217e447f369638f70fa4f06a20</string>
+    <string name="popular">popular</string>
+
+</resources>
