@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,13 +19,14 @@ import com.example.filmlist.GestionVistas.gestorvistas;
 import com.example.filmlist.JsonRead.Film;
 import com.example.filmlist.JsonRead.LeerJsonGenerosPelis;
 import com.example.filmlist.JsonRead.LeerJsonPelisCartelera;
+import com.example.filmlist.JsonRead.ListaPelis;
 import com.example.filmlist.JsonRead.ListasPropias;
 import com.example.filmlist.PeticionWeb.peticion2;
-import com.example.filmlist.RVPopulares.RVunion_P;
-import com.example.filmlist.RV_Estrenos.RVunion_E;
+
+
 import com.example.filmlist.RV_Inicial.RVunion;
-import com.example.filmlist.RV_Busqueda.RVunionBusqueda;
-import com.example.filmlist.RV_Toprated.RVunion_TR;
+
+
 import com.example.filmlist.RV_listaVistas.RVAdapter_LV;
 import com.example.filmlist.RV_listaVistas.RVunion_LV;
 import com.google.gson.JsonElement;
@@ -50,7 +52,7 @@ public class Controlador {
     public gestorvistas gestorvistas;
 
     public SegundaActivity miau=new SegundaActivity();
-
+    public ListaPelis LISTASINICIAL=new ListaPelis();
     public ListasPropias LISTAS=new ListasPropias();
 
 
@@ -93,44 +95,39 @@ public class Controlador {
 
 
     public void LeerPeliculasCartelera(String json ){
-        if(LJPC!=null){
-            LJPC.getListaP(1).clear();
-        }
+
         LJPC=new LeerJsonPelisCartelera(json,1);
-        new RVunion(miActivity, LJPC);
+
     }
 
     public void LeerPeliculasBusqueda(String json){
-        if(LJPC!=null){
-            LJPC.getListaP(2).clear();
-        }
+
         LJPC=new LeerJsonPelisCartelera(json,2);
-        new RVunionBusqueda(miActivity, LJPC);
     }
 
     public void LeerPeliculaspopulares(String json){
-        if(LPP!=null){
-            LPP.getListaP(3).clear();
-        }
+
         LPP=new LeerJsonPelisCartelera(json,3);
-        new RVunion_P(miActivity, LPP);
+
     }
 
     public void LeerPeliculasestrenos(String json){
-        if(LPE!=null){
-            LPE.getListaP(4).clear();
-        }
+
         LPE=new LeerJsonPelisCartelera(json,4);
-        new RVunion_E(miActivity, LPE);
+
     }
 
     public void LeerPeliculasToprated(String json){
-        if(LPTP!=null){
-            LPTP.getListaP(5).clear();
-        }
+
         LPTP=new LeerJsonPelisCartelera(json,5);
-        new RVunion_TR(miActivity, LPTP);
+
     }
+    public void LeerPeliculasRecomendaciones(String json){
+
+        LPTP=new LeerJsonPelisCartelera(json,6);
+
+    }
+
 
 
 
@@ -180,12 +177,8 @@ public class Controlador {
                 Glide.with( miActivity).load(0).into((ImageView)miActivity.findViewById(R.id.imagenbusqueda));
                 adapter.busca(text);
                 adapter.getItem(2);
-
-                if(LJPC!=null){
-                    LJPC.getListaP(2).clear();
-                }
-
-                new RVunionBusqueda(miActivity, LJPC);
+                LISTASINICIAL.getListaFBusqueda().clear();
+                new RVunion(miActivity, LISTASINICIAL.getListaFBusqueda(),stringManager.BUSQUEDA);
 
             }
         });
@@ -212,26 +205,38 @@ public class Controlador {
 
     //----------------------------CLICK EN LA PELICULA---------------------//
 
-    public void clicPeli(View recycler, int position, int n, Film f){
+    public void clicPeli(View recycler, int position,  String opcion, Film f){
+        ScrollView scrollview =miActivity.findViewById(R.id.scrollview);
+        recycler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scrollview.smoothScrollTo(0,0);
+                gestorvistas.cargainfoInicio(position,opcion);
+                gestorvistas.framelayoutinicio(1);
+                gestorvistas.floatingMenu(f);
+                recomendacion(f.getId());
+                new RVunion(miActivity,Controlador.getInstance().LISTASINICIAL.getListaFrecomendaciones(),stringManager.RECOMENDACIONES);
+
+            }
+        });
+
+
+    }
+    public void clicPeliPropias(View recycler, int position,  String opcion, Film f){
+        ScrollView scrollview =miActivity.findViewById(R.id.scrollview);
 
         recycler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-               // Toast.makeText(miActivity, "TONTO", Toast.LENGTH_SHORT).show();
-                if(n==1) {
-                    gestorvistas.cargainfoInicio(position);
-                }if(n==2){
-                    gestorvistas.cargaInfoBusqueda(position);
-                }if(n==3) {
-                    gestorvistas.cargaInfoPopulares(position);
-                }if(n==4){
-                    gestorvistas.cargaInfoEstrenos(position);
-                }if(n==5) {
-                    gestorvistas.cargaInfoToprated(position);
-                }
+                scrollview.smoothScrollTo(0,0);
+                gestorvistas.cargainfoMislistas(position,opcion);
                 gestorvistas.framelayoutinicio(1);
                 gestorvistas.floatingMenu(f);
+                recomendacion(f.getId());
+                new RVunion(miActivity,Controlador.getInstance().LISTASINICIAL.getListaFrecomendaciones(),stringManager.RECOMENDACIONES);
+
+
+
 
 
 
@@ -244,14 +249,38 @@ public class Controlador {
 
    //-----------------GESTION DE LA PAGINA DE LISTAS------------------------------//
 
+    public void RefrscaInicial(){
+
+        new RVunion(miActivity,  LISTASINICIAL.getListaFCartelera(),stringManager.INICIAL);
+        new RVunion(miActivity,  LISTASINICIAL.getListaFBusqueda(),stringManager.BUSQUEDA);
+        new RVunion(miActivity,  LISTASINICIAL.getListaFpopulares(),stringManager.POPULARES);
+        new RVunion(miActivity,  LISTASINICIAL.getListaFestrenos(),stringManager.ESTRENOS);
+        new RVunion(miActivity,  LISTASINICIAL.getListaFtoprated(),stringManager.TOPRATED);
+    }
 
     public void RefrescaVistas(){
 
-        new RVunion_LV(miActivity,  LISTAS.getListaFvistas(),1);
-        new RVunion_LV(miActivity,  LISTAS.getListaFfavoritas(),2);
-        new RVunion_LV(miActivity,  LISTAS.getListaFpendientes(),3);
+        new RVunion_LV(miActivity,  LISTAS.getListaFvistas(),1,stringManager.VISTAS);
+        new RVunion_LV(miActivity,  LISTAS.getListaFfavoritas(),2,stringManager.FAVORITAS);
+        new RVunion_LV(miActivity,  LISTAS.getListaFpendientes(),3,stringManager.PENDIENTES);
     }
 
+
+    //-----------------------------RECOMENDACION PELICULAS-----------------------------------//
+
+    public void recomendacion(String id){
+        clearrecomendacion();
+        String url=stringManager.apiUrl+id+stringManager.recommendations+stringManager.apiKey;
+        getPrevision(miActivity,url,6);
+
+
+
+
+    }
+
+    public void clearrecomendacion(){
+        LISTASINICIAL.getListaFrecomendaciones().clear();
+    }
 
 
 

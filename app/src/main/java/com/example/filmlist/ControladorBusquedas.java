@@ -14,19 +14,19 @@ public class ControladorBusquedas {
     }
 
 
-    public void menu(){
-    int n=0;
-    switch (n){
-        case 1:
+    public void menu(String opcion1){
+    String opcion = opcion1;
+    switch (opcion){
+        case "INICIAL":
 
             break;
-        case 2:
+        case "BUSQUEDA":
             break;
-        case 3:
+        case "POPULARES":
             break;
-        case 4:
+        case "TOPRATED":
             break;
-        case 5:
+        case "ESTRENOS":
             break;
     }
 

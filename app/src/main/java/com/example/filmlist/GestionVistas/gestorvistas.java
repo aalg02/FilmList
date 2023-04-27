@@ -19,6 +19,7 @@ import com.example.filmlist.JsonRead.Film;
 import com.example.filmlist.JsonRead.LeerJsonPelisCartelera;
 import com.example.filmlist.MainActivity;
 import com.example.filmlist.R;
+import com.example.filmlist.RV_Inicial.RVunion;
 import com.example.filmlist.SegundaActivity;
 import com.example.filmlist.StringManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -64,6 +65,8 @@ public class gestorvistas {
 
                 Controlador.getInstance().adapter.getItem(0);
                 Controlador.getInstance().viewPager.setCurrentItem(0);
+                Controlador.getInstance().RefrscaInicial();
+
 
             }
         });
@@ -76,6 +79,8 @@ public class gestorvistas {
                 Controlador.getInstance().adapter.getItem(1);
                 Controlador.getInstance().viewPager.setCurrentItem(1);
                 Controlador.getInstance().RefrescaVistas();
+
+
             }
         });
         ImageButton myButton1 = mainActivity.findViewById(R.id.icon_2);
@@ -105,6 +110,8 @@ public class gestorvistas {
                     case 0:
 
                         Controlador.getInstance().adapter.getItem(0);
+                        Controlador.getInstance().RefrscaInicial();
+
 
                         break;
 
@@ -112,6 +119,8 @@ public class gestorvistas {
                         // Actualizar información para la página 2
                         Controlador.getInstance().adapter.getItem(1);
                         Controlador.getInstance().RefrescaVistas();
+
+
                         break;
                     case 2:
                         // Actualizar información para la página 3
@@ -163,7 +172,7 @@ public class gestorvistas {
 
     }
 
-    public void cargainfoInicio(int n){
+    public void cargainfoInicio(int n,String opcion){
 
         TextView   titulo=mainActivity.findViewById(R.id.nombrepeli);
         TextView   valoracion=mainActivity.findViewById(R.id.valoracionpeli);
@@ -173,114 +182,55 @@ public class gestorvistas {
 
         LeerJsonPelisCartelera miau=Controlador.getInstance().LJPC;
 
-        titulo.setText(miau.getListaP(1).get(n).getName());
-        valoracion.setText(miau.getListaP(1).get(n).getValoration());
-        sinopsis.setText(miau.getListaP(1).get(n).getDescription());
-        añosalida.setText(miau.getListaP(1).get(n).getReleasedate());
-        Glide.with( mainActivity).load(miau.getListaP(1).get(n).getImg_path()).into(posterinfo);
-
+        titulo.setText(Controlador.getInstance().LISTASINICIAL.damelista(opcion).get(n).getName());
+        valoracion.setText(Controlador.getInstance().LISTASINICIAL.damelista(opcion).get(n).getValoration());
+        sinopsis.setText(Controlador.getInstance().LISTASINICIAL.damelista(opcion).get(n).getDescription());
+        añosalida.setText(Controlador.getInstance().LISTASINICIAL.damelista(opcion).get(n).getReleasedate());
+        Glide.with( mainActivity).load(Controlador.getInstance().LISTASINICIAL.damelista(opcion).get(n).getImg_path()).into(posterinfo);
 
 
     }
-
-
-    public void cargaInfoBusqueda(int n){
+     public void cargainfoMislistas(int n,String opcion){
 
         TextView   titulo=mainActivity.findViewById(R.id.nombrepeli);
         TextView   valoracion=mainActivity.findViewById(R.id.valoracionpeli);
         TextView   sinopsis=mainActivity.findViewById(R.id.sinopsispeli);
         TextView   añosalida=mainActivity.findViewById(R.id.fechasalidapeli);
         ImageView  posterinfo=mainActivity.findViewById(R.id.FotoPosterInfo);
-
 
         LeerJsonPelisCartelera miau=Controlador.getInstance().LJPC;
 
-        titulo.setText(miau.getListaP(2).get(n).getName());
-        valoracion.setText(miau.getListaP(2).get(n).getValoration());
-        sinopsis.setText(miau.getListaP(2).get(n).getDescription());
-        añosalida.setText(miau.getListaP(2).get(n).getReleasedate());
-        Glide.with( mainActivity).load(miau.getListaP(2).get(n).getImg_path()).into(posterinfo);
-
-
+        titulo.setText(Controlador.getInstance().LISTAS.damelista(opcion).get(n).getName());
+        valoracion.setText(Controlador.getInstance().LISTAS.damelista(opcion).get(n).getValoration());
+        sinopsis.setText(Controlador.getInstance().LISTAS.damelista(opcion).get(n).getDescription());
+        añosalida.setText(Controlador.getInstance().LISTAS.damelista(opcion).get(n).getReleasedate());
+        Glide.with( mainActivity).load(Controlador.getInstance().LISTAS.damelista(opcion).get(n).getImg_path()).into(posterinfo);
 
     }
-    public void cargaInfoPopulares(int n){
 
-        TextView   titulo=mainActivity.findViewById(R.id.nombrepeli);
-        TextView   valoracion=mainActivity.findViewById(R.id.valoracionpeli);
-        TextView   sinopsis=mainActivity.findViewById(R.id.sinopsispeli);
-        TextView   añosalida=mainActivity.findViewById(R.id.fechasalidapeli);
-        ImageView  posterinfo=mainActivity.findViewById(R.id.FotoPosterInfo);
-
-
-        LeerJsonPelisCartelera miau=Controlador.getInstance().LPP;
-
-        titulo.setText(miau.getListaP(3).get(n).getName());
-        valoracion.setText(miau.getListaP(3).get(n).getValoration());
-        sinopsis.setText(miau.getListaP(3).get(n).getDescription());
-        añosalida.setText(miau.getListaP(3).get(n).getReleasedate());
-        Glide.with( mainActivity).load(miau.getListaP(3).get(n).getImg_path()).into(posterinfo);
-
-
-
-    }
-    public void cargaInfoEstrenos(int n){
-
-        TextView   titulo=mainActivity.findViewById(R.id.nombrepeli);
-        TextView   valoracion=mainActivity.findViewById(R.id.valoracionpeli);
-        TextView   sinopsis=mainActivity.findViewById(R.id.sinopsispeli);
-        TextView   añosalida=mainActivity.findViewById(R.id.fechasalidapeli);
-        ImageView  posterinfo=mainActivity.findViewById(R.id.FotoPosterInfo);
-
-
-        LeerJsonPelisCartelera miau=Controlador.getInstance().LPE;
-
-        titulo.setText(miau.getListaP(4).get(n).getName());
-        valoracion.setText(miau.getListaP(4).get(n).getValoration());
-        sinopsis.setText(miau.getListaP(4).get(n).getDescription());
-        añosalida.setText(miau.getListaP(4).get(n).getReleasedate());
-        Glide.with( mainActivity).load(miau.getListaP(4).get(n).getImg_path()).into(posterinfo);
-
-
-
-    }
-    public void cargaInfoToprated(int n){
-
-        TextView   titulo=mainActivity.findViewById(R.id.nombrepeli);
-        TextView   valoracion=mainActivity.findViewById(R.id.valoracionpeli);
-        TextView   sinopsis=mainActivity.findViewById(R.id.sinopsispeli);
-        TextView   añosalida=mainActivity.findViewById(R.id.fechasalidapeli);
-        ImageView  posterinfo=mainActivity.findViewById(R.id.FotoPosterInfo);
-
-
-        LeerJsonPelisCartelera miau=Controlador.getInstance().LPTP;
-
-        titulo.setText(miau.getListaP(5).get(n).getName());
-        valoracion.setText(miau.getListaP(5).get(n).getValoration());
-        sinopsis.setText(miau.getListaP(5).get(n).getDescription());
-        añosalida.setText(miau.getListaP(5).get(n).getReleasedate());
-        Glide.with( mainActivity).load(miau.getListaP(5).get(n).getImg_path()).into(posterinfo);
-
-
-
-    }
+  
 
     public void framelayoutinicio(int n){
         FrameLayout FM=mainActivity.findViewById(R.id.framelayout);
 
         if(n==0){
             FM.setVisibility(View.INVISIBLE);}
+            Controlador.getInstance().clearrecomendacion();
         if(n==1){
-            FM.setVisibility(View.VISIBLE);}
+            FM.setVisibility(View.VISIBLE);
+        }
+
     }
 
     public void framelayoutpelis(int n){
         FrameLayout FM=mainActivity.findViewById(R.id.framelayout2);
 
         if(n==0){
-            FM.setVisibility(View.INVISIBLE);}
+            FM.setVisibility(View.INVISIBLE);
+        }
         if(n==1){
-            FM.setVisibility(View.VISIBLE);}
+            FM.setVisibility(View.VISIBLE);
+        }
     }
 
 

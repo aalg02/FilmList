@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "624465678095",
+    "project_id": "filmlist-ed9e7",
+    "storage_bucket": "filmlist-ed9e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:624465678095:android:1c5ec159d2a6068a55b87a",
+        "android_client_info": {
+          "package_name": "com.example.filmlist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "624465678095-c7l48ubn9e7ld6dfds49c1867o7m1ik7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgD2isLjvAx_tGxxv6ZQRk8nZYBqC8KpM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "624465678095-c7l48ubn9e7ld6dfds49c1867o7m1ik7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

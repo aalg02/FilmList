@@ -63,14 +63,22 @@ public class peticion2 {
                         // Code will be executed on the main threadnn
                        if(n==1) {
                            Controlador.getInstance().LeerPeliculasCartelera(respuesta);
+                           Controlador.getInstance().RefrscaInicial();
                        }if(n==2){
                            Controlador.getInstance().LeerPeliculasBusqueda(respuesta);
+                            Controlador.getInstance().RefrscaInicial();
                         }if(n==3){
                             Controlador.getInstance().LeerPeliculaspopulares(respuesta);
+                            Controlador.getInstance().RefrscaInicial();
+
                         }if(n==4){
                             Controlador.getInstance().LeerPeliculasestrenos(respuesta);
+                            Controlador.getInstance().RefrscaInicial();
                         }if(n==5){
                             Controlador.getInstance().LeerPeliculasToprated(respuesta);
+                            Controlador.getInstance().RefrscaInicial();
+                        }if(n==6){
+                            Controlador.getInstance().LeerPeliculasRecomendaciones(respuesta);
                         }
 
 
@@ -100,6 +108,8 @@ public class peticion2 {
                             Controlador.getInstance().LeerPeliculasestrenos(respuesta);
                         }if(n==5){
                             Controlador.getInstance().LeerPeliculasToprated(respuesta);
+                        }if(n==6){
+                            Controlador.getInstance().LeerPeliculasRecomendaciones(respuesta);
                         }
 
                         Controlador.getInstance().NoConexion();

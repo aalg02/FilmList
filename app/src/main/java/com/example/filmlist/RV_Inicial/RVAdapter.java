@@ -11,18 +11,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.filmlist.Controlador;
+import com.example.filmlist.JsonRead.Film;
 import com.example.filmlist.JsonRead.LeerJsonPelisCartelera;
 import com.example.filmlist.R;
+import com.example.filmlist.StringManager;
+
+import java.util.LinkedList;
 
 public class RVAdapter extends RecyclerView.Adapter<RVViewHolder> {
 
-    private final LeerJsonPelisCartelera informe;
+    private final LinkedList<Film> informe;
     private final LayoutInflater mInflater;
+    public StringManager SM;
     Context context;
+    String opcion;
 
-    public RVAdapter(Context context, LeerJsonPelisCartelera informe) {
+    public RVAdapter(Context context, LinkedList<Film> informe, String opcion) {
         this.informe=informe;
         this.context=context;
+        this.opcion=opcion;
+        SM=new StringManager();
+
         mInflater = LayoutInflater.from(context);
     }
 
@@ -38,15 +47,14 @@ public class RVAdapter extends RecyclerView.Adapter<RVViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RVViewHolder holder, int position) {
         //holder.titulo.setText(informe.getListaP().get(position).getName());
-        Glide.with(context).load(informe.getListaP(1).get(position).getImg_path()).into(holder.poster);
-        Controlador.getInstance().clicPeli(holder.poster,position,1,informe.getListaP(1).get(position));
-
+        Controlador.getInstance().clicPeli(holder.poster,position,opcion,informe.get(position));
+        Glide.with(context).load(informe.get(position).getImg_path()).into(holder.poster);
 
     }
 
     @Override
     public int getItemCount() {
-        return informe.getListaP(1).size();
+        return informe.size();
     }
 
 }

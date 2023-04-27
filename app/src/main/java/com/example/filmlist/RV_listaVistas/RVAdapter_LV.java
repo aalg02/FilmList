@@ -21,10 +21,12 @@ public class RVAdapter_LV extends RecyclerView.Adapter<RVViewHolder_LV> {
     private final LinkedList<Film> vistas;
     private final LayoutInflater mInflater;
     Context context;
+    String opcion;
 
-    public RVAdapter_LV(Context context, LinkedList<Film> vistas) {
+    public RVAdapter_LV(Context context, LinkedList<Film> vistas,String opcion) {
         this.vistas=vistas;
         this.context=context;
+        this.opcion=opcion;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -32,16 +34,15 @@ public class RVAdapter_LV extends RecyclerView.Adapter<RVViewHolder_LV> {
     @Override
     public RVViewHolder_LV onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View mItemView = mInflater.inflate( R.layout.peliinfo_layout, parent, false);
-       // View mItemView2 = mInflater.inflate(R.layout.generos_layout, parent, false);
-
         return new RVViewHolder_LV(mItemView, this);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RVViewHolder_LV holder, int position) {
         //holder.titulo.setText(informe.getListaP().get(position).getName());
+        Controlador.getInstance().clicPeliPropias(holder.poster,position,opcion,vistas.get(position));
         Glide.with(context).load(vistas.get(position).getImg_path()).into(holder.poster);
-        Controlador.getInstance().clicPeli(holder.poster,position,1,vistas.get(position));
+
 
 
     }

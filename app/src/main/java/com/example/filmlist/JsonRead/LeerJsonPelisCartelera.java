@@ -12,7 +12,7 @@ import java.util.LinkedList;
 
 public class LeerJsonPelisCartelera {
     LeerJsonPeli LJP;
-    ListaPelis listaP=new ListaPelis();
+    ListaPelis listaP;
     StringManager SM=new StringManager();
 
     public LeerJsonPelisCartelera(String json , int n){
@@ -21,19 +21,24 @@ public class LeerJsonPelisCartelera {
             JsonElement pelisactuales = JsonParser.parseString(json);
             JsonObject pelisactualesO = pelisactuales.getAsJsonObject();
             JsonArray listapelis = pelisactualesO.get(SM.results).getAsJsonArray();
+
+
             for (JsonElement p : listapelis) {
                 LJP = new LeerJsonPeli(p);
 
                 if(n==1) {
-                    listaP.getListaFCartelera().add(LJP.getPeli());
+
+                    Controlador.getInstance().LISTASINICIAL.getListaFCartelera().add(LJP.getPeli());
                 }if(n==2){
-                    listaP.getListaFBusqueda().add(LJP.getPeli());
+                    Controlador.getInstance().LISTASINICIAL.getListaFBusqueda().add(LJP.getPeli());
                 }if(n==3) {
-                    listaP.getListaFpopulares().add(LJP.getPeli());
+                    Controlador.getInstance().LISTASINICIAL.getListaFpopulares().add(LJP.getPeli());
                 }if(n==4){
-                    listaP.getListaFestrenos().add(LJP.getPeli());
+                    Controlador.getInstance().LISTASINICIAL.getListaFtoprated().add(LJP.getPeli());
                 }if(n==5) {
-                    listaP.getListaFtoprated().add(LJP.getPeli());
+                    Controlador.getInstance().LISTASINICIAL.getListaFestrenos().add(LJP.getPeli());
+                }if(n==6) {
+                    Controlador.getInstance().LISTASINICIAL.getListaFrecomendaciones().add(LJP.getPeli());
                 }
             }
 
@@ -43,6 +48,9 @@ public class LeerJsonPelisCartelera {
 
     }
 
+    public ListaPelis getListaPmiau() {
+        return listaP;
+    }
 
     public LinkedList<Film> getListaP(int n) {
         if(n==1) {
@@ -55,6 +63,8 @@ public class LeerJsonPelisCartelera {
             return listaP.ListaFestrenos;
         }if(n==5){
             return listaP.ListaFtoprated;
+        }if(n==6){
+            return listaP.ListaFrecomendaciones;
         }
 
         return null;

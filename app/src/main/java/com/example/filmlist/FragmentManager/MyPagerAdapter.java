@@ -29,6 +29,8 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
     String url4=SManager.apiUrl+SManager.upcoming+ SManager.apiKey+ SManager.español;
 
     String url5=SManager.apiUrl+SManager.top_rated+ SManager.apiKey+ SManager.español;
+
+    String url6=SManager.apiUrl+"550"+SManager.recommendations+SManager.apiKey;
     String url2="";
 
 
@@ -44,11 +46,15 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
         // Crea una nueva instancia del fragmento correspondiente
         switch (position) {
             case 0:
+                Controlador.getInstance().LISTASINICIAL.getListaFCartelera().clear();
+                Controlador.getInstance().LISTASINICIAL.getListaFpopulares().clear();
+                Controlador.getInstance().LISTASINICIAL.getListaFestrenos().clear();
+                Controlador.getInstance().LISTASINICIAL.getListaFtoprated().clear();
+
                 Controlador.getInstance().getPrevision(main,url3,3);
                 Controlador.getInstance().getPrevision(main,url4,4);
                 Controlador.getInstance().getPrevision(main,url1,1);
                 Controlador.getInstance().getPrevision(main,url5,5);
-
 
                 return new MyFragment(R.layout.inicio_layout);
             case 1:

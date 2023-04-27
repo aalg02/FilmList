@@ -22,7 +22,26 @@ public class StringManager {
     public String upcoming="upcoming";
 
     public String top_rated="top_rated";
+    public String recommendations="/recommendations";
     public String busqueda="https://api.themoviedb.org/3/search/movie?api_key=18f552217e447f369638f70fa4f06a20&query=";
+
+    //---------------------------gestion opciones rv------------------------------//
+
+
+    public String INICIAL="INICIAL";
+    public String BUSQUEDA="BUSQUEDA";
+    public String POPULARES="POPULARES";
+    public String TOPRATED="TOPRATED";
+    public String ESTRENOS="ESTRENOS";
+    public String RECOMENDACIONES="RECOMENDACIONES";
+
+    //---------------------------//
+
+    public String VISTAS="VISTAS";
+    public String FAVORITAS="FAVORITAS";
+    public String PENDIENTES="PENDIENTES";
+
+
 
 
 }

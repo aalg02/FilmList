@@ -14,7 +14,7 @@ public class ListasPropias {
    public  ListasPropias(){
        listaFvistas=new LinkedList<>();
        listaFfavoritas=new LinkedList<>();
-       listaFpendientes=new LinkedList<>();
+       listaFpendientes=new LinkedList<>(); 
 
 
    }
@@ -22,6 +22,21 @@ public class ListasPropias {
    public void addvistas(Film f){listaFvistas.add(f);}
     public void addfavoritas(Film f){listaFfavoritas.add(f);}
     public void addpendientes(Film f){listaFpendientes.add(f);}
+
+    public LinkedList<Film> damelista(String opcion){
+        switch (opcion){
+            case "VISTAS":
+                return this.listaFvistas;
+            case "FAVORITAS":
+                return this.listaFfavoritas;
+            case "PENDIENTES":
+                return this.listaFpendientes;
+
+
+
+        }
+        return null;
+    }
 
 
 

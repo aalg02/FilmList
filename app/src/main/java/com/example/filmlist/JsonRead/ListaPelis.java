@@ -8,6 +8,7 @@ public class ListaPelis {
     LinkedList<Film> ListaFpopulares;
     LinkedList<Film> ListaFestrenos;
     LinkedList<Film> ListaFtoprated;
+    LinkedList<Film> ListaFrecomendaciones;
 
 
     public ListaPelis(){
@@ -16,6 +17,30 @@ public class ListaPelis {
         ListaFpopulares=new LinkedList<>();
         ListaFestrenos=new LinkedList<>();
         ListaFtoprated=new LinkedList<>();
+        ListaFrecomendaciones=new LinkedList<>();
+    }
+
+
+
+    public LinkedList<Film> damelista(String opcion){
+        switch (opcion){
+            case "INICIAL":
+                return this.ListaFCartelera;
+            case "BUSQUEDA":
+                return this.ListaFBusqueda;
+            case "POPULARES":
+                return this.ListaFpopulares;
+
+            case "TOPRATED":
+                return this.ListaFtoprated;
+
+            case "ESTRENOS":
+                return this.ListaFestrenos;
+            case "RECOMENDACIONES":
+                return this.ListaFrecomendaciones;
+
+        }
+        return null;
     }
 
     public LinkedList<Film> getListaFCartelera() {
@@ -33,6 +58,10 @@ public class ListaPelis {
 
     public LinkedList<Film> getListaFtoprated() {
         return ListaFtoprated;
+    }
+
+    public LinkedList<Film> getListaFrecomendaciones() {
+        return ListaFrecomendaciones;
     }
 
     public Film getListaFI(int id) {

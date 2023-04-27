@@ -27,10 +27,12 @@
         </LinearLayout>
 
         <ScrollView
+            android:id="@+id/scrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -100,7 +102,7 @@
 
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="49dp" />
+                        android:layout_height="45dp" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/floatingActionButton"
@@ -112,6 +114,19 @@
                         app:backgroundTint="#919090"
                         app:rippleColor="#ECE8E8"
                         app:srcCompat="@drawable/mas" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_condensed_bold"
+                        android:text="RECOMENDACIONES"
+                        android:textSize="30dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_recomendaciones"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
 
                 </LinearLayout>

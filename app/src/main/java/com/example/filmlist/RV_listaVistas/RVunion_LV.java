@@ -21,7 +21,7 @@ public class RVunion_LV {
 
 
 
-    public RVunion_LV(MainActivity activity , LinkedList vistas,int n ) {
+    public RVunion_LV(MainActivity activity , LinkedList vistas,int n ,String opcion) {
 
 
         if(n==1){
@@ -32,16 +32,9 @@ public class RVunion_LV {
             recyclerfilms =activity.findViewById(R.id.rv_listapendientes);
         }
 
-        //genresfilms=activity.findViewById(R.id.genre_layout);
-
-
-
         this.vistas = vistas;
 
-//        ((TextView) activity.findViewById(R.id.fecha1)).setText(informe.getPrediccion().getInicio());
-//        ((TextView) activity.findViewById(R.id.fecha2)).setText(informe.getPrediccion().getFin());
-
-        adaptador = new RVAdapter_LV(activity, vistas);
+        adaptador = new RVAdapter_LV(activity, vistas,opcion);
 
         //adaptadorGeneros=new AdapterGenres(activity,)
         recyclerfilms.setLayoutManager(new LinearLayoutManager(activity));
