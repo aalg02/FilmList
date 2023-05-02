@@ -2,6 +2,7 @@ package com.example.filmlist.GestionVistas;
 
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -97,6 +98,7 @@ public class gestorvistas {
         myButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listenersperfil();
                 Controlador.getInstance().adapter.getItem(3);
                 Controlador.getInstance().viewPager.setCurrentItem(3);
             }
@@ -127,7 +129,7 @@ public class gestorvistas {
                         Controlador.getInstance().adapter.getItem(2);
                         break;
                     case 3:
-
+                        listenersperfil();
                         Controlador.getInstance().adapter.getItem(3);
 
                         break;
@@ -292,6 +294,19 @@ public class gestorvistas {
                 Controlador.getInstance().LISTAS.addpendientes(f);
                 framelayoutpelis(0);
 
+
+            }
+        });
+
+    }
+
+    public void listenersperfil(){
+        Button boton=mainActivity.findViewById(R.id.traer);
+        boton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+               //Controlador.getInstance().guardadatos();
 
             }
         });

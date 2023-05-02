@@ -12,12 +12,24 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.filmlist.GestionVistas.gestorvistas;
-import com.example.filmlist.JsonRead.Film;
-import com.google.firebase.FirebaseApp;
+//import com.example.filmlist.JsonRead.Film;
+//import com.google.auth.oauth2.GoogleCredentials;
+//import com.google.cloud.firestore.Firestore;
+//import com.google.firebase.FirebaseApp;
+//import com.google.firebase.FirebaseOptions;
+//import com.google.firebase.cloud.FirestoreClient;
+//import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
     protected Controlador miControlador;
+    // public  FirebaseApp firebase;
     gestorvistas gestor;
+  //  FirebaseFirestore firestore;
     SegundaActivity segundaActivity;
 
     @Override
@@ -35,11 +47,10 @@ public class MainActivity extends AppCompatActivity {
         gestor.listeners();
         gestor.framelayoutinicio(0);
         miControlador.setVistamanager(gestor);
-        FirebaseApp.initializeApp(this);
+        
 
 
-
-       // gestor=gestorvistas.getInstance();
+        // gestor=gestorvistas.getInstance();
 
         // miControlador.cargarRV(this);
 
@@ -47,7 +58,15 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+        //miControlador.guardadatos();
         gestor.framelayoutinicio(0);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //Controlador.getInstance().guardadatos();
+
     }
 
 }

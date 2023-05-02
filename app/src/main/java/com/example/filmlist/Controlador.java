@@ -1,14 +1,18 @@
 package com.example.filmlist;
 
+import static android.content.ContentValues.TAG;
 import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -29,8 +33,32 @@ import com.example.filmlist.RV_Inicial.RVunion;
 
 import com.example.filmlist.RV_listaVistas.RVAdapter_LV;
 import com.example.filmlist.RV_listaVistas.RVunion_LV;
+import com.example.filmlist.usuarios.guardardatos;
+import com.example.filmlist.usuarios.usuario;
+//import com.google.android.gms.common.api.GoogleApi;
+//import com.google.android.gms.tasks.OnFailureListener;
+//import com.google.android.gms.tasks.OnSuccessListener;
+//import com.google.auth.oauth2.GoogleCredentials;
+//import com.google.cloud.firestore.Firestore;
+//import com.google.firebase.FirebaseApp;
+//import com.google.firebase.FirebaseOptions;
+//import com.google.firebase.auth.GoogleAuthCredential;
+//import com.google.firebase.cloud.FirestoreClient;
+//import com.google.firebase.firestore.DocumentReference;
+//import com.google.firebase.firestore.DocumentSnapshot;
+//import com.google.firebase.firestore.FirebaseFirestore;
+//import com.google.firebase.firestore.QueryDocumentSnapshot;
+//import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Controlador {
     private static Controlador miControlador;
@@ -54,6 +82,10 @@ public class Controlador {
     public SegundaActivity miau=new SegundaActivity();
     public ListaPelis LISTASINICIAL=new ListaPelis();
     public ListasPropias LISTAS=new ListasPropias();
+    public usuario usuario=new usuario();
+//    FirebaseApp Firebase;
+//    FirebaseFirestore firestore;
+//    Firestore db;
 
 
 
@@ -85,6 +117,9 @@ public class Controlador {
     public void setVistamanager(gestorvistas miau) {
         gestorvistas = miau;
     }
+//   // public void setFirebaseapp(FirebaseApp miau) {
+//         this.Firebase= miau;
+//    }
 
 
 
@@ -281,6 +316,69 @@ public class Controlador {
     public void clearrecomendacion(){
         LISTASINICIAL.getListaFrecomendaciones().clear();
     }
+    //---------------------------------Guardar datos y movidas------------------------//
+
+
+//    public void guardadatos(){
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//      guardardatos guardar=new guardardatos();
+//      EditText nombret=miActivity.findViewById(R.id.first_name2);
+//      EditText pasword=miActivity.findViewById(R.id.pasword);
+//      usuario.setGmail(nombret.getText().toString());
+//      usuario.setContraseña(pasword.getText().toString());
+//      guardar.guardalistasusuarios();
+//
+//
+//
+//        Map<String,Object>map=new HashMap<>();
+//        map.put("gmail","manuel");
+//        map.put("contraseña","1234");
+//            db.collection("users").document("user1").set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                @Override
+//                public void onSuccess(Void unused) {
+//                    Toast.makeText(miActivity, "EXITO AL AÑADIR", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//
+//    }
+//
+//    public void recuperardatos(){
+//
+//        TextView contraseñat=miActivity.findViewById(R.id.contraseña);
+//        TextView nombre=miActivity.findViewById(R.id.last_name2);
+//
+//        firestore = FirebaseFirestore.getInstance();
+//        firestore.collection("users")
+//                .get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot querySnapshot) {
+//                        if (!querySnapshot.isEmpty()) {
+//                            DocumentSnapshot documentSnapshot = querySnapshot.getDocuments().get(0);
+//                            usuario usuario1 = documentSnapshot.toObject(usuario.class);
+//
+//                            contraseñat.setText(usuario1.getContraseña());
+//                            nombre.setText(usuario1.getGmail());
+//                            // Aquí puedes acceder a las propiedades del usuario
+//                        } else {
+//                            // El usuario no fue encontrado
+//                        }
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        // Manejar el error
+//                        Toast.makeText(miActivity, "ERROR", Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                });
+//
+//    }
+//
+
+
+
 
 
 

@@ -14,7 +14,10 @@ public class ListasPropias {
    public  ListasPropias(){
        listaFvistas=new LinkedList<>();
        listaFfavoritas=new LinkedList<>();
-       listaFpendientes=new LinkedList<>(); 
+       listaFpendientes=new LinkedList<>();
+       listaFvistas.add(new Film("","","","","",""));
+       listaFfavoritas.add(new Film("","","","","",""));
+       listaFpendientes.add(new Film("","","","","",""));
 
 
    }
