@@ -49,6 +49,11 @@ import com.example.filmlist.usuarios.usuario;
 //import com.google.firebase.firestore.FirebaseFirestore;
 //import com.google.firebase.firestore.QueryDocumentSnapshot;
 //import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
@@ -72,7 +77,7 @@ public class Controlador {
     StringManager stringManager=new StringManager();
     protected MainActivity miActivity;
     peticion2 peticionapi = new peticion2();
-
+    guardardatos guardar=new guardardatos();
     public ViewPager viewPager;
     public MyPagerAdapter adapter;
 
@@ -82,6 +87,7 @@ public class Controlador {
     public SegundaActivity miau=new SegundaActivity();
     public ListaPelis LISTASINICIAL=new ListaPelis();
     public ListasPropias LISTAS=new ListasPropias();
+    public usuario usuario1;
     public usuario usuario=new usuario();
 //    FirebaseApp Firebase;
 //    FirebaseFirestore firestore;
@@ -376,6 +382,40 @@ public class Controlador {
 //
 //    }
 //
+
+    public void firebaseDatabasesetdatos(){
+
+        guardar.guardalistasusuarios();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://filmlist-ed9e7-default-rtdb.europe-west1.firebasedatabase.app").getReference();
+        mDatabase.child("usuario1").setValue(usuario);
+    }
+
+    public void firebaseDatabasegetdatos(){
+        TextView contraseñat=miActivity.findViewById(R.id.contraseña);
+        TextView nombre=miActivity.findViewById(R.id.last_name2);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://filmlist-ed9e7-default-rtdb.europe-west1.firebasedatabase.app").getReference("usuario1");
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Aquí es donde se manejan los datos recuperados
+                // Utiliza el método getValue() para obtener los datos
+                 usuario1 = dataSnapshot.getValue(usuario.class);
+                contraseñat.setText(usuario1.getContraseña());
+                nombre.setText(usuario1.getGmail());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Manejar errores
+            }
+        });
+    }
+
+
+    //------------------------RECUPERAR DATOS----------------------------//
+
+
+
 
 
 

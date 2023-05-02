@@ -5,6 +5,7 @@ import com.example.filmlist.JsonRead.Film;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class guardardatos {
     ArrayList<String> listavistas=new ArrayList<>();
@@ -12,6 +13,7 @@ public class guardardatos {
     ArrayList<String>  listapendientes=new ArrayList<>();
 
     public void guardalistasusuarios(){
+
         for(Film f:Controlador.getInstance().LISTAS.getListaFvistas()){
             listavistas.add(f.getId());
         }
@@ -21,6 +23,18 @@ public class guardardatos {
         for(Film f:Controlador.getInstance().LISTAS.getListaFpendientes()){
             listapendientes.add(f.getId());
         }
+
+
+
+
+
+
+
+
+        //-----------------//
+        Controlador.getInstance().usuario.setGmail("aalgarracerezo");
+        Controlador.getInstance().usuario.setContraseña("1234");
+
 
 
         Controlador.getInstance().usuario.setListavistas(listavistas);

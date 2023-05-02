@@ -17,8 +17,8 @@ public class LeerJsonGenerosPelis {
          for(JsonElement JE:generosA){
              JsonObject JEO= JE.getAsJsonObject();
              String Id=JEO.getAsJsonPrimitive(SM.id).getAsString();
-             String nombre=JEO.getAsJsonPrimitive(SM.name).getAsString();
-             ListaGeneros.add(new Genre(Id , nombre));
+             String nombrefilm=JEO.getAsJsonPrimitive(SM.name).getAsString();
+             ListaGeneros.add(new Genre(Id , nombrefilm));
          }
     }
 

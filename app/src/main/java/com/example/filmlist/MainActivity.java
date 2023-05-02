@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.filmlist.GestionVistas.gestorvistas;
+import com.google.firebase.FirebaseApp;
 //import com.example.filmlist.JsonRead.Film;
 //import com.google.auth.oauth2.GoogleCredentials;
 //import com.google.cloud.firestore.Firestore;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         gestor.listeners();
         gestor.framelayoutinicio(0);
         miControlador.setVistamanager(gestor);
+        FirebaseApp.initializeApp(this);
         
 
 

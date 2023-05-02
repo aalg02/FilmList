@@ -1,16 +1,13 @@
 package com.example.filmlist.GestionVistas;
 
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
@@ -20,13 +17,9 @@ import com.example.filmlist.JsonRead.Film;
 import com.example.filmlist.JsonRead.LeerJsonPelisCartelera;
 import com.example.filmlist.MainActivity;
 import com.example.filmlist.R;
-import com.example.filmlist.RV_Inicial.RVunion;
 import com.example.filmlist.SegundaActivity;
 import com.example.filmlist.StringManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.uwetrottmann.tmdb2.entities.Image;
-
-import java.io.FileReader;
 
 public class gestorvistas {
 
@@ -184,9 +177,9 @@ public class gestorvistas {
 
         LeerJsonPelisCartelera miau=Controlador.getInstance().LJPC;
 
-        titulo.setText(Controlador.getInstance().LISTASINICIAL.damelista(opcion).get(n).getName());
+        titulo.setText(Controlador.getInstance().LISTASINICIAL.damelista(opcion).get(n).getNombre());
         valoracion.setText(Controlador.getInstance().LISTASINICIAL.damelista(opcion).get(n).getValoration());
-        sinopsis.setText(Controlador.getInstance().LISTASINICIAL.damelista(opcion).get(n).getDescription());
+        sinopsis.setText(Controlador.getInstance().LISTASINICIAL.damelista(opcion).get(n).getSinopsis());
         añosalida.setText(Controlador.getInstance().LISTASINICIAL.damelista(opcion).get(n).getReleasedate());
         Glide.with( mainActivity).load(Controlador.getInstance().LISTASINICIAL.damelista(opcion).get(n).getImg_path()).into(posterinfo);
 
@@ -202,9 +195,9 @@ public class gestorvistas {
 
         LeerJsonPelisCartelera miau=Controlador.getInstance().LJPC;
 
-        titulo.setText(Controlador.getInstance().LISTAS.damelista(opcion).get(n).getName());
+        titulo.setText(Controlador.getInstance().LISTAS.damelista(opcion).get(n).getNombre());
         valoracion.setText(Controlador.getInstance().LISTAS.damelista(opcion).get(n).getValoration());
-        sinopsis.setText(Controlador.getInstance().LISTAS.damelista(opcion).get(n).getDescription());
+        sinopsis.setText(Controlador.getInstance().LISTAS.damelista(opcion).get(n).getSinopsis());
         añosalida.setText(Controlador.getInstance().LISTAS.damelista(opcion).get(n).getReleasedate());
         Glide.with( mainActivity).load(Controlador.getInstance().LISTAS.damelista(opcion).get(n).getImg_path()).into(posterinfo);
 
@@ -305,7 +298,7 @@ public class gestorvistas {
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+            Controlador.getInstance().firebaseDatabasegetdatos();
                //Controlador.getInstance().guardadatos();
 
             }

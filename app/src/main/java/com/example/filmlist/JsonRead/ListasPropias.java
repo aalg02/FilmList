@@ -15,9 +15,9 @@ public class ListasPropias {
        listaFvistas=new LinkedList<>();
        listaFfavoritas=new LinkedList<>();
        listaFpendientes=new LinkedList<>();
-       listaFvistas.add(new Film("","","","","",""));
-       listaFfavoritas.add(new Film("","","","","",""));
-       listaFpendientes.add(new Film("","","","","",""));
+       listaFvistas.add(new Film("","","1234","","",""));
+       listaFfavoritas.add(new Film("","","asdf","","",""));
+       listaFpendientes.add(new Film("","","jijais","","",""));
 
 
    }

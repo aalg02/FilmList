@@ -2,39 +2,38 @@ package com.example.filmlist.JsonRead;
 
 import android.net.Uri;
 
-import java.util.ArrayList;
-
 public class Film {
 
 
 
-    public String id;
-    public String Name;
-    public String Description;
+    public String idFilm;
+    public String Nombre;
+    public String sinopsis;
     public String Valoration;
 
     public String img_path="https://image.tmdb.org/t/p/original";
     public String releasedate;
 
-    public  Film(String id,String Name ,String Description,String Valoration,String path,String releasedate){
-        this.id=id;
-      this.Name=Name;
-      this.Description=Description;
+
+    public  Film(String id,String Name ,String description,String Valoration,String path,String releasedate){
+        this.idFilm=id;
+      this.Nombre =Name;
+      this.sinopsis=description;
       this.Valoration=Valoration;
       this.img_path=getImg_path()+path;
       this.releasedate=releasedate;
     }
 
     public String getId() {
-        return id;
+        return idFilm;
     }
 
-    public String getName() {
-        return Name;
+    public String getNombre() {
+        return this.Nombre;
     }
 
-    public String getDescription() {
-        return Description;
+    public String getSinopsis() {
+        return this.sinopsis;
     }
 
     public String getValoration() {
