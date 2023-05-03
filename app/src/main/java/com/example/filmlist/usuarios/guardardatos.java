@@ -26,14 +26,8 @@ public class guardardatos {
 
 
 
-
-
-
-
-
         //-----------------//
-        Controlador.getInstance().usuario.setGmail("aalgarracerezo");
-        Controlador.getInstance().usuario.setContraseña("1234");
+
 
 
 
@@ -42,10 +36,12 @@ public class guardardatos {
         Controlador.getInstance().usuario.setListapendientes(listapendientes);
 
 
+    }
 
+    public void guardarusuario(String gmail , String contraseña){
 
-
-
+        Controlador.getInstance().usuario.setGmail(gmail);
+        Controlador.getInstance().usuario.setContraseña(contraseña);
 
     }
 }

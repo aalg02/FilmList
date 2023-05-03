@@ -2,6 +2,7 @@ package com.example.filmlist.GestionVistas;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -83,7 +84,7 @@ public class gestorvistas {
             public void onClick(View v) {
                 Controlador.getInstance().adapter.getItem(2);
                 Controlador.getInstance().viewPager.setCurrentItem(2);
-                Controlador.getInstance().busqueda();
+                listenersbusqueda();
             }
         });
 
@@ -120,6 +121,7 @@ public class gestorvistas {
                     case 2:
                         // Actualizar información para la página 3
                         Controlador.getInstance().adapter.getItem(2);
+                        listenersbusqueda();
                         break;
                     case 3:
                         listenersperfil();
@@ -203,36 +205,45 @@ public class gestorvistas {
 
     }
 
-  
+
 
     public void framelayoutinicio(int n){
         FrameLayout FM=mainActivity.findViewById(R.id.framelayout);
 
         if(n==0){
-            FM.setVisibility(View.INVISIBLE);}
+            FM.setVisibility(View.INVISIBLE);
+        Controlador.getInstance().adapter.Fragment1.setMenuVisibility(true);
+        }
+
             Controlador.getInstance().clearrecomendacion();
         if(n==1){
             FM.setVisibility(View.VISIBLE);
+            Controlador.getInstance().adapter.Fragment1.setMenuVisibility(false);
+
+
         }
 
     }
 
-    public void framelayoutpelis(int n){
-        FrameLayout FM=mainActivity.findViewById(R.id.framelayout2);
+    public void framelayoutFloatingB(int n){
+        FrameLayout FM=mainActivity.findViewById(R.id.framelayoutFloatingB);
 
         if(n==0){
             FM.setVisibility(View.INVISIBLE);
+
         }
         if(n==1){
             FM.setVisibility(View.VISIBLE);
+
         }
+
     }
 
 
     public void floatingMenu(Film f){
         FloatingActionButton fabMain = mainActivity.findViewById(R.id.floatingActionButton);
 
-        framelayoutpelis(0);
+        framelayoutFloatingB(0);
 
 
 // Configura un clic para el botón principal
@@ -241,10 +252,18 @@ public class gestorvistas {
             public void onClick(View view) {
 
                 Toast.makeText(mainActivity, "SELECIONA LA LISTA A LA QUE QUIERES AÑADIRLA", Toast.LENGTH_SHORT).show();
-                framelayoutpelis(1);
+                framelayoutFloatingB(1);
                 listenersMenu(f);
 
 
+            }
+        });
+
+        ImageView flecha=mainActivity.findViewById(R.id.flechatras);
+        flecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                framelayoutinicio(0);
             }
         });
 
@@ -257,13 +276,14 @@ public class gestorvistas {
         FloatingActionButton butonfavoritas = mainActivity.findViewById(R.id.FBfavoritas);
         FloatingActionButton butonpendientes = mainActivity.findViewById(R.id.FBpendientes);
 
+
         butonvistas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Toast.makeText(mainActivity, "AÑADIDA A VISTAS", Toast.LENGTH_SHORT).show();
                 Controlador.getInstance().LISTAS.addvistas(f);
-                framelayoutpelis(0);
+                framelayoutFloatingB(0);
 
 
             }
@@ -274,7 +294,7 @@ public class gestorvistas {
 
                 Toast.makeText(mainActivity, "AÑADIDA A FAVORITAS", Toast.LENGTH_SHORT).show();
                 Controlador.getInstance().LISTAS.addfavoritas(f);
-                framelayoutpelis(0);
+                framelayoutFloatingB(0);
 
 
             }
@@ -285,26 +305,84 @@ public class gestorvistas {
 
                 Toast.makeText(mainActivity, "AÑADIDA A PENDIENTES", Toast.LENGTH_SHORT).show();
                 Controlador.getInstance().LISTAS.addpendientes(f);
-                framelayoutpelis(0);
+                framelayoutFloatingB(0);
 
 
             }
         });
+
+
 
     }
 
     public void listenersperfil(){
-        Button boton=mainActivity.findViewById(R.id.traer);
+        Button boton=mainActivity.findViewById(R.id.iniciosesionB);
+        Button registro=mainActivity.findViewById(R.id.registroB);
+        Button guardarlistas=mainActivity.findViewById(R.id.guardarB);
+        Button logout=mainActivity.findViewById(R.id.eliminarB);
+        EditText nombret=mainActivity.findViewById(R.id.editTextTextEmailAddress);
+        EditText pasword=mainActivity.findViewById(R.id.editTextTextPassword);
+
+
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            Controlador.getInstance().firebaseDatabasegetdatos();
-               //Controlador.getInstance().guardadatos();
+
+
+            Controlador.getInstance().authenticationLogin(nombret.getText().toString(),pasword.getText().toString());
 
             }
         });
 
+        registro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Controlador.getInstance().authenticationRegistro(nombret.getText().toString(),pasword.getText().toString());
+            }
+        });
+        guardarlistas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Controlador.getInstance().firebaseDatabasesetdatos();
+
+            }
+        });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Controlador.getInstance().authenticationlogout();;
+
+            }
+        });
+
+
+
+
     }
+
+
+    public void listenersbusqueda(){
+        ImageView imagen = mainActivity.findViewById(R.id.search_icon);
+
+        imagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            Controlador.getInstance().busqueda();
+            }
+        });
+
+
+
+    }
+
+
+
+
+
 
 
 

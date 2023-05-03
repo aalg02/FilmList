@@ -19,7 +19,7 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
     MainActivity main;
     String titulo;
     StringManager SManager =new StringManager();
-    Fragment Fragment1=new MyFragment(R.layout.inicio_layout);
+     public Fragment Fragment1=new MyFragment(R.layout.inicio_layout);
     Fragment Fragment2=new MyFragment(R.layout.busqueda_layout);
     Fragment Fragment3=new MyFragment(R.layout.perfil);
 
@@ -56,16 +56,16 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
                 Controlador.getInstance().getPrevision(main,url1,1);
                 Controlador.getInstance().getPrevision(main,url5,5);
 
-                return new MyFragment(R.layout.inicio_layout);
+                return Fragment1=new MyFragment(R.layout.inicio_layout);
             case 1:
 
                 return new MyFragment(R.layout.listas_layout);
             case 2:
                 Controlador.getInstance().getPrevision(main,url2,2);
-                return new MyFragment(R.layout.busqueda_layout);
+                return Fragment2= new MyFragment(R.layout.busqueda_layout);
 
             case 3:
-                return new MyFragment(R.layout.perfil);
+                return Fragment3=new MyFragment(R.layout.fragmentlogin);
             default:
                 return null;
         }

@@ -1,27 +1,25 @@
 package com.example.filmlist;
 
-import static android.content.ContentValues.TAG;
-import static androidx.core.content.ContextCompat.startActivity;
+import static androidx.core.content.ContextCompat.getSystemService;
 
-import android.content.Intent;
-import android.util.Log;
+import android.content.Context;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
-import com.example.filmlist.FragmentManager.MyFragment;
 import com.example.filmlist.FragmentManager.MyPagerAdapter;
 import com.example.filmlist.GestionVistas.gestorvistas;
 import com.example.filmlist.JsonRead.Film;
 import com.example.filmlist.JsonRead.LeerJsonGenerosPelis;
+import com.example.filmlist.JsonRead.LeerJsonPeli;
 import com.example.filmlist.JsonRead.LeerJsonPelisCartelera;
 import com.example.filmlist.JsonRead.ListaPelis;
 import com.example.filmlist.JsonRead.ListasPropias;
@@ -31,7 +29,6 @@ import com.example.filmlist.PeticionWeb.peticion2;
 import com.example.filmlist.RV_Inicial.RVunion;
 
 
-import com.example.filmlist.RV_listaVistas.RVAdapter_LV;
 import com.example.filmlist.RV_listaVistas.RVunion_LV;
 import com.example.filmlist.usuarios.guardardatos;
 import com.example.filmlist.usuarios.usuario;
@@ -49,6 +46,7 @@ import com.example.filmlist.usuarios.usuario;
 //import com.google.firebase.firestore.FirebaseFirestore;
 //import com.google.firebase.firestore.QueryDocumentSnapshot;
 //import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,14 +54,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Controlador {
     private static Controlador miControlador;
@@ -89,6 +79,7 @@ public class Controlador {
     public ListasPropias LISTAS=new ListasPropias();
     public usuario usuario1;
     public usuario usuario=new usuario();
+    String Gmail;
 //    FirebaseApp Firebase;
 //    FirebaseFirestore firestore;
 //    Firestore db;
@@ -168,6 +159,21 @@ public class Controlador {
         LPTP=new LeerJsonPelisCartelera(json,6);
 
     }
+    public void LeerPeliVistas(String json){
+        JsonElement pelicula = JsonParser.parseString(json);
+        LeerJsonPeli PL=new LeerJsonPeli(pelicula);
+        LISTAS.getListaFvistas().add(PL.getPeli());
+    }
+    public void LeerPeliFav(String json){
+        JsonElement pelicula = JsonParser.parseString(json);
+        LeerJsonPeli PL=new LeerJsonPeli(pelicula);
+        LISTAS.getListaFfavoritas().add(PL.getPeli());
+    }
+    public void LeerPeliPendiente(String json){
+        JsonElement pelicula = JsonParser.parseString(json);
+        LeerJsonPeli PL=new LeerJsonPeli(pelicula);
+        LISTAS.getListaFpendientes().add(PL.getPeli());
+    }
 
 
 
@@ -207,22 +213,14 @@ public class Controlador {
 
     public void busqueda(){
 
+        EditText EditT = miActivity.findViewById(R.id.search_bar);
+        String text = EditT.getText().toString();
+        Glide.with( miActivity).load(0).into((ImageView)miActivity.findViewById(R.id.imagenbusqueda));
+        adapter.busca(text);
+        adapter.getItem(2);
+        LISTASINICIAL.getListaFBusqueda().clear();
+        new RVunion(miActivity, LISTASINICIAL.getListaFBusqueda(),stringManager.BUSQUEDA);
 
-        ImageView imagen = miActivity.findViewById(R.id.search_icon);
-        imagen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                EditText EditT = miActivity.findViewById(R.id.search_bar);
-                String text = EditT.getText().toString();
-                Glide.with( miActivity).load(0).into((ImageView)miActivity.findViewById(R.id.imagenbusqueda));
-                adapter.busca(text);
-                adapter.getItem(2);
-                LISTASINICIAL.getListaFBusqueda().clear();
-                new RVunion(miActivity, LISTASINICIAL.getListaFBusqueda(),stringManager.BUSQUEDA);
-
-            }
-        });
     }
 
     //----------------------------CARGA---------------------//
@@ -275,12 +273,6 @@ public class Controlador {
                 gestorvistas.floatingMenu(f);
                 recomendacion(f.getId());
                 new RVunion(miActivity,Controlador.getInstance().LISTASINICIAL.getListaFrecomendaciones(),stringManager.RECOMENDACIONES);
-
-
-
-
-
-
             }
         });
 
@@ -325,83 +317,41 @@ public class Controlador {
     //---------------------------------Guardar datos y movidas------------------------//
 
 
-//    public void guardadatos(){
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//      guardardatos guardar=new guardardatos();
-//      EditText nombret=miActivity.findViewById(R.id.first_name2);
-//      EditText pasword=miActivity.findViewById(R.id.pasword);
-//      usuario.setGmail(nombret.getText().toString());
-//      usuario.setContraseña(pasword.getText().toString());
-//      guardar.guardalistasusuarios();
-//
-//
-//
-//        Map<String,Object>map=new HashMap<>();
-//        map.put("gmail","manuel");
-//        map.put("contraseña","1234");
-//            db.collection("users").document("user1").set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                @Override
-//                public void onSuccess(Void unused) {
-//                    Toast.makeText(miActivity, "EXITO AL AÑADIR", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//
-//    }
-//
-//    public void recuperardatos(){
-//
-//        TextView contraseñat=miActivity.findViewById(R.id.contraseña);
-//        TextView nombre=miActivity.findViewById(R.id.last_name2);
-//
-//        firestore = FirebaseFirestore.getInstance();
-//        firestore.collection("users")
-//                .get()
-//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onSuccess(QuerySnapshot querySnapshot) {
-//                        if (!querySnapshot.isEmpty()) {
-//                            DocumentSnapshot documentSnapshot = querySnapshot.getDocuments().get(0);
-//                            usuario usuario1 = documentSnapshot.toObject(usuario.class);
-//
-//                            contraseñat.setText(usuario1.getContraseña());
-//                            nombre.setText(usuario1.getGmail());
-//                            // Aquí puedes acceder a las propiedades del usuario
-//                        } else {
-//                            // El usuario no fue encontrado
-//                        }
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        // Manejar el error
-//                        Toast.makeText(miActivity, "ERROR", Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                });
-//
-//    }
-//
 
     public void firebaseDatabasesetdatos(){
 
         guardar.guardalistasusuarios();
+        int arrobaPosicion = usuario.getGmail().indexOf('@');
+        String nombreUsuario = usuario.getGmail().substring(0, arrobaPosicion);
         DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://filmlist-ed9e7-default-rtdb.europe-west1.firebasedatabase.app").getReference();
-        mDatabase.child("usuario1").setValue(usuario);
+        mDatabase.child(nombreUsuario).setValue(usuario);
     }
 
-    public void firebaseDatabasegetdatos(){
-        TextView contraseñat=miActivity.findViewById(R.id.contraseña);
-        TextView nombre=miActivity.findViewById(R.id.last_name2);
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://filmlist-ed9e7-default-rtdb.europe-west1.firebasedatabase.app").getReference("usuario1");
+    public void registroDatabase(String gmail,String contraseña){
+        guardar.guardarusuario(gmail,contraseña);
+        int arrobaPosicion = gmail.indexOf('@');
+        String nombreUsuario = gmail.substring(0, arrobaPosicion);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://filmlist-ed9e7-default-rtdb.europe-west1.firebasedatabase.app").getReference();
+        mDatabase.child(nombreUsuario).setValue(usuario);
+    }
+
+    public void firebaseDatabasegetdatos(String gmail,String contraseña){
+
+        int arrobaPosicion = gmail.indexOf('@');
+        String nombreUsuario = gmail.substring(0, arrobaPosicion);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://filmlist-ed9e7-default-rtdb.europe-west1.firebasedatabase.app").getReference(nombreUsuario);
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Aquí es donde se manejan los datos recuperados
-                // Utiliza el método getValue() para obtener los datos
-                 usuario1 = dataSnapshot.getValue(usuario.class);
-                contraseñat.setText(usuario1.getContraseña());
-                nombre.setText(usuario1.getGmail());
+                usuario1 = dataSnapshot.getValue(usuario.class);
+                if(usuario1==null){
+                    Toast.makeText(miActivity, "Este usuario no existe tio", Toast.LENGTH_SHORT).show();
+                }else {
+                    usuario.setGmail(usuario1.getGmail());
+                    usuario.setContraseña(usuario1.getContraseña());
+
+                    recuperarpelis();
+                }
             }
 
             @Override
@@ -411,10 +361,79 @@ public class Controlador {
         });
     }
 
+    public void login(){
+
+
+    }
+
 
     //------------------------RECUPERAR DATOS----------------------------//
 
+    public void recuperarpelis(){
+        usuario.setListavistas(usuario1.getListavistas());
+        usuario.setListafavoritas(usuario1.getListafavoritas());
+        usuario.setListapendientes(usuario1.getListapendientes());
+        LISTAS.getListaFvistas().clear();
+        LISTAS.getListaFfavoritas().clear();
+        LISTAS.getListaFpendientes().clear();
 
+        if(usuario.getListavistas()!=null) {
+            for (String id : usuario.getListavistas()) {
+                String url = stringManager.apiUrl + id + stringManager.apiKey;
+                getPrevision(miActivity, url, 7);
+
+            }
+        }
+        if(usuario.getListafavoritas()!=null) {
+            for (String id : usuario.getListafavoritas()) {
+                String url = stringManager.apiUrl + id + stringManager.apiKey;
+                getPrevision(miActivity, url, 8);
+            }
+        }
+
+        if(usuario.getListapendientes()!=null) {
+            for (String id : usuario.getListapendientes()) {
+                String url = stringManager.apiUrl + id + stringManager.apiKey;
+                getPrevision(miActivity, url, 9);
+            }
+        }
+
+    }
+
+    //------------AUTHENTICATION----------------------//
+
+
+    public void authenticationRegistro(String gmail,String contraseña){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.createUserWithEmailAndPassword(gmail, contraseña)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Registro exitoso
+                        registroDatabase(gmail,contraseña);
+                    } else {
+                        // Registro fallido
+                        Toast.makeText(miActivity, "No se ha podido realizar el registro, revisa los campos", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void authenticationLogin(String gmail,String contraseña) {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithEmailAndPassword(gmail, contraseña)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        firebaseDatabasegetdatos(gmail,contraseña);
+                    } else {
+                        Toast.makeText(miActivity, "No se ha podido realizar el inicio de sesion, revisa los campos", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void authenticationlogout(){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.signOut();
+
+    }
 
 
 

@@ -12,17 +12,6 @@
         android:orientation="vertical">
 
         <!-- La foto de perfil redonda se colocará en la esquina superior derecha -->
-        <Button
-            android:id="@+id/guardar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button" />
-
-        <Button
-            android:id="@+id/traer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button" />
 
         <Space
             android:layout_width="match_parent"
@@ -39,40 +28,23 @@
                 android:gravity="left"
                 android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/first_name2"
+                <TextView
+                    android:id="@+id/gmailtxv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:text="Nombre del Usuario"
-                    android:textSize="20sp" />
-                <EditText
-                    android:id="@+id/pasword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:text="contraseña"
-                    android:textSize="20sp" />
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="gmail"
+                    android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/last_name2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:text="Apellido del Usuario"
-                    android:textSize="16sp" />
-                <TextView
-                    android:id="@+id/contraseña"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text="contraseña"
+                    android:text="logeado"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -92,11 +64,6 @@
         <!-- TextViews para mostrar el nombre y apellido del usuario -->
 
         <!-- RecyclerView para mostrar las listas de películas del usuario -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/movie_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp" />
 
     </LinearLayout>
 

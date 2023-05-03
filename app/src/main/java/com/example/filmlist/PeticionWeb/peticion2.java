@@ -79,7 +79,14 @@ public class peticion2 {
                             Controlador.getInstance().RefrscaInicial();
                         }if(n==6){
                             Controlador.getInstance().LeerPeliculasRecomendaciones(respuesta);
+                        }if(n==7){
+                           Controlador.getInstance().LeerPeliVistas(respuesta);
+                        }if(n==8){
+                            Controlador.getInstance().LeerPeliFav(respuesta);
+                        }if(n==9){
+                            Controlador.getInstance().LeerPeliPendiente(respuesta);
                         }
+
 
 
                     }
