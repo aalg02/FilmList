@@ -5,14 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="#000000">
+    android:background="@drawable/pelis">
 
     <LinearLayout
         android:layout_width="278dp"
         android:layout_height="565dp"
-        android:layout_marginTop="36dp"
+        android:background="@drawable/circulo"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="vertical"
+        android:padding="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,8 +22,8 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
             app:srcCompat="@drawable/iconoperfil" />
 
         <EditText
@@ -29,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:gravity="center_horizontal"
             android:hint="correo electronico"
             android:inputType="textEmailAddress" />
 
@@ -36,32 +39,47 @@
             android:id="@+id/editTextTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:ems="10"
+            android:gravity="center_horizontal"
             android:hint="contraseña"
             android:inputType="textPassword" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="18dp" />
 
         <Button
             android:id="@+id/iniciosesionB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Iniciar Sesion" />
+            android:backgroundTint="#E60000"
+            android:text="Iniciar Sesion"
+            android:background="@drawable/circulo"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
 
         <Button
             android:id="@+id/registroB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Registrarse" />
+            android:backgroundTint="#E60000"
+            android:text="Registrarse"
+            android:background="@drawable/circulo"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="14dp" />
 
         <Button
             android:id="@+id/guardarB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="guardar listas" />
+            android:backgroundTint="#E60000"
+            android:text="INVITADO"
+            android:background="@drawable/circulo"/>
 
-        <Button
-            android:id="@+id/eliminarB"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="log out" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

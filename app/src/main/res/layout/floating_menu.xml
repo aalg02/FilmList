@@ -8,13 +8,13 @@
     android:backgroundTint="@color/semi_transparent_gray">
 
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/FBvistas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="244dp"
         android:clickable="true"
+        app:backgroundTint="#E10404"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        app:backgroundTint="#E10404"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="248dp"
         android:clickable="true"
+        app:backgroundTint="#E10404"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"

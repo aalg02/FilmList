@@ -1,8 +1,10 @@
 package com.example.filmlist;
 
+import static android.content.ContentValues.TAG;
 import static androidx.core.content.ContextCompat.getSystemService;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -46,7 +48,12 @@ import com.example.filmlist.usuarios.usuario;
 //import com.google.firebase.firestore.FirebaseFirestore;
 //import com.google.firebase.firestore.QueryDocumentSnapshot;
 //import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -323,8 +330,11 @@ public class Controlador {
         guardar.guardalistasusuarios();
         int arrobaPosicion = usuario.getGmail().indexOf('@');
         String nombreUsuario = usuario.getGmail().substring(0, arrobaPosicion);
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://filmlist-ed9e7-default-rtdb.europe-west1.firebasedatabase.app").getReference();
-        mDatabase.child(nombreUsuario).setValue(usuario);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://filmlist-ed9e7-default-rtdb.europe-west1.firebasedatabase.app").getReference(nombreUsuario);
+        mDatabase.setValue(null);
+        mDatabase.setValue(usuario);
+
+
     }
 
     public void registroDatabase(String gmail,String contraseña){
@@ -336,6 +346,7 @@ public class Controlador {
     }
 
     public void firebaseDatabasegetdatos(String gmail,String contraseña){
+
 
         int arrobaPosicion = gmail.indexOf('@');
         String nombreUsuario = gmail.substring(0, arrobaPosicion);
@@ -404,36 +415,84 @@ public class Controlador {
 
 
     public void authenticationRegistro(String gmail,String contraseña){
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.createUserWithEmailAndPassword(gmail, contraseña)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        // Registro exitoso
-                        registroDatabase(gmail,contraseña);
-                    } else {
-                        // Registro fallido
-                        Toast.makeText(miActivity, "No se ha podido realizar el registro, revisa los campos", Toast.LENGTH_SHORT).show();
-                    }
-                });
+
+
+        if(gmail==null||contraseña==null){
+            Toast.makeText(miActivity, "faltan campos", Toast.LENGTH_LONG).show();
+
+        }else {
+
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            mAuth.createUserWithEmailAndPassword(gmail, contraseña)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            // Registro exitoso
+                            registroDatabase(gmail, contraseña);
+                            gestorvistas.framelayoutLogin(0);
+                        } else {
+                            // Registro fallido
+                            try {
+                                throw task.getException();
+                            } catch (FirebaseAuthWeakPasswordException e) {
+                                String errorMessage = "La contraseña es demasiado corta (mínimo " + "6" + " caracteres)";
+                                Toast.makeText(miActivity, errorMessage, Toast.LENGTH_LONG).show();
+                            } catch (FirebaseAuthInvalidCredentialsException e) {
+                                Toast.makeText(miActivity, "Credenciales de autenticación inválidas", Toast.LENGTH_LONG).show();
+                            } catch (FirebaseAuthUserCollisionException e) {
+                                Toast.makeText(miActivity, "El usuario ya existe", Toast.LENGTH_LONG).show();
+                            } catch (FirebaseNetworkException e) {
+                                Toast.makeText(miActivity, "Error de red", Toast.LENGTH_LONG).show();
+                            } catch (Exception e) {
+                                Toast.makeText(miActivity, "Error al crear la cuenta: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+        }
     }
 
     public void authenticationLogin(String gmail,String contraseña) {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword(gmail, contraseña)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        firebaseDatabasegetdatos(gmail,contraseña);
-                    } else {
-                        Toast.makeText(miActivity, "No se ha podido realizar el inicio de sesion, revisa los campos", Toast.LENGTH_SHORT).show();
-                    }
-                });
+
+
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            mAuth.signInWithEmailAndPassword(gmail, contraseña)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            firebaseDatabasegetdatos(gmail, contraseña);
+                            gestorvistas.framelayoutLogin(0);
+                        } else {
+                            try {
+                                throw task.getException();
+
+                            } catch (FirebaseAuthInvalidCredentialsException e) {
+                                Toast.makeText(miActivity, "la contraseña no coincide con la del correo ", Toast.LENGTH_SHORT).show();
+                            } catch (FirebaseAuthInvalidUserException e) {
+
+                                Toast.makeText(miActivity, "El correo no esta registrado", Toast.LENGTH_SHORT).show();
+                            } catch (Exception e) {
+                                Toast.makeText(miActivity, "Error al crear la cuenta: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
     }
+
 
     public void authenticationlogout(){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
+    }
+
+
+
+    //--------------------------------------------------//
+
+    public void logueado(){
+
+
 
     }
+
+
 
 
 

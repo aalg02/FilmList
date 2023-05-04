@@ -14,6 +14,10 @@ public class guardardatos {
 
     public void guardalistasusuarios(){
 
+        listavistas.clear();
+        listafavoritas.clear();
+        listapendientes.clear();
+
         for(Film f:Controlador.getInstance().LISTAS.getListaFvistas()){
             listavistas.add(f.getId());
         }
@@ -42,6 +46,12 @@ public class guardardatos {
 
         Controlador.getInstance().usuario.setGmail(gmail);
         Controlador.getInstance().usuario.setContraseña(contraseña);
+
+    }
+
+    public void invitado(){
+        Controlador.getInstance().usuario.setGmail("invitado");
+        Controlador.getInstance().usuario.setContraseña("invitado");
 
     }
 }

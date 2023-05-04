@@ -1,5 +1,6 @@
 package com.example.filmlist.GestionVistas;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -92,9 +93,10 @@ public class gestorvistas {
         myButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listenersperfil();
+
                 Controlador.getInstance().adapter.getItem(3);
                 Controlador.getInstance().viewPager.setCurrentItem(3);
+                listenerscuandologueado();
             }
         });
 
@@ -124,8 +126,9 @@ public class gestorvistas {
                         listenersbusqueda();
                         break;
                     case 3:
-                        listenersperfil();
+
                         Controlador.getInstance().adapter.getItem(3);
+                        listenerscuandologueado();
 
                         break;
                     // Agregar casos para todas las páginas del ViewPager
@@ -239,6 +242,20 @@ public class gestorvistas {
 
     }
 
+    public void framelayoutLogin(int n){
+        FrameLayout FM=mainActivity.findViewById(R.id.framelayoutlogin);
+
+        if(n==0){
+            FM.setVisibility(View.INVISIBLE);
+
+        }
+        if(n==1){
+            FM.setVisibility(View.VISIBLE);
+
+        }
+
+    }
+
 
     public void floatingMenu(Film f){
         FloatingActionButton fabMain = mainActivity.findViewById(R.id.floatingActionButton);
@@ -284,6 +301,7 @@ public class gestorvistas {
                 Toast.makeText(mainActivity, "AÑADIDA A VISTAS", Toast.LENGTH_SHORT).show();
                 Controlador.getInstance().LISTAS.addvistas(f);
                 framelayoutFloatingB(0);
+                Controlador.getInstance().firebaseDatabasesetdatos();
 
 
             }
@@ -295,6 +313,7 @@ public class gestorvistas {
                 Toast.makeText(mainActivity, "AÑADIDA A FAVORITAS", Toast.LENGTH_SHORT).show();
                 Controlador.getInstance().LISTAS.addfavoritas(f);
                 framelayoutFloatingB(0);
+                Controlador.getInstance().firebaseDatabasesetdatos();
 
 
             }
@@ -306,6 +325,7 @@ public class gestorvistas {
                 Toast.makeText(mainActivity, "AÑADIDA A PENDIENTES", Toast.LENGTH_SHORT).show();
                 Controlador.getInstance().LISTAS.addpendientes(f);
                 framelayoutFloatingB(0);
+                Controlador.getInstance().firebaseDatabasesetdatos();
 
 
             }
@@ -319,50 +339,51 @@ public class gestorvistas {
         Button boton=mainActivity.findViewById(R.id.iniciosesionB);
         Button registro=mainActivity.findViewById(R.id.registroB);
         Button guardarlistas=mainActivity.findViewById(R.id.guardarB);
-        Button logout=mainActivity.findViewById(R.id.eliminarB);
         EditText nombret=mainActivity.findViewById(R.id.editTextTextEmailAddress);
         EditText pasword=mainActivity.findViewById(R.id.editTextTextPassword);
+
 
 
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+            if(TextUtils.isEmpty(nombret.getText().toString())||TextUtils.isEmpty(nombret.getText().toString())){
+                Toast.makeText(mainActivity, "faltan campos", Toast.LENGTH_LONG).show();
 
-            Controlador.getInstance().authenticationLogin(nombret.getText().toString(),pasword.getText().toString());
-
+            }else {
+                Controlador.getInstance().authenticationLogin(nombret.getText().toString(), pasword.getText().toString());
+            }
             }
         });
 
         registro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Controlador.getInstance().authenticationRegistro(nombret.getText().toString(),pasword.getText().toString());
+
+                if(TextUtils.isEmpty(nombret.getText().toString())||TextUtils.isEmpty(nombret.getText().toString())){
+                    Toast.makeText(mainActivity, "faltan campos", Toast.LENGTH_LONG).show();
+
+                }else {
+                    Controlador.getInstance().authenticationRegistro(nombret.getText().toString(), pasword.getText().toString());
+                }
             }
         });
         guardarlistas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                framelayoutLogin(0);
+                Controlador.getInstance().usuario.setGmail("invitado@gmail.com");
+                Controlador.getInstance().usuario.setContraseña("invitado");
 
-                Controlador.getInstance().firebaseDatabasesetdatos();
 
             }
         });
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                Controlador.getInstance().authenticationlogout();;
-
-            }
-        });
-
-
-
 
     }
+
+
 
 
     public void listenersbusqueda(){
@@ -377,6 +398,11 @@ public class gestorvistas {
 
 
 
+    }
+
+    public void listenerscuandologueado(){
+        TextView corretotx=mainActivity.findViewById(R.id.gmailtxv);
+        corretotx.setText(Controlador.getInstance().usuario.getGmail());
     }
 
 

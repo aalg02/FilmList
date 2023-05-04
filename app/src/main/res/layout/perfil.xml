@@ -39,25 +39,30 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:text="logeado"
                     android:textSize="16sp" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/profile_image"
-                android:layout_width="80dp"
+                android:layout_width="30dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
                 android:background="@drawable/circulo"
-                android:backgroundTint="@color/purple_700"
+                android:backgroundTint="@color/semi_transparent_gray"
                 android:padding="2dp"
                 android:paddingLeft="20dp"
                 android:src="@drawable/iconoperfil" />
+
 
         </LinearLayout>
 

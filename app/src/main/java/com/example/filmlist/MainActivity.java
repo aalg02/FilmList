@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         gestor=new gestorvistas();
         gestor.setActivity(this);
         gestor.listeners();
+        gestor.listenersperfil();
         gestor.framelayoutinicio(0);
         miControlador.setVistamanager(gestor);
         FirebaseApp.initializeApp(this);
