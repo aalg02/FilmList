@@ -6,20 +6,30 @@ public class usuario {
 
     String gmail;
     String contraseña;
+    String fotoperfil;
     ArrayList<String> listavistas;
     ArrayList<String> listafavoritas;
     ArrayList<String> listapendientes;
 
-    public usuario(String gmail, String contraseña, ArrayList<String> listavistas, ArrayList<String> listafavoritas, ArrayList<String> listapendientes) {
+    public usuario(String gmail, String contraseña, ArrayList<String> listavistas, ArrayList<String> listafavoritas, ArrayList<String> listapendientes,String fotoperfil) {
         this.gmail = gmail;
         this.contraseña = contraseña;
         this.listavistas = listavistas;
         this.listafavoritas = listafavoritas;
         this.listapendientes = listapendientes;
+        this.fotoperfil=fotoperfil;
     }
 
     public usuario(){
 
+    }
+
+    public String getFotoperfil() {
+        return fotoperfil;
+    }
+
+    public void setFotoperfil(String fotoperfil) {
+        this.fotoperfil = fotoperfil;
     }
 
     public ArrayList<String> getListavistas() {

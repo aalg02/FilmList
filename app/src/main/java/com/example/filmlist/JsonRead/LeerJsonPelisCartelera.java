@@ -42,6 +42,7 @@ public class LeerJsonPelisCartelera {
                 }
             }
 
+
         }catch (Exception e){
             Controlador.getInstance().NoConexion();
         }

@@ -10,6 +10,7 @@ public class ListaPelis {
     LinkedList<Film> ListaFtoprated;
     LinkedList<Film> ListaFrecomendaciones;
 
+    LinkedList<Film> ListaFConsultadas;
 
     public ListaPelis(){
         ListaFCartelera=new LinkedList<>();
@@ -18,6 +19,7 @@ public class ListaPelis {
         ListaFestrenos=new LinkedList<>();
         ListaFtoprated=new LinkedList<>();
         ListaFrecomendaciones=new LinkedList<>();
+        ListaFConsultadas=new LinkedList<>();
     }
 
 
@@ -62,6 +64,10 @@ public class ListaPelis {
 
     public LinkedList<Film> getListaFrecomendaciones() {
         return ListaFrecomendaciones;
+    }
+
+public LinkedList<Film> getListaFConsultadas() {
+        return ListaFConsultadas;
     }
 
     public Film getListaFI(int id) {

@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:background="@drawable/pelis">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="350dp"
-        android:layout_height="640dp"
+        android:layout_width="300dp"
+        android:layout_height="580dp"
         android:background="@drawable/circulo"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="vertical"
@@ -19,31 +16,6 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="175dp"
-            android:layout_height="175dp"
-            app:srcCompat="@drawable/iconoperfil" />
-
-        <EditText
-            android:id="@+id/editTextTextEmailAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:gravity="center_horizontal"
-            android:hint="correo electronico"
-            android:inputType="textEmailAddress" />
-
-        <EditText
-            android:id="@+id/editTextTextPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:gravity="center_horizontal"
-            android:hint="contraseña"
-            android:inputType="textPassword" />
 
         <Space
             android:layout_width="match_parent"
@@ -55,7 +27,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/circulo"
             android:backgroundTint="#E60000"
-            android:text="Iniciar Sesion" />
+            android:text="Cerrar Sesion" />
 
         <Space
             android:layout_width="match_parent"
@@ -67,7 +39,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/circulo"
             android:backgroundTint="#E60000"
-            android:text="Registrarse" />
+            android:text="Informacion" />
 
         <Space
             android:layout_width="match_parent"
@@ -79,7 +51,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/circulo"
             android:backgroundTint="#E60000"
-            android:text="INVITADO" />
+            android:text="MODO" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

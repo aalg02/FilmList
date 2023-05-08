@@ -105,15 +105,15 @@
                         android:textColor="#FFFFFF" />
 
                     <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp" />
+                        android:layout_width="260dp"
+                        android:layout_height="21dp" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/floatingActionButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginBottom="96dp"
+                        android:layout_marginBottom="20dp"
                         android:clickable="true"
                         app:backgroundTint="#D60000"
                         app:rippleColor="#ECE8E8"

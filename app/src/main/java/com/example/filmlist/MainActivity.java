@@ -3,8 +3,11 @@ package com.example.filmlist;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -48,9 +51,10 @@ public class MainActivity extends AppCompatActivity {
         gestor.listeners();
         gestor.listenersperfil();
         gestor.framelayoutinicio(0);
+
         miControlador.setVistamanager(gestor);
         FirebaseApp.initializeApp(this);
-        
+
 
 
         // gestor=gestorvistas.getInstance();
@@ -63,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         //miControlador.guardadatos();
         gestor.framelayoutinicio(0);
+        gestor.framelayoutajustes(0);
+
     }
 
     @Override
@@ -71,5 +77,25 @@ public class MainActivity extends AppCompatActivity {
         //Controlador.getInstance().guardadatos();
 
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 123 && resultCode == RESULT_OK && data != null) {
+            Uri imageUri = data.getData();
+
+            // hacer algo con la imagen seleccionada, por ejemplo, mostrarla en un ImageView
+            gestor.ponerfoto(imageUri);
+        }
+    }
+
+
+
+
+
+
+
 
 }

@@ -1,5 +1,12 @@
 package com.example.filmlist.GestionVistas;
 
+
+
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
+import android.content.res.Configuration;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
@@ -29,7 +37,7 @@ public class gestorvistas {
     public static gestorvistas gestor;
     MainActivity mainActivity;
     SegundaActivity segundaActivity;
-
+    private boolean isDarkModeEnabled = false;
     ImageButton InicioButton;
 
      ImageView erros_img;
@@ -37,6 +45,7 @@ public class gestorvistas {
     StringManager stringManager=new StringManager();
     public ViewPager viewPager;
     public MyPagerAdapter adapter;
+
 
 
     public  gestorvistas getInstance() {
@@ -71,7 +80,7 @@ public class gestorvistas {
         myButton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Controlador.getInstance().ocultateclado();
                 Controlador.getInstance().adapter.getItem(1);
                 Controlador.getInstance().viewPager.setCurrentItem(1);
                 Controlador.getInstance().RefrescaVistas();
@@ -83,6 +92,7 @@ public class gestorvistas {
         myButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Controlador.getInstance().ocultateclado();
                 Controlador.getInstance().adapter.getItem(2);
                 Controlador.getInstance().viewPager.setCurrentItem(2);
                 listenersbusqueda();
@@ -93,10 +103,12 @@ public class gestorvistas {
         myButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Controlador.getInstance().ocultateclado();
                 Controlador.getInstance().adapter.getItem(3);
                 Controlador.getInstance().viewPager.setCurrentItem(3);
                 listenerscuandologueado();
+                framelayoutajustes(0);
+                listenersperfilusuario();
             }
         });
 
@@ -106,7 +118,7 @@ public class gestorvistas {
                 // Aquí actualiza la información en función de la página seleccionada
                 switch (position) {
                     case 0:
-
+                        Controlador.getInstance().ocultateclado();
                         Controlador.getInstance().adapter.getItem(0);
                         Controlador.getInstance().RefrscaInicial();
 
@@ -114,6 +126,7 @@ public class gestorvistas {
                         break;
 
                     case 1:
+                        Controlador.getInstance().ocultateclado();
                         // Actualizar información para la página 2
                         Controlador.getInstance().adapter.getItem(1);
                         Controlador.getInstance().RefrescaVistas();
@@ -121,14 +134,17 @@ public class gestorvistas {
 
                         break;
                     case 2:
+                        Controlador.getInstance().ocultateclado();
                         // Actualizar información para la página 3
                         Controlador.getInstance().adapter.getItem(2);
                         listenersbusqueda();
                         break;
                     case 3:
-
+                        Controlador.getInstance().ocultateclado();
                         Controlador.getInstance().adapter.getItem(3);
                         listenerscuandologueado();
+                        framelayoutajustes(0);
+                        listenersperfilusuario();
 
                         break;
                     // Agregar casos para todas las páginas del ViewPager
@@ -172,7 +188,8 @@ public class gestorvistas {
 
     }
 
-    public void cargainfoInicio(int n,String opcion){
+
+    public void cargainfopeli(Film pelichula){
 
         TextView   titulo=mainActivity.findViewById(R.id.nombrepeli);
         TextView   valoracion=mainActivity.findViewById(R.id.valoracionpeli);
@@ -182,29 +199,11 @@ public class gestorvistas {
 
         LeerJsonPelisCartelera miau=Controlador.getInstance().LJPC;
 
-        titulo.setText(Controlador.getInstance().LISTASINICIAL.damelista(opcion).get(n).getNombre());
-        valoracion.setText(Controlador.getInstance().LISTASINICIAL.damelista(opcion).get(n).getValoration());
-        sinopsis.setText(Controlador.getInstance().LISTASINICIAL.damelista(opcion).get(n).getSinopsis());
-        añosalida.setText(Controlador.getInstance().LISTASINICIAL.damelista(opcion).get(n).getReleasedate());
-        Glide.with( mainActivity).load(Controlador.getInstance().LISTASINICIAL.damelista(opcion).get(n).getImg_path()).into(posterinfo);
-
-
-    }
-     public void cargainfoMislistas(int n,String opcion){
-
-        TextView   titulo=mainActivity.findViewById(R.id.nombrepeli);
-        TextView   valoracion=mainActivity.findViewById(R.id.valoracionpeli);
-        TextView   sinopsis=mainActivity.findViewById(R.id.sinopsispeli);
-        TextView   añosalida=mainActivity.findViewById(R.id.fechasalidapeli);
-        ImageView  posterinfo=mainActivity.findViewById(R.id.FotoPosterInfo);
-
-        LeerJsonPelisCartelera miau=Controlador.getInstance().LJPC;
-
-        titulo.setText(Controlador.getInstance().LISTAS.damelista(opcion).get(n).getNombre());
-        valoracion.setText(Controlador.getInstance().LISTAS.damelista(opcion).get(n).getValoration());
-        sinopsis.setText(Controlador.getInstance().LISTAS.damelista(opcion).get(n).getSinopsis());
-        añosalida.setText(Controlador.getInstance().LISTAS.damelista(opcion).get(n).getReleasedate());
-        Glide.with( mainActivity).load(Controlador.getInstance().LISTAS.damelista(opcion).get(n).getImg_path()).into(posterinfo);
+        titulo.setText(pelichula.getNombre());
+        valoracion.setText(pelichula.getValoration());
+        sinopsis.setText(pelichula.getSinopsis());
+        añosalida.setText(pelichula.getReleasedate());
+        Glide.with( mainActivity).load(pelichula.getImg_path()).into(posterinfo);
 
     }
 
@@ -218,7 +217,7 @@ public class gestorvistas {
         Controlador.getInstance().adapter.Fragment1.setMenuVisibility(true);
         }
 
-            Controlador.getInstance().clearrecomendacion();
+
         if(n==1){
             FM.setVisibility(View.VISIBLE);
             Controlador.getInstance().adapter.Fragment1.setMenuVisibility(false);
@@ -262,8 +261,6 @@ public class gestorvistas {
 
         framelayoutFloatingB(0);
 
-
-// Configura un clic para el botón principal
         fabMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -298,8 +295,7 @@ public class gestorvistas {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(mainActivity, "AÑADIDA A VISTAS", Toast.LENGTH_SHORT).show();
-                Controlador.getInstance().LISTAS.addvistas(f);
+                Controlador.getInstance().controlaPeliListaVistas(f);
                 framelayoutFloatingB(0);
                 Controlador.getInstance().firebaseDatabasesetdatos();
 
@@ -310,8 +306,7 @@ public class gestorvistas {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(mainActivity, "AÑADIDA A FAVORITAS", Toast.LENGTH_SHORT).show();
-                Controlador.getInstance().LISTAS.addfavoritas(f);
+                Controlador.getInstance().controlaPeliListaFavoritas(f);
                 framelayoutFloatingB(0);
                 Controlador.getInstance().firebaseDatabasesetdatos();
 
@@ -322,8 +317,7 @@ public class gestorvistas {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(mainActivity, "AÑADIDA A PENDIENTES", Toast.LENGTH_SHORT).show();
-                Controlador.getInstance().LISTAS.addpendientes(f);
+                Controlador.getInstance().controlaPeliListaPendientes(f);
                 framelayoutFloatingB(0);
                 Controlador.getInstance().firebaseDatabasesetdatos();
 
@@ -336,9 +330,9 @@ public class gestorvistas {
     }
 
     public void listenersperfil(){
-        Button boton=mainActivity.findViewById(R.id.iniciosesionB);
-        Button registro=mainActivity.findViewById(R.id.registroB);
-        Button guardarlistas=mainActivity.findViewById(R.id.guardarB);
+        Button boton=mainActivity.findViewById(R.id.logoutB);
+        Button registro=mainActivity.findViewById(R.id.informacionB);
+        Button guardarlistas=mainActivity.findViewById(R.id.cambiarModoB);
         EditText nombret=mainActivity.findViewById(R.id.editTextTextEmailAddress);
         EditText pasword=mainActivity.findViewById(R.id.editTextTextPassword);
 
@@ -348,10 +342,11 @@ public class gestorvistas {
             @Override
             public void onClick(View view) {
 
-            if(TextUtils.isEmpty(nombret.getText().toString())||TextUtils.isEmpty(nombret.getText().toString())){
+            if(TextUtils.isEmpty(nombret.getText().toString())||TextUtils.isEmpty(pasword.getText().toString())){
                 Toast.makeText(mainActivity, "faltan campos", Toast.LENGTH_LONG).show();
 
             }else {
+                Controlador.getInstance().ocultateclado();
                 Controlador.getInstance().authenticationLogin(nombret.getText().toString(), pasword.getText().toString());
             }
             }
@@ -361,10 +356,11 @@ public class gestorvistas {
             @Override
             public void onClick(View v) {
 
-                if(TextUtils.isEmpty(nombret.getText().toString())||TextUtils.isEmpty(nombret.getText().toString())){
+                if(TextUtils.isEmpty(nombret.getText().toString())||TextUtils.isEmpty(pasword.getText().toString())){
                     Toast.makeText(mainActivity, "faltan campos", Toast.LENGTH_LONG).show();
 
                 }else {
+                    Controlador.getInstance().ocultateclado();
                     Controlador.getInstance().authenticationRegistro(nombret.getText().toString(), pasword.getText().toString());
                 }
             }
@@ -392,7 +388,8 @@ public class gestorvistas {
         imagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Controlador.getInstance().busqueda();
+                Controlador.getInstance().ocultateclado();
+                Controlador.getInstance().busqueda();
             }
         });
 
@@ -403,14 +400,117 @@ public class gestorvistas {
     public void listenerscuandologueado(){
         TextView corretotx=mainActivity.findViewById(R.id.gmailtxv);
         corretotx.setText(Controlador.getInstance().usuario.getGmail());
+        if(Controlador.getInstance().usuario.getFotoperfil()==null){
+            ponerfoto(Uri.parse("android.resource://com.example.filmlist/" + R.drawable.iconoperfil) );
+        }else {
+            ponerfoto(Uri.parse(Controlador.getInstance().usuario.getFotoperfil()));
+
+        }
+    }
+
+    public void listenersperfilusuario(){
+
+        viewPager=mainActivity.findViewById(R.id.viewpage);
+        ImageView fotoperfil = mainActivity.findViewById(R.id.profile_image);
+        FloatingActionButton ajustes=mainActivity.findViewById(R.id.floatingAjustes);
+
+
+        ajustes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alternarFrameLayoutVisibility();
+                listenerajustes();
+            }
+        });
+
+        fotoperfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Controlador.getInstance().miau();
+            }
+        });
     }
 
 
 
 
+    public void listenerajustes(){
+        Button logout=mainActivity.findViewById(R.id.logoutB);
+        Button informacion=mainActivity.findViewById(R.id.informacionB);
+        Button modo=mainActivity.findViewById(R.id.cambiarModoB);
 
 
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Controlador.getInstance().authenticationlogout();
+                framelayoutLogin(1);
+                viewPager.setCurrentItem(0);
+            }
+        });
 
+        informacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mainActivity, "funcion en desarrollo lo siento", Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+        modo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mainActivity, "funcion en desarrollo lo siento", Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
+    //--------------------FRAMELAYOUT AJUSTES------------------------//
+
+    public void framelayoutajustes(int n){
+
+        FrameLayout FM=mainActivity.findViewById(R.id.framelayoutajustes);
+
+        if(n==0){
+            FM.setVisibility(View.INVISIBLE);
+        }
+        if(n==1){
+            FM.setVisibility(View.VISIBLE);
+
+
+        }
+    }
+    public void alternarFrameLayoutVisibility() {
+        FrameLayout FM = mainActivity.findViewById(R.id.framelayoutajustes);
+
+        if(FM.getVisibility() == View.VISIBLE) {
+            FM.setVisibility(View.INVISIBLE);
+        } else {
+            FM.setVisibility(View.VISIBLE);
+        }
+    }
+
+    //--------------modo oscuro/claro-------------//
+
+    @SuppressLint("WrongConstant")
+    public void claroscuro(){
+        int modoActual = mainActivity.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        int nuevoModo;
+        if (modoActual == Configuration.UI_MODE_NIGHT_YES) {
+            nuevoModo = Configuration.UI_MODE_NIGHT_NO;
+        } else {
+            nuevoModo = Configuration.UI_MODE_NIGHT_YES;
+        }
+        AppCompatDelegate.setDefaultNightMode(nuevoModo);
+
+    }
+    public void ponerfoto(Uri uri) {
+        ImageView fotoperfil = mainActivity.findViewById(R.id.profile_image);
+        Glide.with(mainActivity).load(uri).into(fotoperfil);
+        Controlador.getInstance().usuario.setFotoperfil(uri.toString());
+        Controlador.getInstance().firebaseDatabasesetdatos();
+    }
 
 
 

@@ -1,9 +1,15 @@
 package com.example.filmlist;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
+import static androidx.core.app.ActivityCompat.startActivityForResult;
 import static androidx.core.content.ContextCompat.getSystemService;
+import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -56,11 +62,16 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+
+import java.util.Iterator;
+
+import javax.annotation.meta.When;
 
 public class Controlador {
     private static Controlador miControlador;
@@ -69,6 +80,7 @@ public class Controlador {
     public LeerJsonPelisCartelera LPP;
     public LeerJsonPelisCartelera LPE;
     public LeerJsonPelisCartelera LPTP;
+    private static final int PICK_IMAGE_REQUEST = 1;
 
     LeerJsonGenerosPelis LJGP;
     StringManager stringManager=new StringManager();
@@ -164,6 +176,7 @@ public class Controlador {
     public void LeerPeliculasRecomendaciones(String json){
 
         LPTP=new LeerJsonPelisCartelera(json,6);
+        new RVunion(miActivity,LISTASINICIAL.getListaFrecomendaciones(),stringManager.RECOMENDACIONES);
 
     }
     public void LeerPeliVistas(String json){
@@ -181,6 +194,8 @@ public class Controlador {
         LeerJsonPeli PL=new LeerJsonPeli(pelicula);
         LISTAS.getListaFpendientes().add(PL.getPeli());
     }
+
+
 
 
 
@@ -251,41 +266,23 @@ public class Controlador {
 
     //----------------------------CLICK EN LA PELICULA---------------------//
 
-    public void clicPeli(View recycler, int position,  String opcion, Film f){
-        ScrollView scrollview =miActivity.findViewById(R.id.scrollview);
-        recycler.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scrollview.smoothScrollTo(0,0);
-                gestorvistas.cargainfoInicio(position,opcion);
-                gestorvistas.framelayoutinicio(1);
-                gestorvistas.floatingMenu(f);
-                recomendacion(f.getId());
-                new RVunion(miActivity,Controlador.getInstance().LISTASINICIAL.getListaFrecomendaciones(),stringManager.RECOMENDACIONES);
-
-            }
-        });
 
 
-    }
-    public void clicPeliPropias(View recycler, int position,  String opcion, Film f){
+    public void CliclckPelisola(View recycler,Film f){
         ScrollView scrollview =miActivity.findViewById(R.id.scrollview);
 
         recycler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                recomendacion(f);
                 scrollview.smoothScrollTo(0,0);
-                gestorvistas.cargainfoMislistas(position,opcion);
+                gestorvistas.cargainfopeli(f);
                 gestorvistas.framelayoutinicio(1);
                 gestorvistas.floatingMenu(f);
-                recomendacion(f.getId());
-                new RVunion(miActivity,Controlador.getInstance().LISTASINICIAL.getListaFrecomendaciones(),stringManager.RECOMENDACIONES);
+
             }
         });
-
-
     }
-
 
    //-----------------GESTION DE LA PAGINA DE LISTAS------------------------------//
 
@@ -308,17 +305,19 @@ public class Controlador {
 
     //-----------------------------RECOMENDACION PELICULAS-----------------------------------//
 
-    public void recomendacion(String id){
-        clearrecomendacion();
-        String url=stringManager.apiUrl+id+stringManager.recommendations+stringManager.apiKey;
+    public void recomendacion(Film f){
+
+        String url=stringManager.apiUrl+f.getId()+stringManager.recommendations+stringManager.apiKey;
+        LISTASINICIAL.getListaFrecomendaciones().clear();
         getPrevision(miActivity,url,6);
+
 
 
 
 
     }
 
-    public void clearrecomendacion(){
+    public void refresca(){
         LISTASINICIAL.getListaFrecomendaciones().clear();
     }
     //---------------------------------Guardar datos y movidas------------------------//
@@ -360,6 +359,7 @@ public class Controlador {
                 }else {
                     usuario.setGmail(usuario1.getGmail());
                     usuario.setContraseña(usuario1.getContraseña());
+                    usuario.setFotoperfil(usuario1.getFotoperfil());
 
                     recuperarpelis();
                 }
@@ -442,6 +442,8 @@ public class Controlador {
                                 Toast.makeText(miActivity, "El usuario ya existe", Toast.LENGTH_LONG).show();
                             } catch (FirebaseNetworkException e) {
                                 Toast.makeText(miActivity, "Error de red", Toast.LENGTH_LONG).show();
+                            } catch (DatabaseException e) {
+                                Toast.makeText(miActivity, "Has puesto un caracter que no esta permitido '.', '#', '$', '[', or ']'", Toast.LENGTH_LONG).show();
                             } catch (Exception e) {
                                 Toast.makeText(miActivity, "Error al crear la cuenta: " + e.getMessage(), Toast.LENGTH_LONG).show();
                             }
@@ -493,15 +495,89 @@ public class Controlador {
     }
 
 
+    //-------------controles varios-------------//
+
+
+    public void controlaPeliListaVistas(Film f){
+        boolean miaubool = true;
+        Iterator<Film> iterator = LISTAS.getListaFvistas().iterator();
+        while (iterator.hasNext()) {
+            Film filmi = iterator.next();
+            if (filmi == null || filmi.idFilm.equals(f.idFilm)) {
+                Toast.makeText(miActivity, "Esta pelicula ya esta en la lista", Toast.LENGTH_SHORT).show();
+                miaubool = false;
+                break;
+            }
+        }
+        if (miaubool) {
+            Toast.makeText(miActivity, "AÑADIDA A VISTAS", Toast.LENGTH_SHORT).show();
+            LISTAS.getListaFvistas().add(f);
+        }
+    }
+    public void controlaPeliListaFavoritas(Film f){
+        boolean miaubool = true;
+        Iterator<Film> iterator = LISTAS.getListaFfavoritas().iterator();
+        while (iterator.hasNext()) {
+            Film filmi = iterator.next();
+            if (filmi == null || filmi.idFilm.equals(f.idFilm)) {
+                Toast.makeText(miActivity, "Esta pelicula ya esta en la lista", Toast.LENGTH_SHORT).show();
+                miaubool = false;
+                break;
+            }
+        }
+        if (miaubool) {
+            Toast.makeText(miActivity, "AÑADIDA A FAVORITAS", Toast.LENGTH_SHORT).show();
+            LISTAS.getListaFfavoritas().add(f);
+        }
+    }
+    public void controlaPeliListaPendientes(Film f){
+
+        boolean miaubool = true;
+        Iterator<Film> iterator = LISTAS.getListaFpendientes().iterator();
+        while (iterator.hasNext()) {
+            Film filmi = iterator.next();
+            if (filmi == null || filmi.idFilm.equals(f.idFilm)) {
+                Toast.makeText(miActivity, "Esta pelicula ya esta en la lista", Toast.LENGTH_SHORT).show();
+                miaubool = false;
+                break;
+            }
+        }
+        if (miaubool) {
+            Toast.makeText(miActivity, "AÑADIDA A PENDIENTES", Toast.LENGTH_SHORT).show();
+            LISTAS.getListaFpendientes().add(f);
+        }
+        }
 
 
 
+    //--------------OCULTAR TECLADO---------//
+   public void ocultateclado(){
+       InputMethodManager imm = (InputMethodManager) miActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+       View vista = miActivity.getCurrentFocus();
+       if (vista != null) {
+           imm.hideSoftInputFromWindow(vista.getWindowToken(), 0);
+       }
+   }
 
 
 
-
-
-
+    public void miau() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        miActivity.startActivityForResult(intent, 123);
+    }
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

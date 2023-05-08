@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.filmlist.Controlador;
-import com.example.filmlist.ControladorBusquedas;
 import com.example.filmlist.MainActivity;
 import com.example.filmlist.R;
 import com.example.filmlist.StringManager;
@@ -23,7 +22,7 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
     Fragment Fragment2=new MyFragment(R.layout.busqueda_layout);
     public Fragment Fragment3=new MyFragment(R.layout.perfil);
 
-    ControladorBusquedas CB=new ControladorBusquedas();
+
     String url1=SManager.apiUrl+SManager.now_playing+ SManager.apiKey+ SManager.español;
     String url3=SManager.apiUrl+SManager.popular+ SManager.apiKey+ SManager.español;
     String url4=SManager.apiUrl+SManager.upcoming+ SManager.apiKey+ SManager.español;
@@ -65,7 +64,7 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
                 return Fragment2= new MyFragment(R.layout.busqueda_layout);
 
             case 3:
-                return Fragment3=new MyFragment(R.layout.perfil);
+                    return Fragment3=new MyFragment(R.layout.perfil);
             default:
                 return null;
         }
