@@ -34,6 +34,7 @@ public class RVunion_LV {
 
         this.vistas = vistas;
 
+
         adaptador = new RVAdapter_LV(activity, vistas,opcion);
 
         //adaptadorGeneros=new AdapterGenres(activity,)

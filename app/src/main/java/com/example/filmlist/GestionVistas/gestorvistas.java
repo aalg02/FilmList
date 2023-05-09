@@ -45,6 +45,7 @@ public class gestorvistas {
     StringManager stringManager=new StringManager();
     public ViewPager viewPager;
     public MyPagerAdapter adapter;
+    public FrameLayout FMI;
 
 
 
@@ -83,6 +84,7 @@ public class gestorvistas {
                 Controlador.getInstance().ocultateclado();
                 Controlador.getInstance().adapter.getItem(1);
                 Controlador.getInstance().viewPager.setCurrentItem(1);
+                framelayoueliminar(0);
                 Controlador.getInstance().RefrescaVistas();
 
 
@@ -130,6 +132,7 @@ public class gestorvistas {
                         // Actualizar información para la página 2
                         Controlador.getInstance().adapter.getItem(1);
                         Controlador.getInstance().RefrescaVistas();
+                        framelayoueliminar(0);
 
 
                         break;
@@ -210,16 +213,16 @@ public class gestorvistas {
 
 
     public void framelayoutinicio(int n){
-        FrameLayout FM=mainActivity.findViewById(R.id.framelayout);
+         FMI=mainActivity.findViewById(R.id.framelayout);
 
         if(n==0){
-            FM.setVisibility(View.INVISIBLE);
+            FMI.setVisibility(View.INVISIBLE);
         Controlador.getInstance().adapter.Fragment1.setMenuVisibility(true);
         }
 
 
         if(n==1){
-            FM.setVisibility(View.VISIBLE);
+            FMI.setVisibility(View.VISIBLE);
             Controlador.getInstance().adapter.Fragment1.setMenuVisibility(false);
 
 
@@ -243,6 +246,20 @@ public class gestorvistas {
 
     public void framelayoutLogin(int n){
         FrameLayout FM=mainActivity.findViewById(R.id.framelayoutlogin);
+
+        if(n==0){
+            FM.setVisibility(View.INVISIBLE);
+
+        }
+        if(n==1){
+            FM.setVisibility(View.VISIBLE);
+
+        }
+
+    }
+
+    public void framelayoueliminar(int n){
+        FrameLayout FM=mainActivity.findViewById(R.id.framelayouteliminar);
 
         if(n==0){
             FM.setVisibility(View.INVISIBLE);
@@ -509,7 +526,30 @@ public class gestorvistas {
         ImageView fotoperfil = mainActivity.findViewById(R.id.profile_image);
         Glide.with(mainActivity).load(uri).into(fotoperfil);
         Controlador.getInstance().usuario.setFotoperfil(uri.toString());
-        Controlador.getInstance().firebaseDatabasesetdatos();
+
+    }
+
+    //------------------------------------------------------//
+    public void listenereliminar(String opcion ,int n){
+        Button eliminarB=mainActivity.findViewById(R.id.buttonSI);
+        Button NoB=mainActivity.findViewById(R.id.buttonNO);
+        eliminarB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Controlador.getInstance().eliminarpeli(opcion,n);
+                Controlador.getInstance().RefrescaVistas();
+                framelayoueliminar(0);
+            }
+        });
+
+        NoB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                framelayoueliminar(0);
+            }
+        });
+
     }
 
 

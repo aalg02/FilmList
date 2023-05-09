@@ -109,15 +109,13 @@ android:orientation="vertical">
                 android:layout_height="21dp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton"
-                android:layout_width="wrap_content"
+                android:id="@+id/floatingActionButton2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
                 android:clickable="true"
-                app:backgroundTint="#D60000"
-                app:rippleColor="#ECE8E8"
-                app:srcCompat="@drawable/mas" />
+                app:backgroundTint="#F40000"
+                app:srcCompat="@drawable/baseline_delete_outline_24" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -144,10 +142,7 @@ android:id="@+id/framelayoutFloatingB"
 android:layout_width="match_parent"
 android:layout_height="match_parent">
 
-<include
-    layout="@layout/floating_menu"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+
 
 </FrameLayout>
 

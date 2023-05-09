@@ -41,6 +41,7 @@ public class RVAdapter_LV extends RecyclerView.Adapter<RVViewHolder_LV> {
     public void onBindViewHolder(@NonNull RVViewHolder_LV holder, int position) {
         //holder.titulo.setText(informe.getListaP().get(position).getName());
         Controlador.getInstance().CliclckPelisola(holder.poster,vistas.get(position));
+        Controlador.getInstance().MantenerPelicula(holder.poster, opcion, position,vistas.get(position));
         Glide.with(context).load(vistas.get(position).getImg_path()).into(holder.poster);
 
 

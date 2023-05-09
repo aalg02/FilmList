@@ -45,12 +45,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         miControlador = Controlador.getInstance();
         miControlador.setActivity(this);
+
         miControlador.controlViewpage();
         gestor=new gestorvistas();
         gestor.setActivity(this);
         gestor.listeners();
         gestor.listenersperfil();
         gestor.framelayoutinicio(0);
+        miControlador.checkSavedCredentialsAndSignIn();
 
         miControlador.setVistamanager(gestor);
         FirebaseApp.initializeApp(this);
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
             // hacer algo con la imagen seleccionada, por ejemplo, mostrarla en un ImageView
             gestor.ponerfoto(imageUri);
+            Controlador.getInstance().firebaseDatabasesetdatos();
         }
     }
 

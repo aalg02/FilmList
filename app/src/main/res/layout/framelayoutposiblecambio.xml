@@ -22,36 +22,40 @@
             android:layout_height="18dp" />
 
         <Button
-            android:id="@+id/logoutB"
+            android:id="@+id/vistasB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="VISTAS"
             android:background="@drawable/circulo"
-            android:backgroundTint="#E60000"
-            android:text="Cerrar Sesion" />
+            android:backgroundTint="#E60000"/>
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="15dp" />
 
         <Button
-            android:id="@+id/informacionB"
+            android:id="@+id/favortB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="FAVORITAS"
             android:background="@drawable/circulo"
-            android:backgroundTint="#E60000"
-            android:text="Informacion" />
+            android:backgroundTint="#E60000"/>
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="14dp" />
+            android:layout_height="15dp" />
 
         <Button
-            android:id="@+id/cambiarModoB"
+            android:id="@+id/pendientesB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="PENDIENTES"
             android:background="@drawable/circulo"
-            android:backgroundTint="#E60000"
-            android:text="MODO" />
+            android:backgroundTint="#E60000"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

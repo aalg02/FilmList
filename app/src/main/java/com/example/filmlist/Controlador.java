@@ -8,6 +8,7 @@ import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -60,6 +61,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
@@ -283,6 +285,22 @@ public class Controlador {
             }
         });
     }
+
+
+
+    public void MantenerPelicula(View recycler,String opcion,int n,Film f){
+        recycler.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(miActivity, f.getNombre(), Toast.LENGTH_SHORT).show();
+                gestorvistas.framelayoueliminar(1);
+                gestorvistas.listenereliminar(opcion,n);
+
+                return true; // Retorna true para indicar que se ha manejado el evento correctamente
+            }
+        });
+    }
+
 
    //-----------------GESTION DE LA PAGINA DE LISTAS------------------------------//
 
@@ -567,7 +585,44 @@ public class Controlador {
     }
 
 
+    //--------------mantener sesion iniciada---------------//
+
+
+    public void checkSavedCredentialsAndSignIn() {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            firebaseDatabasegetdatos(currentUser.getEmail(),"");
+            miActivity.gestor.framelayoutLogin(0);
+        } else {
+
+        }
+    }
+
+    //------------------------eliminar peli-------------//
+
+    public void eliminarpeli(String opcion ,int n){
+        if(opcion==stringManager.VISTAS){
+            LISTAS.getListaFvistas().remove(n);
+            firebaseDatabasesetdatos();
+        }
+        if(opcion==stringManager.FAVORITAS){
+            LISTAS.getListaFfavoritas().remove(n);
+            firebaseDatabasesetdatos();
+        }
+        if(opcion==stringManager.PENDIENTES){
+            LISTAS.getListaFpendientes().remove(n);
+            firebaseDatabasesetdatos();
+
+        }
+
+    }
+
+
 }
+
+
+
 
 
 
