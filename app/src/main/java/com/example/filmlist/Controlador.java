@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,7 +72,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.meta.When;
 
@@ -335,9 +338,6 @@ public class Controlador {
 
     }
 
-    public void refresca(){
-        LISTASINICIAL.getListaFrecomendaciones().clear();
-    }
     //---------------------------------Guardar datos y movidas------------------------//
 
 
@@ -579,7 +579,7 @@ public class Controlador {
 
 
 
-    public void miau() {
+    public void galeria() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         miActivity.startActivityForResult(intent, 123);
     }
@@ -616,6 +616,36 @@ public class Controlador {
 
         }
 
+    }
+
+
+    private void createRatingBar(int rating) {
+        LinearLayout ratingBar = miActivity.findViewById(R.id.rating_bar);
+        List<ImageView> starViews = new ArrayList<>();
+
+        for (int i = 0; i < 5; i++) {
+            ImageView starView = new ImageView(miActivity);
+            starView.setImageResource(R.drawable.star);
+            starView.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+            ratingBar.addView(starView);
+            starViews.add(starView);
+        }
+
+        setRating(rating, starViews);
+    }
+
+    private void setRating(int rating, List<ImageView> starViews) {
+        for (int i = 0; i < starViews.size(); i++) {
+            ImageView starView = starViews.get(i);
+
+            if (i < rating) {
+                starView.setImageResource(R.drawable.star);
+            } else {
+                starView.setImageResource(R.drawable.iconopalomitas);
+            }
+        }
     }
 
 

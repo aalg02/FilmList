@@ -443,7 +443,7 @@ public class gestorvistas {
         fotoperfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Controlador.getInstance().miau();
+                Controlador.getInstance().galeria();
             }
         });
     }
@@ -469,7 +469,7 @@ public class gestorvistas {
         informacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mainActivity, "funcion en desarrollo lo siento", Toast.LENGTH_LONG).show();
+                Toast.makeText(mainActivity, "no hay informacion disponible aun lo siento", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -477,7 +477,7 @@ public class gestorvistas {
         modo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mainActivity, "funcion en desarrollo lo siento", Toast.LENGTH_LONG).show();
+                Toast.makeText(mainActivity, "ahora eres gay lo siento", Toast.LENGTH_LONG).show();
 
             }
         });

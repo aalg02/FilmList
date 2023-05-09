@@ -114,7 +114,6 @@ android:orientation="vertical">
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:clickable="true"
-                app:backgroundTint="#F40000"
                 app:srcCompat="@drawable/baseline_delete_outline_24" />
 
             <TextView

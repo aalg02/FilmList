@@ -97,7 +97,8 @@
     <FrameLayout
         android:id="@+id/framelayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="invisible">
 
         <include
             layout="@layout/info_peliculas"
@@ -108,7 +109,9 @@
     <FrameLayout
         android:id="@+id/framelayoutlogin"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
         <include
             layout="@layout/fragmentlogin"
             android:layout_width="match_parent"

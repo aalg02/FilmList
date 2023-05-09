@@ -104,6 +104,7 @@
                         android:textSize="30dp" />
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/misamigos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -124,6 +125,7 @@
                         android:textSize="30dp" />
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/misvaloraciones"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -152,7 +154,8 @@
     <FrameLayout
         android:id="@+id/framelayoutajustes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="invisible">
 
         <include
             layout="@layout/ajustes"
