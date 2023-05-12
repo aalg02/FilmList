@@ -89,8 +89,8 @@ public class MainActivity extends AppCompatActivity {
             Uri imageUri = data.getData();
 
             // hacer algo con la imagen seleccionada, por ejemplo, mostrarla en un ImageView
-            gestor.ponerfoto(imageUri);
-            Controlador.getInstance().firebaseDatabasesetdatos();
+            Controlador.getInstance().storageFirebase(imageUri);
+            gestor.ponerfoto(imageUri.toString());
         }
     }
 

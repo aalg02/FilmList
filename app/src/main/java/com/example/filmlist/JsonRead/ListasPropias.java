@@ -9,12 +9,15 @@ public class ListasPropias {
     LinkedList<Film> listaFvistas;
     LinkedList<Film> listaFfavoritas;
     LinkedList<Film> listaFpendientes;
+    LinkedList<Film> listaFvaloradas;
 
 
    public  ListasPropias(){
        listaFvistas=new LinkedList<>();
        listaFfavoritas=new LinkedList<>();
        listaFpendientes=new LinkedList<>();
+       listaFvaloradas=new LinkedList<>();
+
 
 
    }
@@ -38,7 +41,13 @@ public class ListasPropias {
         return null;
     }
 
+    public LinkedList<Film> getListaFvaloradas() {
+        return listaFvaloradas;
+    }
 
+    public void setListaFvaloradas(LinkedList<Film> listaFvaloradas) {
+        this.listaFvaloradas = listaFvaloradas;
+    }
 
     public LinkedList<Film> getListaFvistas() {
         return listaFvistas;

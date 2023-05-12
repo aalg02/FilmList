@@ -36,13 +36,16 @@
         android:id="@+id/viewpage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/bottom_bar"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_bar"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="96dp"
-        tools:layout_editor_absoluteY="385dp" />
+        tools:layout_editor_absoluteX="96dp" />
     <LinearLayout
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:layout_above="@id/viewpage"
         android:background="@color/black"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">

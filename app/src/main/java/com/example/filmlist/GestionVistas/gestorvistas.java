@@ -6,9 +6,12 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -21,15 +24,24 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.example.filmlist.Controlador;
 import com.example.filmlist.FragmentManager.MyPagerAdapter;
 import com.example.filmlist.JsonRead.Film;
 import com.example.filmlist.JsonRead.LeerJsonPelisCartelera;
+import com.example.filmlist.JsonRead.ListasPropias;
 import com.example.filmlist.MainActivity;
 import com.example.filmlist.R;
 import com.example.filmlist.SegundaActivity;
 import com.example.filmlist.StringManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+
+import jp.wasabeef.glide.transformations.BlurTransformation;
+import retrofit2.http.Url;
 
 public class gestorvistas {
 
@@ -46,6 +58,8 @@ public class gestorvistas {
     public ViewPager viewPager;
     public MyPagerAdapter adapter;
     public FrameLayout FMI;
+
+    ArrayList<ImageView> estrellas;
 
 
 
@@ -72,6 +86,7 @@ public class gestorvistas {
                 Controlador.getInstance().adapter.getItem(0);
                 Controlador.getInstance().viewPager.setCurrentItem(0);
                 Controlador.getInstance().RefrscaInicial();
+                framelayoueliminar(0);
 
 
             }
@@ -97,6 +112,7 @@ public class gestorvistas {
                 Controlador.getInstance().ocultateclado();
                 Controlador.getInstance().adapter.getItem(2);
                 Controlador.getInstance().viewPager.setCurrentItem(2);
+                framelayoueliminar(0);
                 listenersbusqueda();
             }
         });
@@ -108,7 +124,9 @@ public class gestorvistas {
                 Controlador.getInstance().ocultateclado();
                 Controlador.getInstance().adapter.getItem(3);
                 Controlador.getInstance().viewPager.setCurrentItem(3);
+                Controlador.getInstance().RefrescaValoraciones();
                 listenerscuandologueado();
+                framelayoueliminar(0);
                 framelayoutajustes(0);
                 listenersperfilusuario();
             }
@@ -123,7 +141,7 @@ public class gestorvistas {
                         Controlador.getInstance().ocultateclado();
                         Controlador.getInstance().adapter.getItem(0);
                         Controlador.getInstance().RefrscaInicial();
-
+                        framelayoueliminar(0);
 
                         break;
 
@@ -133,7 +151,7 @@ public class gestorvistas {
                         Controlador.getInstance().adapter.getItem(1);
                         Controlador.getInstance().RefrescaVistas();
                         framelayoueliminar(0);
-
+                        framelayoueliminar(0);
 
                         break;
                     case 2:
@@ -148,7 +166,8 @@ public class gestorvistas {
                         listenerscuandologueado();
                         framelayoutajustes(0);
                         listenersperfilusuario();
-
+                        Controlador.getInstance().RefrescaValoraciones();
+                        framelayoueliminar(0);
                         break;
                     // Agregar casos para todas las páginas del ViewPager
                 }
@@ -199,6 +218,7 @@ public class gestorvistas {
         TextView   sinopsis=mainActivity.findViewById(R.id.sinopsispeli);
         TextView   añosalida=mainActivity.findViewById(R.id.fechasalidapeli);
         ImageView  posterinfo=mainActivity.findViewById(R.id.FotoPosterInfo);
+        Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.cargapelis);
 
         LeerJsonPelisCartelera miau=Controlador.getInstance().LJPC;
 
@@ -206,7 +226,9 @@ public class gestorvistas {
         valoracion.setText(pelichula.getValoration());
         sinopsis.setText(pelichula.getSinopsis());
         añosalida.setText(pelichula.getReleasedate());
+        posterinfo.startAnimation(animation);
         Glide.with( mainActivity).load(pelichula.getImg_path()).into(posterinfo);
+
 
     }
 
@@ -232,12 +254,15 @@ public class gestorvistas {
 
     public void framelayoutFloatingB(int n){
         FrameLayout FM=mainActivity.findViewById(R.id.framelayoutFloatingB);
+        Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.mostrarbotones);
 
         if(n==0){
+
             FM.setVisibility(View.INVISIBLE);
 
         }
         if(n==1){
+            FM.startAnimation(animation);
             FM.setVisibility(View.VISIBLE);
 
         }
@@ -246,12 +271,15 @@ public class gestorvistas {
 
     public void framelayoutLogin(int n){
         FrameLayout FM=mainActivity.findViewById(R.id.framelayoutlogin);
+        Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.slide_up);
 
         if(n==0){
+
             FM.setVisibility(View.INVISIBLE);
 
         }
         if(n==1){
+            FM.startAnimation(animation);
             FM.setVisibility(View.VISIBLE);
 
         }
@@ -260,28 +288,59 @@ public class gestorvistas {
 
     public void framelayoueliminar(int n){
         FrameLayout FM=mainActivity.findViewById(R.id.framelayouteliminar);
+        FrameLayout FM1=mainActivity.findViewById(R.id.framelayouteliminar2);
+        Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.slide_up);
+
 
         if(n==0){
-            FM.setVisibility(View.INVISIBLE);
 
+            FM.setVisibility(View.INVISIBLE);
+            FM1.setVisibility(View.INVISIBLE);
         }
         if(n==1){
+            FM.startAnimation(animation);
+            FM1.startAnimation(animation);
             FM.setVisibility(View.VISIBLE);
-
+            FM1.setVisibility(View.VISIBLE);
         }
 
+    }
+
+    //--------------------FRAMELAYOUT AJUSTES------------------------//
+
+    public void framelayoutajustes(int n){
+
+        FrameLayout FM=mainActivity.findViewById(R.id.framelayoutajustes);
+        Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.slide_up);
+        if(n==0){
+
+            FM.setVisibility(View.INVISIBLE);
+        }
+        if(n==1){
+            FM.startAnimation(animation);
+            FM.setVisibility(View.VISIBLE);
+        }
+    }
+    public void alternarFrameLayoutVisibility() {
+        FrameLayout FM = mainActivity.findViewById(R.id.framelayoutajustes);
+
+        if(FM.getVisibility() == View.VISIBLE) {
+            FM.setVisibility(View.INVISIBLE);
+        } else {
+            FM.setVisibility(View.VISIBLE);
+        }
     }
 
 
     public void floatingMenu(Film f){
         FloatingActionButton fabMain = mainActivity.findViewById(R.id.floatingActionButton);
-
+        Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.expansion_estrella);
         framelayoutFloatingB(0);
 
         fabMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                fabMain.startAnimation(animation);
                 Toast.makeText(mainActivity, "SELECIONA LA LISTA A LA QUE QUIERES AÑADIRLA", Toast.LENGTH_SHORT).show();
                 framelayoutFloatingB(1);
                 listenersMenu(f);
@@ -295,6 +354,7 @@ public class gestorvistas {
             @Override
             public void onClick(View v) {
                 framelayoutinicio(0);
+                vaciarestrellas();
             }
         });
 
@@ -363,6 +423,7 @@ public class gestorvistas {
                 Toast.makeText(mainActivity, "faltan campos", Toast.LENGTH_LONG).show();
 
             }else {
+                ponerfoto("android.resource://com.example.filmlist/" + R.drawable.iconoperfil );
                 Controlador.getInstance().ocultateclado();
                 Controlador.getInstance().authenticationLogin(nombret.getText().toString(), pasword.getText().toString());
             }
@@ -377,6 +438,7 @@ public class gestorvistas {
                     Toast.makeText(mainActivity, "faltan campos", Toast.LENGTH_LONG).show();
 
                 }else {
+                    ponerfoto("android.resource://com.example.filmlist/" + R.drawable.iconoperfil );
                     Controlador.getInstance().ocultateclado();
                     Controlador.getInstance().authenticationRegistro(nombret.getText().toString(), pasword.getText().toString());
                 }
@@ -389,7 +451,7 @@ public class gestorvistas {
                 framelayoutLogin(0);
                 Controlador.getInstance().usuario.setGmail("invitado@gmail.com");
                 Controlador.getInstance().usuario.setContraseña("invitado");
-
+                ponerfoto("android.resource://com.example.filmlist/" + R.drawable.iconoperfil );
 
             }
         });
@@ -417,11 +479,11 @@ public class gestorvistas {
     public void listenerscuandologueado(){
         TextView corretotx=mainActivity.findViewById(R.id.gmailtxv);
         corretotx.setText(Controlador.getInstance().usuario.getGmail());
-        if(Controlador.getInstance().usuario.getFotoperfil()==null){
-            ponerfoto(Uri.parse("android.resource://com.example.filmlist/" + R.drawable.iconoperfil) );
+        if(Controlador.getInstance().usuario.getFotoperfil()==""){
+            //ponerfoto(Uri.parse("android.resource://com.example.filmlist/" + R.drawable.iconoperfil) );
         }else {
-            ponerfoto(Uri.parse(Controlador.getInstance().usuario.getFotoperfil()));
-
+            ponerfoto(Controlador.getInstance().usuario.getFotoperfil());
+            //ponerfoto(Uri.parse("android.resource://com.example.filmlist/" + R.drawable.iconoperfil) );
         }
     }
 
@@ -483,30 +545,7 @@ public class gestorvistas {
         });
     }
 
-    //--------------------FRAMELAYOUT AJUSTES------------------------//
 
-    public void framelayoutajustes(int n){
-
-        FrameLayout FM=mainActivity.findViewById(R.id.framelayoutajustes);
-
-        if(n==0){
-            FM.setVisibility(View.INVISIBLE);
-        }
-        if(n==1){
-            FM.setVisibility(View.VISIBLE);
-
-
-        }
-    }
-    public void alternarFrameLayoutVisibility() {
-        FrameLayout FM = mainActivity.findViewById(R.id.framelayoutajustes);
-
-        if(FM.getVisibility() == View.VISIBLE) {
-            FM.setVisibility(View.INVISIBLE);
-        } else {
-            FM.setVisibility(View.VISIBLE);
-        }
-    }
 
     //--------------modo oscuro/claro-------------//
 
@@ -522,36 +561,146 @@ public class gestorvistas {
         AppCompatDelegate.setDefaultNightMode(nuevoModo);
 
     }
-    public void ponerfoto(Uri uri) {
+    public void ponerfoto(String url) {
         ImageView fotoperfil = mainActivity.findViewById(R.id.profile_image);
-        Glide.with(mainActivity).load(uri).into(fotoperfil);
-        Controlador.getInstance().usuario.setFotoperfil(uri.toString());
-
+        Glide.with(mainActivity).load(url).transform(new CircleCrop()).into(fotoperfil);
     }
 
     //------------------------------------------------------//
     public void listenereliminar(String opcion ,int n){
         Button eliminarB=mainActivity.findViewById(R.id.buttonSI);
         Button NoB=mainActivity.findViewById(R.id.buttonNO);
+        Button eliminarB2=mainActivity.findViewById(R.id.buttonSI2);
+        Button NoB2=mainActivity.findViewById(R.id.buttonNO2);
+        Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.expansion_estrella);
         eliminarB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                framelayoueliminar(0);
                 Controlador.getInstance().eliminarpeli(opcion,n);
                 Controlador.getInstance().RefrescaVistas();
-                framelayoueliminar(0);
+
             }
         });
 
         NoB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 framelayoueliminar(0);
+            }
+        });
+
+        eliminarB2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                framelayoueliminar(0);
+                Controlador.getInstance().eliminarpeli(opcion,n);
+                Controlador.getInstance().RefrescaValoraciones();
+
+            }
+        });
+
+        NoB2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                framelayoueliminar(0);
+            }
+        });
+
+
+    }
+
+
+    public void listenerEstrellas(Film f){
+        ImageView estrella1=mainActivity.findViewById(R.id.estrella1);
+        ImageView estrella2=mainActivity.findViewById(R.id.estrella2);
+        ImageView estrella3=mainActivity.findViewById(R.id.estrella3);
+        ImageView estrella4=mainActivity.findViewById(R.id.estrella4);
+        ImageView estrella5=mainActivity.findViewById(R.id.estrella5);
+        Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.expansion_estrella);
+        estrellas=new ArrayList<>();
+        estrellas.add(estrella1);
+        estrellas.add(estrella2);
+        estrellas.add(estrella3);
+        estrellas.add(estrella4);
+        estrellas.add(estrella5);
+
+        estrella1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                estrella1.startAnimation(animation);
+                rellenarestrellas(0,f);
+
+            }
+        });
+        estrella2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                estrella2.startAnimation(animation);
+                rellenarestrellas(1,f);
+            }
+        });
+        estrella3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                estrella3.startAnimation(animation);
+                rellenarestrellas(2,f);
+            }
+        });
+        estrella4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                estrella4.startAnimation(animation);
+                rellenarestrellas(3,f);
+            }
+        });
+        estrella5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                estrella5.startAnimation(animation);
+                rellenarestrellas(4,f);
             }
         });
 
     }
 
+    public void rellenarestrellas(int n, Film f){
+        Toast.makeText(mainActivity, "VALORADA CON "+(n+1)+" ESTRELLAS", Toast.LENGTH_SHORT).show();
+        Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.expansion_estrella);
+        for(int i=0; i<=n;i++){
+            estrellas.get(i).startAnimation(animation);
+            Glide.with( mainActivity).load(R.drawable.star).into(estrellas.get(i));
+
+        }
+        for(int i=4; i>n;i--){
+            Glide.with( mainActivity).load(R.drawable.baseline_star_vacia).into(estrellas.get(i));
+
+        }
+        if(f!=null){
+        f.setMivaloracion(n);
+        Controlador.getInstance().controlPelisVaolradas(f);
+        Controlador.getInstance().usuario.getValoraciones().put(f.idFilm,n);
+        Controlador.getInstance().firebaseDatabasesetdatos();
+        }
+
+    }
+
+    public void vaciarestrellas(){
+        for(ImageView estrella:estrellas){
+            Glide.with( mainActivity).load(R.drawable.baseline_star_vacia).into(estrella);
+
+        }
+    }
+
+    //------------------------------------------------------//
+
+
+
+
+    public void valoraciones(){
+
+    }
 
 
 }

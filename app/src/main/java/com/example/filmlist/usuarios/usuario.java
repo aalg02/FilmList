@@ -1,6 +1,7 @@
 package com.example.filmlist.usuarios;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class usuario {
 
@@ -10,18 +11,40 @@ public class usuario {
     ArrayList<String> listavistas;
     ArrayList<String> listafavoritas;
     ArrayList<String> listapendientes;
+    ArrayList<String> listavaloradas;
 
-    public usuario(String gmail, String contraseña, ArrayList<String> listavistas, ArrayList<String> listafavoritas, ArrayList<String> listapendientes,String fotoperfil) {
+    HashMap<String,Integer>valoraciones;
+
+
+    public usuario(String gmail, String contraseña, ArrayList<String> listavistas, ArrayList<String> listafavoritas, ArrayList<String> listapendientes,ArrayList<String >listavaloradas,String fotoperfil,HashMap<String,Integer>valoraciones) {
         this.gmail = gmail;
         this.contraseña = contraseña;
         this.listavistas = listavistas;
         this.listafavoritas = listafavoritas;
         this.listapendientes = listapendientes;
+        this.listavaloradas=listavaloradas;
         this.fotoperfil=fotoperfil;
+        this.valoraciones=valoraciones;
     }
 
     public usuario(){
+      valoraciones=new HashMap<>();
+    }
 
+    public HashMap<String, Integer> getValoraciones() {
+        return valoraciones;
+    }
+
+    public void setValoraciones(HashMap<String, Integer> valoraciones) {
+        this.valoraciones = valoraciones;
+    }
+
+    public ArrayList<String> getListavaloradas() {
+        return listavaloradas;
+    }
+
+    public void setListavaloradas(ArrayList<String> listavaloradas) {
+        this.listavaloradas = listavaloradas;
     }
 
     public String getFotoperfil() {

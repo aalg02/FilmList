@@ -81,33 +81,14 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:padding="15dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/amigos"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#000000"
-                        android:fontFamily="@font/roboto_condensed_bold"
-                        android:text="AMIGOS"
-                        android:textColor="#FFFFFF"
-                        android:textSize="30dp" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/misamigos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -120,9 +101,11 @@
                         android:layout_height="wrap_content"
                         android:background="#000000"
                         android:fontFamily="@font/roboto_condensed_bold"
+                        android:gravity="center"
                         android:text="MIS  VALORACIONES"
                         android:textColor="#FFFFFF"
                         android:textSize="30dp" />
+
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/misvaloraciones"
@@ -162,6 +145,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/framelayouteliminar2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
+        <include
+            layout="@layout/eliminar2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

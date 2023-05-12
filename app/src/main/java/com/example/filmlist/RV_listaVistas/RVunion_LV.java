@@ -30,6 +30,8 @@ public class RVunion_LV {
             recyclerfilms =activity.findViewById(R.id.rv_listafavoritas);
         }if(n==3){
             recyclerfilms =activity.findViewById(R.id.rv_listapendientes);
+        }if(n==4){
+            recyclerfilms =activity.findViewById(R.id.misvaloraciones);
         }
 
         this.vistas = vistas;

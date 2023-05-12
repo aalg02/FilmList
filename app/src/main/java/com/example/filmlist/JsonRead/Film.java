@@ -14,14 +14,25 @@ public class Film {
     public String img_path="https://image.tmdb.org/t/p/original";
     public String releasedate;
 
+    public int mivaloracion;
 
-    public  Film(String id,String Name ,String description,String Valoration,String path,String releasedate){
+
+    public  Film(String id,String Name ,String description,String Valoration,String path,String releasedate,int mivaloracion){
         this.idFilm=id;
       this.Nombre =Name;
       this.sinopsis=description;
       this.Valoration=Valoration;
       this.img_path=getImg_path()+path;
       this.releasedate=releasedate;
+      this.mivaloracion=mivaloracion;
+    }
+
+    public int getMivaloracion() {
+        return mivaloracion;
+    }
+
+    public void setMivaloracion(int mivaloracion) {
+        this.mivaloracion = mivaloracion;
     }
 
     public String getId() {

@@ -24,7 +24,7 @@ public class LeerJsonPeli {
         String img_path=infopeli.getAsJsonPrimitive(stringManager.poster_path).getAsString();
         String date=infopeli.getAsJsonPrimitive(stringManager.release_date).getAsString();
 
-        this.film = new Film(id,tittle,description,valoration,img_path,date);
+        this.film = new Film(id,tittle,description,valoration,img_path,date,0);
         //listaP.getListaF().add(getPeli());
 
     }

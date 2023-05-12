@@ -29,7 +29,7 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
 
     String url5=SManager.apiUrl+SManager.top_rated+ SManager.apiKey+ SManager.español;
 
-    String url6=SManager.apiUrl+"550"+SManager.recommendations+SManager.apiKey;
+
     String url2="";
 
 

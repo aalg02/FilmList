@@ -85,7 +85,9 @@ public class peticion2 {
                             Controlador.getInstance().LeerPeliFav(respuesta);
                         }if(n==9){
                             Controlador.getInstance().LeerPeliPendiente(respuesta);
-                        }
+                        }if(n==10){
+                        Controlador.getInstance().LeerPelivaloradas(respuesta);
+                    }
 
 
 

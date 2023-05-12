@@ -1,30 +1,24 @@
 package com.example.filmlist;
 
-import static android.app.Activity.RESULT_OK;
-import static android.content.ContentValues.TAG;
-import static androidx.core.app.ActivityCompat.startActivityForResult;
-import static androidx.core.content.ContextCompat.getSystemService;
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.example.filmlist.FragmentManager.MyFragment;
 import com.example.filmlist.FragmentManager.MyPagerAdapter;
 import com.example.filmlist.GestionVistas.gestorvistas;
 import com.example.filmlist.JsonRead.Film;
@@ -56,6 +50,9 @@ import com.example.filmlist.usuarios.usuario;
 //import com.google.firebase.firestore.FirebaseFirestore;
 //import com.google.firebase.firestore.QueryDocumentSnapshot;
 //import com.google.firebase.firestore.QuerySnapshot;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -69,14 +66,15 @@ import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.Iterator;
-import java.util.List;
-
-import javax.annotation.meta.When;
 
 public class Controlador {
     private static Controlador miControlador;
@@ -91,7 +89,7 @@ public class Controlador {
     StringManager stringManager=new StringManager();
     protected MainActivity miActivity;
     peticion2 peticionapi = new peticion2();
-    guardardatos guardar=new guardardatos();
+    public guardardatos guardar=new guardardatos();
     public ViewPager viewPager;
     public MyPagerAdapter adapter;
 
@@ -103,6 +101,7 @@ public class Controlador {
     public ListasPropias LISTAS=new ListasPropias();
     public usuario usuario1;
     public usuario usuario=new usuario();
+
     String Gmail;
 //    FirebaseApp Firebase;
 //    FirebaseFirestore firestore;
@@ -199,6 +198,12 @@ public class Controlador {
         LeerJsonPeli PL=new LeerJsonPeli(pelicula);
         LISTAS.getListaFpendientes().add(PL.getPeli());
     }
+    public void LeerPelivaloradas(String json){
+        JsonElement pelicula = JsonParser.parseString(json);
+        LeerJsonPeli PL=new LeerJsonPeli(pelicula);
+        LISTAS.getListaFvaloradas().add(PL.getPeli());
+
+    }
 
 
 
@@ -284,6 +289,7 @@ public class Controlador {
                 gestorvistas.cargainfopeli(f);
                 gestorvistas.framelayoutinicio(1);
                 gestorvistas.floatingMenu(f);
+                gestorvistas.listenerEstrellas(f);
 
             }
         });
@@ -295,9 +301,10 @@ public class Controlador {
         recycler.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                gestorvistas.listenereliminar(opcion,n);
                 Toast.makeText(miActivity, f.getNombre(), Toast.LENGTH_SHORT).show();
                 gestorvistas.framelayoueliminar(1);
-                gestorvistas.listenereliminar(opcion,n);
+
 
                 return true; // Retorna true para indicar que se ha manejado el evento correctamente
             }
@@ -321,6 +328,12 @@ public class Controlador {
         new RVunion_LV(miActivity,  LISTAS.getListaFvistas(),1,stringManager.VISTAS);
         new RVunion_LV(miActivity,  LISTAS.getListaFfavoritas(),2,stringManager.FAVORITAS);
         new RVunion_LV(miActivity,  LISTAS.getListaFpendientes(),3,stringManager.PENDIENTES);
+
+    }
+
+
+    public void RefrescaValoraciones(){
+        new RVunion_LV(miActivity,  LISTAS.getListaFvaloradas(),4,stringManager.VALORACIONES);
     }
 
 
@@ -378,6 +391,7 @@ public class Controlador {
                     usuario.setGmail(usuario1.getGmail());
                     usuario.setContraseña(usuario1.getContraseña());
                     usuario.setFotoperfil(usuario1.getFotoperfil());
+                    usuario.setValoraciones(usuario1.getValoraciones());
 
                     recuperarpelis();
                 }
@@ -402,9 +416,11 @@ public class Controlador {
         usuario.setListavistas(usuario1.getListavistas());
         usuario.setListafavoritas(usuario1.getListafavoritas());
         usuario.setListapendientes(usuario1.getListapendientes());
+        usuario.setListavaloradas(usuario1.getListavaloradas());
         LISTAS.getListaFvistas().clear();
         LISTAS.getListaFfavoritas().clear();
         LISTAS.getListaFpendientes().clear();
+        LISTAS.getListaFvaloradas().clear();
 
         if(usuario.getListavistas()!=null) {
             for (String id : usuario.getListavistas()) {
@@ -424,6 +440,12 @@ public class Controlador {
             for (String id : usuario.getListapendientes()) {
                 String url = stringManager.apiUrl + id + stringManager.apiKey;
                 getPrevision(miActivity, url, 9);
+            }
+        }
+        if(usuario.getListavaloradas()!=null) {
+            for (String id : usuario.getListavaloradas()) {
+                String url = stringManager.apiUrl + id + stringManager.apiKey;
+                getPrevision(miActivity, url, 10);
             }
         }
 
@@ -504,6 +526,67 @@ public class Controlador {
 
 
 
+
+
+
+
+    public void storageFirebase(Uri uri){
+        eliminarstorage();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference carpetaRef = storageRef.child(usuario.getGmail());
+        String nombreArchivo = uri.getLastPathSegment();
+        StorageReference imagenRef = carpetaRef.child(nombreArchivo);
+        StorageMetadata metadata = new StorageMetadata.Builder()
+                .setContentType("image/jpeg")
+                .build();
+        UploadTask uploadTask = imagenRef.putFile(uri, metadata);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Task<Uri> downloadUrl = taskSnapshot.getStorage().getDownloadUrl();
+                downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+
+                        String imageUrl = uri.toString();
+                        usuario.setFotoperfil(imageUrl);
+                        firebaseDatabasesetdatos();
+                    }
+                });
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Ocurrió un error al subir el archivo
+            }
+        });
+    }
+
+    public void eliminarstorage(){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl(usuario.getFotoperfil());
+
+// Elimina el archivo
+        storageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Ha ocurrido un error al eliminar la imagen
+            }
+        });
+    }
+
+
+
+
+
+
     //--------------------------------------------------//
 
     public void logueado(){
@@ -563,8 +646,27 @@ public class Controlador {
         if (miaubool) {
             Toast.makeText(miActivity, "AÑADIDA A PENDIENTES", Toast.LENGTH_SHORT).show();
             LISTAS.getListaFpendientes().add(f);
+
         }
         }
+
+
+    public void controlPelisVaolradas(Film f){
+
+        boolean miaubool = true;
+        Iterator<Film> iterator = LISTAS.getListaFvaloradas().iterator();
+        while (iterator.hasNext()) {
+            Film filmi = iterator.next();
+            if (filmi == null || filmi.idFilm.equals(f.idFilm)) {
+                Toast.makeText(miActivity, "Esta pelicula ya la valoraste anteriormente", Toast.LENGTH_SHORT).show();
+                miaubool = false;
+                break;
+            }
+        }
+        if (miaubool) {
+            LISTAS.getListaFvaloradas().add(f);
+        }
+    }
 
 
 
@@ -614,39 +716,24 @@ public class Controlador {
             LISTAS.getListaFpendientes().remove(n);
             firebaseDatabasesetdatos();
 
+        }if(opcion==stringManager.VALORACIONES){
+            usuario.getValoraciones().remove(LISTAS.getListaFvaloradas().get(n).getId());
+            LISTAS.getListaFvaloradas().remove(n);
+            firebaseDatabasesetdatos();
+
         }
 
     }
 
+    public int rellenaValoraciones(int n){
 
-    private void createRatingBar(int rating) {
-        LinearLayout ratingBar = miActivity.findViewById(R.id.rating_bar);
-        List<ImageView> starViews = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-            ImageView starView = new ImageView(miActivity);
-            starView.setImageResource(R.drawable.star);
-            starView.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT));
-            ratingBar.addView(starView);
-            starViews.add(starView);
-        }
-
-        setRating(rating, starViews);
+       return (usuario.getValoraciones().get(usuario.getListavaloradas().get(n))+1);
     }
 
-    private void setRating(int rating, List<ImageView> starViews) {
-        for (int i = 0; i < starViews.size(); i++) {
-            ImageView starView = starViews.get(i);
 
-            if (i < rating) {
-                starView.setImageResource(R.drawable.star);
-            } else {
-                starView.setImageResource(R.drawable.iconopalomitas);
-            }
-        }
-    }
+
+
+
 
 
 }

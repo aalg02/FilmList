@@ -40,7 +40,7 @@ public class StringManager {
     public String VISTAS="VISTAS";
     public String FAVORITAS="FAVORITAS";
     public String PENDIENTES="PENDIENTES";
-
+    public String VALORACIONES="VALORACIONES";
 
 
 

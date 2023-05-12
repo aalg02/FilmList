@@ -5,18 +5,25 @@ import com.example.filmlist.JsonRead.Film;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class guardardatos {
     ArrayList<String> listavistas=new ArrayList<>();
     ArrayList<String>  listafavoritas=new ArrayList<>();
     ArrayList<String>  listapendientes=new ArrayList<>();
+    ArrayList<String>  listavaloradas=new ArrayList<>();
+    HashMap<String, Integer> valoraciones=new HashMap<>();
 
     public void guardalistasusuarios(){
 
         listavistas.clear();
         listafavoritas.clear();
         listapendientes.clear();
+        listavaloradas .clear();
+
+
+
 
         for(Film f:Controlador.getInstance().LISTAS.getListaFvistas()){
             listavistas.add(f.getId());
@@ -27,6 +34,12 @@ public class guardardatos {
         for(Film f:Controlador.getInstance().LISTAS.getListaFpendientes()){
             listapendientes.add(f.getId());
         }
+        for(Film f:Controlador.getInstance().LISTAS.getListaFvaloradas()){
+            listavaloradas.add(f.getId());
+            valoraciones=Controlador.getInstance().usuario.valoraciones;
+
+        }
+
 
 
 
@@ -38,6 +51,10 @@ public class guardardatos {
         Controlador.getInstance().usuario.setListavistas(listavistas);
         Controlador.getInstance().usuario.setListafavoritas(listafavoritas);
         Controlador.getInstance().usuario.setListapendientes(listapendientes);
+        Controlador.getInstance().usuario.setListavaloradas(listavaloradas);
+        Controlador.getInstance().usuario.setValoraciones(valoraciones);
+
+
 
 
     }
