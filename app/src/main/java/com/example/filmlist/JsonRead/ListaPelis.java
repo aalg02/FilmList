@@ -9,6 +9,7 @@ public class ListaPelis {
     LinkedList<Film> ListaFestrenos;
     LinkedList<Film> ListaFtoprated;
     LinkedList<Film> ListaFrecomendaciones;
+    LinkedList<Film> ListaFGenero;
 
     LinkedList<Film> ListaFConsultadas;
 
@@ -20,6 +21,7 @@ public class ListaPelis {
         ListaFtoprated=new LinkedList<>();
         ListaFrecomendaciones=new LinkedList<>();
         ListaFConsultadas=new LinkedList<>();
+        ListaFGenero=new LinkedList<>();
     }
 
 
@@ -40,6 +42,7 @@ public class ListaPelis {
                 return this.ListaFestrenos;
             case "RECOMENDACIONES":
                 return this.ListaFrecomendaciones;
+
 
         }
         return null;
@@ -66,7 +69,11 @@ public class ListaPelis {
         return ListaFrecomendaciones;
     }
 
-public LinkedList<Film> getListaFConsultadas() {
+    public LinkedList<Film> getListaFGenero() {
+        return ListaFGenero;
+    }
+
+    public LinkedList<Film> getListaFConsultadas() {
         return ListaFConsultadas;
     }
 

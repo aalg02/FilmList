@@ -1,52 +1,30 @@
-package com.example.filmlist.RV_Inicial;
+package com.example.filmlist.RV_Actores;
 
 
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.filmlist.Controlador;
+import com.example.filmlist.JsonRead.Actor;
 import com.example.filmlist.JsonRead.Film;
-import com.example.filmlist.JsonRead.LeerJsonPelisCartelera;
 import com.example.filmlist.MainActivity;
 import com.example.filmlist.R;
 
 import java.util.LinkedList;
 
-public class RVunion {
+public class RVunion_A {
     RecyclerView recyclerfilms;
     RecyclerView genresfilms;
-    RVAdapter adaptador;
+    RVAdapter_A adaptador;
 
-    private final LinkedList<Film> informe;
-
-
-
-    public RVunion(MainActivity activity , LinkedList<Film> Informe , String opcion) {
+    private final LinkedList<Actor> informe;
 
 
-        if(opcion== "INICIAL"){
-                recyclerfilms =activity.findViewById(R.id.RV_films);}
-        if(opcion=="BUSQUEDA"){
-                recyclerfilms =activity.findViewById(R.id.recycler_busqueda);}
 
-        if(opcion== "POPULARES"){
-                recyclerfilms =activity.findViewById(R.id.rv_populares);}
+    public RVunion_A(MainActivity activity , LinkedList<Actor> Informe , String opcion) {
 
-        if(opcion== "TOPRATED"){
-                recyclerfilms =activity.findViewById(R.id.rv_estrenos);}
 
-        if(opcion== "ESTRENOS"){
-                recyclerfilms =activity.findViewById(R.id.rv_toprated);
-
-        } if(opcion== "RECOMENDACIONES"){
-
-            recyclerfilms =activity.findViewById(R.id.rv_recomendaciones);
-        }if(opcion== "GENERO"){
-
-            recyclerfilms =activity.findViewById(R.id.generosrv);
-        }
-
+        recyclerfilms =activity.findViewById(R.id.rvactores);
 
 
         //genresfilms=activity.findViewById(R.id.genre_layout);
@@ -58,7 +36,7 @@ public class RVunion {
 //        ((TextView) activity.findViewById(R.id.fecha1)).setText(informe.getPrediccion().getInicio());
 //        ((TextView) activity.findViewById(R.id.fecha2)).setText(informe.getPrediccion().getFin());
 
-        adaptador = new RVAdapter(activity, informe,opcion);
+        adaptador = new RVAdapter_A(activity, informe,opcion);
 
         //adaptadorGeneros=new AdapterGenres(activity,)
         recyclerfilms.setLayoutManager(new LinearLayoutManager(activity));

@@ -39,6 +39,8 @@ public class LeerJsonPelisCartelera {
                     Controlador.getInstance().LISTASINICIAL.getListaFestrenos().add(LJP.getPeli());
                 }if(n==6) {
                     Controlador.getInstance().LISTASINICIAL.getListaFrecomendaciones().add(LJP.getPeli());
+                }if(n==7) {
+                    Controlador.getInstance().LISTASINICIAL.getListaFGenero().add(LJP.getPeli());
                 }
             }
 

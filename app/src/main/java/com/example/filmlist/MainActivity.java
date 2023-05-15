@@ -45,16 +45,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         miControlador = Controlador.getInstance();
         miControlador.setActivity(this);
-
         miControlador.controlViewpage();
         gestor=new gestorvistas();
         gestor.setActivity(this);
         gestor.listeners();
         gestor.listenersperfil();
         gestor.framelayoutinicio(0);
+        miControlador.setVistamanager(gestor);
         miControlador.checkSavedCredentialsAndSignIn();
 
-        miControlador.setVistamanager(gestor);
+
+
+
         FirebaseApp.initializeApp(this);
 
 
@@ -64,6 +66,16 @@ public class MainActivity extends AppCompatActivity {
         // miControlador.cargarRV(this);
 
 
+    }
+    public void onStart() {
+
+        super.onStart();
+        gestor.Listenergeneros();
+    };
+    public void onResume() {
+
+        super.onResume();
+        gestor.Listenergeneros();
     }
     @Override
     public void onBackPressed() {

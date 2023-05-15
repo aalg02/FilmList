@@ -182,6 +182,20 @@
                         app:srcCompat="@drawable/mas" />
 
                     <TextView
+                        android:id="@+id/txActores"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_condensed_bold"
+                        android:text="CAST"
+                        android:textColor="#FFFFFF"
+                        android:textSize="25dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvactores"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
                         android:id="@+id/textView3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

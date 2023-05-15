@@ -98,13 +98,24 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/framelayout"
+        android:id="@+id/framelayoutpelis"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible">
 
         <include
             layout="@layout/info_peliculas"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/framelayoutActor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
+        <include
+            layout="@layout/infoactor"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>

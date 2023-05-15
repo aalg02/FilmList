@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
@@ -29,6 +30,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.example.filmlist.Controlador;
 import com.example.filmlist.FragmentManager.MyPagerAdapter;
+import com.example.filmlist.JsonRead.Actor;
 import com.example.filmlist.JsonRead.Film;
 import com.example.filmlist.JsonRead.LeerJsonPelisCartelera;
 import com.example.filmlist.JsonRead.ListasPropias;
@@ -86,6 +88,7 @@ public class gestorvistas {
                 Controlador.getInstance().adapter.getItem(0);
                 Controlador.getInstance().viewPager.setCurrentItem(0);
                 Controlador.getInstance().RefrscaInicial();
+                Listenergeneros();
                 framelayoueliminar(0);
 
 
@@ -140,6 +143,7 @@ public class gestorvistas {
                     case 0:
                         Controlador.getInstance().ocultateclado();
                         Controlador.getInstance().adapter.getItem(0);
+                        Listenergeneros();
                         Controlador.getInstance().RefrscaInicial();
                         framelayoueliminar(0);
 
@@ -231,11 +235,26 @@ public class gestorvistas {
 
 
     }
+    public void cargaInfoActor(Actor actor){
+
+        TextView   titulo=mainActivity.findViewById(R.id.NombreActor);
+        TextView   valoracion=mainActivity.findViewById(R.id.Biografia);
+        ImageView  posterinfo=mainActivity.findViewById(R.id.FotoActor);
+        Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.cargapelis);
+
+
+        titulo.setText(actor.getNombre());
+        valoracion.setText(actor.getBiografia());
+        posterinfo.startAnimation(animation);
+        Glide.with( mainActivity).load(actor.getProfile_path()).into(posterinfo);
+
+
+    }
 
 
 
     public void framelayoutinicio(int n){
-         FMI=mainActivity.findViewById(R.id.framelayout);
+         FMI=mainActivity.findViewById(R.id.framelayoutpelis);
 
         if(n==0){
             FMI.setVisibility(View.INVISIBLE);
@@ -246,6 +265,23 @@ public class gestorvistas {
         if(n==1){
             FMI.setVisibility(View.VISIBLE);
             Controlador.getInstance().adapter.Fragment1.setMenuVisibility(false);
+
+
+        }
+
+    }
+    public void framelayoutActor(int n){
+        FMI=mainActivity.findViewById(R.id.framelayoutActor);
+
+        if(n==0){
+            FMI.setVisibility(View.INVISIBLE);
+
+        }
+
+
+        if(n==1){
+            FMI.setVisibility(View.VISIBLE);
+
 
 
         }
@@ -271,7 +307,7 @@ public class gestorvistas {
 
     public void framelayoutLogin(int n){
         FrameLayout FM=mainActivity.findViewById(R.id.framelayoutlogin);
-        Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.slide_up);
+
 
         if(n==0){
 
@@ -279,7 +315,7 @@ public class gestorvistas {
 
         }
         if(n==1){
-            FM.startAnimation(animation);
+
             FM.setVisibility(View.VISIBLE);
 
         }
@@ -484,6 +520,7 @@ public class gestorvistas {
         }else {
             ponerfoto(Controlador.getInstance().usuario.getFotoperfil());
             //ponerfoto(Uri.parse("android.resource://com.example.filmlist/" + R.drawable.iconoperfil) );
+
         }
     }
 
@@ -522,8 +559,9 @@ public class gestorvistas {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Controlador.getInstance().authenticationlogout();
                 framelayoutLogin(1);
+                Controlador.getInstance().authenticationlogout();
+
                 viewPager.setCurrentItem(0);
             }
         });
@@ -544,6 +582,19 @@ public class gestorvistas {
             }
         });
     }
+    public void listenerActorinfo(){
+        ImageView flecha=mainActivity.findViewById(R.id.flechatras2);
+        flecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                framelayoutActor(0);
+
+            }
+        });
+    }
+
+
+
 
 
 
@@ -698,7 +749,25 @@ public class gestorvistas {
 
 
 
-    public void valoraciones(){
+    public void Listenergeneros(){
+        CardView card=mainActivity.findViewById(R.id.mau0);
+        for (int i = 0; i <= 17; i++) {
+            int n = i;
+            int id = mainActivity.getResources().getIdentifier("mau" + i, "id", mainActivity.getPackageName());
+            card = mainActivity.findViewById(id);
+            if (card != null) {
+                card.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Controlador.getInstance().rellenarRVGeneros(n);
+                        Controlador.getInstance().RefrescaGenero();
+                    }
+                });
+            }
+        }
+
+
 
     }
 

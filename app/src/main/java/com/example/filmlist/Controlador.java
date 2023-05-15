@@ -1,5 +1,6 @@
 package com.example.filmlist;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -7,6 +8,8 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -21,15 +24,20 @@ import com.bumptech.glide.Glide;
 import com.example.filmlist.FragmentManager.MyFragment;
 import com.example.filmlist.FragmentManager.MyPagerAdapter;
 import com.example.filmlist.GestionVistas.gestorvistas;
+import com.example.filmlist.JsonRead.Actor;
 import com.example.filmlist.JsonRead.Film;
+import com.example.filmlist.JsonRead.LeerInfoCastPeli;
+import com.example.filmlist.JsonRead.LeerJsonActor;
 import com.example.filmlist.JsonRead.LeerJsonGenerosPelis;
 import com.example.filmlist.JsonRead.LeerJsonPeli;
 import com.example.filmlist.JsonRead.LeerJsonPelisCartelera;
 import com.example.filmlist.JsonRead.ListaPelis;
+import com.example.filmlist.JsonRead.ListasActores;
 import com.example.filmlist.JsonRead.ListasPropias;
 import com.example.filmlist.PeticionWeb.peticion2;
 
 
+import com.example.filmlist.RV_Actores.RVunion_A;
 import com.example.filmlist.RV_Inicial.RVunion;
 
 
@@ -74,6 +82,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 
 public class Controlador {
@@ -87,7 +96,7 @@ public class Controlador {
 
     LeerJsonGenerosPelis LJGP;
     StringManager stringManager=new StringManager();
-    protected MainActivity miActivity;
+    public MainActivity miActivity;
     peticion2 peticionapi = new peticion2();
     public guardardatos guardar=new guardardatos();
     public ViewPager viewPager;
@@ -102,10 +111,9 @@ public class Controlador {
     public usuario usuario1;
     public usuario usuario=new usuario();
 
-    String Gmail;
-//    FirebaseApp Firebase;
-//    FirebaseFirestore firestore;
-//    Firestore db;
+    public ListasActores LISTASACTORES=new ListasActores();
+    Actor actoraso;
+
 
 
 
@@ -183,6 +191,12 @@ public class Controlador {
         new RVunion(miActivity,LISTASINICIAL.getListaFrecomendaciones(),stringManager.RECOMENDACIONES);
 
     }
+    public void LeerPeligenero(String json){
+
+        LPTP=new LeerJsonPelisCartelera(json,7);
+        new RVunion(miActivity,LISTASINICIAL.getListaFGenero(),stringManager.GENERO);
+
+    }
     public void LeerPeliVistas(String json){
         JsonElement pelicula = JsonParser.parseString(json);
         LeerJsonPeli PL=new LeerJsonPeli(pelicula);
@@ -202,6 +216,20 @@ public class Controlador {
         JsonElement pelicula = JsonParser.parseString(json);
         LeerJsonPeli PL=new LeerJsonPeli(pelicula);
         LISTAS.getListaFvaloradas().add(PL.getPeli());
+
+    }
+
+    public void LeerActoresPeli(String json){
+        LeerInfoCastPeli LJCP=new LeerInfoCastPeli(json);
+        new RVunion_A(miActivity,LISTASACTORES.getListaActoresPeli(),stringManager.ACTORES);
+
+    }
+
+    public void LeerActor(String json){
+        JsonElement pelicula = JsonParser.parseString(json);
+        LeerJsonActor LJA=new LeerJsonActor(pelicula);
+        actoraso=LJA.getActor();
+
 
     }
 
@@ -285,6 +313,7 @@ public class Controlador {
             @Override
             public void onClick(View v) {
                 recomendacion(f);
+                rellenarRVActores(f.idFilm);
                 scrollview.smoothScrollTo(0,0);
                 gestorvistas.cargainfopeli(f);
                 gestorvistas.framelayoutinicio(1);
@@ -312,15 +341,41 @@ public class Controlador {
     }
 
 
-   //-----------------GESTION DE LA PAGINA DE LISTAS------------------------------//
+    public void ClickActor(View recycler,Actor actor){
+        ScrollView scrollview =miActivity.findViewById(R.id.scrollInfoActor);
+
+        recycler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                busquedaActor(actor.getId());
+                gestorvistas.listenerActorinfo();
+                gestorvistas.framelayoutActor(1);
+                gestorvistas.cargaInfoActor(actor);
+
+
+            }
+        });
+    }
+
+
+
+
+
+
+
+    //-----------------GESTION DE LA PAGINA DE LISTAS------------------------------//
 
     public void RefrscaInicial(){
+        HorizontalScrollView scrollgeneros=miActivity.findViewById(R.id.scrollgeneros);
+        scrollgeneros.smoothScrollTo(0,0);
 
         new RVunion(miActivity,  LISTASINICIAL.getListaFCartelera(),stringManager.INICIAL);
         new RVunion(miActivity,  LISTASINICIAL.getListaFBusqueda(),stringManager.BUSQUEDA);
         new RVunion(miActivity,  LISTASINICIAL.getListaFpopulares(),stringManager.POPULARES);
         new RVunion(miActivity,  LISTASINICIAL.getListaFestrenos(),stringManager.ESTRENOS);
         new RVunion(miActivity,  LISTASINICIAL.getListaFtoprated(),stringManager.TOPRATED);
+        RefrescaGenero();
     }
 
     public void RefrescaVistas(){
@@ -334,6 +389,11 @@ public class Controlador {
 
     public void RefrescaValoraciones(){
         new RVunion_LV(miActivity,  LISTAS.getListaFvaloradas(),4,stringManager.VALORACIONES);
+    }
+
+    public void RefrescaGenero(){
+        new RVunion(miActivity,  LISTASINICIAL.getListaFGenero(),stringManager.GENERO);
+
     }
 
 
@@ -565,21 +625,32 @@ public class Controlador {
     }
 
     public void eliminarstorage(){
+
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReferenceFromUrl(usuario.getFotoperfil());
+        StorageReference storageRef=null;
+        try{
+             storageRef = storage.getReferenceFromUrl(usuario.getFotoperfil());
+        }catch (IllegalArgumentException a){
+
+        }
+
 
 // Elimina el archivo
-        storageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
+        if(storageRef==null){
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Ha ocurrido un error al eliminar la imagen
-            }
-        });
+        }else {
+            storageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Ha ocurrido un error al eliminar la imagen
+                }
+            });
+        }
     }
 
 
@@ -697,7 +768,7 @@ public class Controlador {
             firebaseDatabasegetdatos(currentUser.getEmail(),"");
             miActivity.gestor.framelayoutLogin(0);
         } else {
-
+            gestorvistas.framelayoutLogin(1);
         }
     }
 
@@ -728,6 +799,22 @@ public class Controlador {
     public int rellenaValoraciones(int n){
 
        return (usuario.getValoraciones().get(usuario.getListavaloradas().get(n))+1);
+    }
+
+    public void rellenarRVGeneros(int n){
+        LISTASINICIAL.getListaFGenero().clear();
+        peticionapi.requestData(stringManager.urlgeneros+stringManager.IDGEN[n],11);
+
+    }
+
+    public void rellenarRVActores(String idPeli){
+        LISTASACTORES.getListaActoresPeli().clear();
+        peticionapi.requestData(stringManager.apiUrl+idPeli+stringManager.urlcast,12);
+    }
+
+
+    public void busquedaActor(String idActor){
+        peticionapi.requestData(stringManager.urlactor+idActor+stringManager.apiKey,13);
     }
 
 

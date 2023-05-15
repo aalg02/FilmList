@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <HorizontalScrollView
+        android:id="@+id/scrollgeneros"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@color/black"
+                android:clickable="true"
+                app:cardBackgroundColor="#009688"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="ACCION"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@color/black"
+                android:clickable="true"
+                app:cardBackgroundColor="#4CAF50"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="AVENTURA"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@color/black"
+                app:cardBackgroundColor="#E91E63"
+                android:clickable="true"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="ANIMACION"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:layout_margin="5dp"
+                android:background="@color/black"
+                app:cardBackgroundColor="#2196F3"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="COMEDIA"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:layout_margin="5dp"
+                android:background="@color/black"
+                app:cardBackgroundColor="#F61B0B"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="CRIMENES"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@color/black"
+                android:clickable="true"
+                app:cardBackgroundColor="#9E4D05"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="DOCUMENTAL"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:clickable="true"
+                android:background="@color/black"
+                app:cardBackgroundColor="#E91E63"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="DRAMA"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@color/black"
+                app:cardBackgroundColor="#8BC34A"
+                android:clickable="true"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="FAMILIA"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@color/black"
+                app:cardBackgroundColor="#681577"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="FANTASIA"
+                    android:layout_margin="10dp"
+                    android:clickable="true"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau9"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@color/black"
+                android:clickable="true"
+                app:cardBackgroundColor="#00BCD4"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="HISTORIA"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau10"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@color/black"
+                app:cardBackgroundColor="#CC2020"
+                android:clickable="true"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="HORROR"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau11"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:clickable="true"
+                android:background="@color/black"
+                app:cardBackgroundColor="#009688"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="MUSICA"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau12"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:layout_margin="5dp"
+                android:background="@color/black"
+                app:cardBackgroundColor="#673AB7"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="MISTERIO"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau13"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:layout_margin="5dp"
+                android:background="@color/black"
+                app:cardBackgroundColor="#F61543"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="ROMANCE"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau14"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:clickable="true"
+                android:background="@color/black"
+                app:cardBackgroundColor="#152EBA"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="C.FICCION"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau15"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@color/black"
+                android:clickable="true"
+                app:cardBackgroundColor="#0CDC17"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="THRILLER"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau16"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@color/black"
+                android:clickable="true"
+                app:cardBackgroundColor="#FF0707"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="GUERRA"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mau17"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@color/black"
+                app:cardBackgroundColor="#FF9800"
+                android:clickable="true"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/acciontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="WESTERN"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    tools:ignore="DuplicateIds" />
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

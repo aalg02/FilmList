@@ -85,11 +85,15 @@ public class peticion2 {
                             Controlador.getInstance().LeerPeliFav(respuesta);
                         }if(n==9){
                             Controlador.getInstance().LeerPeliPendiente(respuesta);
-                        }if(n==10){
-                        Controlador.getInstance().LeerPelivaloradas(respuesta);
-                    }
-
-
+                        }if(n==10) {
+                            Controlador.getInstance().LeerPelivaloradas(respuesta);
+                        }if(n==11){
+                                Controlador.getInstance().LeerPeligenero(respuesta);
+                       }if(n==12){
+                            Controlador.getInstance().LeerActoresPeli(respuesta);
+                        }if(n==13){
+                           Controlador.getInstance().LeerActor(respuesta);
+                        }
 
                     }
                 });

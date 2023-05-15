@@ -49,7 +49,6 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
                 Controlador.getInstance().LISTASINICIAL.getListaFpopulares().clear();
                 Controlador.getInstance().LISTASINICIAL.getListaFestrenos().clear();
                 Controlador.getInstance().LISTASINICIAL.getListaFtoprated().clear();
-
                 Controlador.getInstance().getPrevision(main,url3,3);
                 Controlador.getInstance().getPrevision(main,url4,4);
                 Controlador.getInstance().getPrevision(main,url1,1);
