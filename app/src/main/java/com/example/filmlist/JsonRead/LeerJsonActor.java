@@ -16,7 +16,7 @@ public class LeerJsonActor {
         String name = infoactor.getAsJsonPrimitive(stringManager.name).getAsString();
         String img_path = infoactor.getAsJsonPrimitive(stringManager.profile_path).getAsString();
         try{
-            String biography = infoactor.getAsJsonPrimitive(stringManager.biography).getAsString();
+            String biography = infoactor.getAsJsonPrimitive(stringManager.character).getAsString();
             actor=new Actor(name , id,img_path,biography);
         }catch (Exception e){
                 actor=new Actor(name , id,img_path);

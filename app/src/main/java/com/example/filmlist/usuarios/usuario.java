@@ -12,11 +12,12 @@ public class usuario {
     ArrayList<String> listafavoritas;
     ArrayList<String> listapendientes;
     ArrayList<String> listavaloradas;
+    ArrayList<String> listaActores;
 
     HashMap<String,Integer>valoraciones;
 
 
-    public usuario(String gmail, String contraseña, ArrayList<String> listavistas, ArrayList<String> listafavoritas, ArrayList<String> listapendientes,ArrayList<String >listavaloradas,String fotoperfil,HashMap<String,Integer>valoraciones) {
+    public usuario(String gmail, String contraseña, ArrayList<String> listavistas, ArrayList<String> listafavoritas, ArrayList<String> listapendientes,ArrayList<String >listavaloradas,String fotoperfil,HashMap<String,Integer>valoraciones,ArrayList<String> listaActores) {
         this.gmail = gmail;
         this.contraseña = contraseña;
         this.listavistas = listavistas;
@@ -25,6 +26,16 @@ public class usuario {
         this.listavaloradas=listavaloradas;
         this.fotoperfil=fotoperfil;
         this.valoraciones=valoraciones;
+        this.listaActores=listaActores;
+    }
+
+
+    public ArrayList<String> getListaActores() {
+        return listaActores;
+    }
+
+    public void setListaActores(ArrayList<String> listaActores) {
+        this.listaActores = listaActores;
     }
 
     public usuario(){

@@ -111,17 +111,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/floatingActionButtonActoresFav"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
-                        android:clickable="true"
-                        app:backgroundTint="#FF0000"
-                        app:rippleColor="#F80202"
-                        app:srcCompat="@drawable/baseline_valorar" />
-
                     <View
                         android:id="@+id/view2"
                         android:layout_width="wrap_content"

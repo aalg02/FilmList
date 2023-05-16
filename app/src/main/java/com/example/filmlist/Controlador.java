@@ -136,6 +136,8 @@ public class Controlador {
             peticionapi.requestData(url,n);
         }catch (Exception e){
             e.printStackTrace();
+
+
         }
     }
 
@@ -228,8 +230,14 @@ public class Controlador {
     public void LeerActor(String json){
         JsonElement pelicula = JsonParser.parseString(json);
         LeerJsonActor LJA=new LeerJsonActor(pelicula);
-        actoraso=LJA.getActor();
+        LISTASACTORES.getListaActorFav().add(LJA.getActor());
 
+
+    }
+    public void LeerPeliculasActor(String json){
+
+        LPTP=new LeerJsonPelisCartelera(json,8);
+        new RVunion(miActivity,LISTASINICIAL.getListaFActores(),stringManager.PELISACTORES);
 
     }
 
@@ -279,6 +287,7 @@ public class Controlador {
         adapter.busca(text);
         adapter.getItem(2);
         LISTASINICIAL.getListaFBusqueda().clear();
+        LISTASINICIAL.getListaFGenero().clear();
         new RVunion(miActivity, LISTASINICIAL.getListaFBusqueda(),stringManager.BUSQUEDA);
 
     }
@@ -317,6 +326,7 @@ public class Controlador {
                 scrollview.smoothScrollTo(0,0);
                 gestorvistas.cargainfopeli(f);
                 gestorvistas.framelayoutinicio(1);
+                gestorvistas.framelayoutActor(0);
                 gestorvistas.floatingMenu(f);
                 gestorvistas.listenerEstrellas(f);
 
@@ -348,8 +358,9 @@ public class Controlador {
             @Override
             public void onClick(View v) {
 
-                busquedaActor(actor.getId());
-                gestorvistas.listenerActorinfo();
+
+                OtrasPelisActor(actor.getId());
+                gestorvistas.listenerActorinfo(actor);
                 gestorvistas.framelayoutActor(1);
                 gestorvistas.cargaInfoActor(actor);
 
@@ -357,6 +368,20 @@ public class Controlador {
             }
         });
     }
+    public void MantenerActor(View recycler,Actor actor,int n){
+        recycler.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                gestorvistas.listenereliminar(stringManager.ACTORESFAV,n);
+                Toast.makeText(miActivity, actor.getNombre(), Toast.LENGTH_SHORT).show();
+                gestorvistas.framelayoueliminar(1);
+
+
+                return true; // Retorna true para indicar que se ha manejado el evento correctamente
+            }
+        });
+    }
+
 
 
 
@@ -393,6 +418,11 @@ public class Controlador {
 
     public void RefrescaGenero(){
         new RVunion(miActivity,  LISTASINICIAL.getListaFGenero(),stringManager.GENERO);
+
+    }
+
+    public void RefrescaActoresFav(){
+        new RVunion_A(miActivity,  LISTASACTORES.getListaActorFav(),stringManager.ACTORESFAV);
 
     }
 
@@ -477,35 +507,43 @@ public class Controlador {
         usuario.setListafavoritas(usuario1.getListafavoritas());
         usuario.setListapendientes(usuario1.getListapendientes());
         usuario.setListavaloradas(usuario1.getListavaloradas());
+        usuario.setListaActores(usuario1.getListaActores());
         LISTAS.getListaFvistas().clear();
         LISTAS.getListaFfavoritas().clear();
         LISTAS.getListaFpendientes().clear();
         LISTAS.getListaFvaloradas().clear();
+        LISTASACTORES.getListaActorFav().clear();
 
         if(usuario.getListavistas()!=null) {
             for (String id : usuario.getListavistas()) {
-                String url = stringManager.apiUrl + id + stringManager.apiKey;
+                String url = stringManager.apiUrl + id + stringManager.apiKey+stringManager.español;
                 getPrevision(miActivity, url, 7);
 
             }
         }
         if(usuario.getListafavoritas()!=null) {
             for (String id : usuario.getListafavoritas()) {
-                String url = stringManager.apiUrl + id + stringManager.apiKey;
+                String url = stringManager.apiUrl + id + stringManager.apiKey+stringManager.español;
                 getPrevision(miActivity, url, 8);
             }
         }
 
         if(usuario.getListapendientes()!=null) {
             for (String id : usuario.getListapendientes()) {
-                String url = stringManager.apiUrl + id + stringManager.apiKey;
+                String url = stringManager.apiUrl + id + stringManager.apiKey+stringManager.español;
                 getPrevision(miActivity, url, 9);
             }
         }
         if(usuario.getListavaloradas()!=null) {
             for (String id : usuario.getListavaloradas()) {
-                String url = stringManager.apiUrl + id + stringManager.apiKey;
+                String url = stringManager.apiUrl + id + stringManager.apiKey+stringManager.español;
                 getPrevision(miActivity, url, 10);
+            }
+        }
+        if(usuario.getListaActores()!=null) {
+            for (String id : usuario.getListaActores()) {
+                String url =stringManager.urlactor+id+stringManager.apiKey+stringManager.español ;
+                getPrevision(miActivity, url, 13);
             }
         }
 
@@ -739,6 +777,23 @@ public class Controlador {
         }
     }
 
+    public void controlActoresFav(Actor actor){
+        boolean miaubool = true;
+        Iterator<Actor> iterator = LISTASACTORES.getListaActorFav().iterator();
+        while (iterator.hasNext()) {
+            Actor Actori = iterator.next();
+            if (Actori == null || Actori.getId().equals(actor.getId())) {
+                Toast.makeText(miActivity, "Este actor ya esta en la lista", Toast.LENGTH_SHORT).show();
+                miaubool = false;
+                break;
+            }
+        }
+        if (miaubool) {
+            Toast.makeText(miActivity, "AÑADIDO A FAVORITOS", Toast.LENGTH_SHORT).show();
+            LISTASACTORES.getListaActorFav().add(actor);
+        }
+    }
+
 
 
     //--------------OCULTAR TECLADO---------//
@@ -796,6 +851,13 @@ public class Controlador {
 
     }
 
+
+    public void eliminaractor(int n){
+        usuario.getListaActores().remove(LISTASACTORES.ListaActorFav.get(n).getId());
+        LISTASACTORES.getListaActorFav().remove(n);
+        firebaseDatabasesetdatos();
+    }
+
     public int rellenaValoraciones(int n){
 
        return (usuario.getValoraciones().get(usuario.getListavaloradas().get(n))+1);
@@ -814,7 +876,13 @@ public class Controlador {
 
 
     public void busquedaActor(String idActor){
-        peticionapi.requestData(stringManager.urlactor+idActor+stringManager.apiKey,13);
+        getPrevision(miActivity,stringManager.urlactor+idActor+stringManager.apiKey,13);
+    }
+
+    public void OtrasPelisActor(String idActor){
+        LISTASINICIAL.getListaFBusqueda().clear();
+        LISTASINICIAL.getListaFActores().clear();
+        getPrevision(miActivity,stringManager.urlactor+idActor+stringManager.urlPliActores,14);
     }
 
 

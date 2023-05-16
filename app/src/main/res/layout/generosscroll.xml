@@ -220,7 +220,6 @@
                     android:fontFamily="@font/roboto_condensed_bold"
                     android:text="FANTASIA"
                     android:layout_margin="10dp"
-                    android:clickable="true"
                     android:textColor="#FFFFFF"
                     android:textSize="25dp"
                     tools:ignore="DuplicateIds" />

@@ -17,37 +17,54 @@ public class LeerJsonPelisCartelera {
 
     public LeerJsonPelisCartelera(String json , int n){
 
-        try {
-            JsonElement pelisactuales = JsonParser.parseString(json);
-            JsonObject pelisactualesO = pelisactuales.getAsJsonObject();
-            JsonArray listapelis = pelisactualesO.get(SM.results).getAsJsonArray();
 
 
-            for (JsonElement p : listapelis) {
-                LJP = new LeerJsonPeli(p);
 
-                if(n==1) {
+                    JsonElement pelisactuales = JsonParser.parseString(json);
+                    JsonObject pelisactualesO = pelisactuales.getAsJsonObject();
+                    JsonArray listapelis=null;
+                    if (n==8){
+                        listapelis = pelisactualesO.get("cast").getAsJsonArray();
 
-                    Controlador.getInstance().LISTASINICIAL.getListaFCartelera().add(LJP.getPeli());
-                }if(n==2){
-                    Controlador.getInstance().LISTASINICIAL.getListaFBusqueda().add(LJP.getPeli());
-                }if(n==3) {
-                    Controlador.getInstance().LISTASINICIAL.getListaFpopulares().add(LJP.getPeli());
-                }if(n==4){
-                    Controlador.getInstance().LISTASINICIAL.getListaFtoprated().add(LJP.getPeli());
-                }if(n==5) {
-                    Controlador.getInstance().LISTASINICIAL.getListaFestrenos().add(LJP.getPeli());
-                }if(n==6) {
-                    Controlador.getInstance().LISTASINICIAL.getListaFrecomendaciones().add(LJP.getPeli());
-                }if(n==7) {
-                    Controlador.getInstance().LISTASINICIAL.getListaFGenero().add(LJP.getPeli());
-                }
+                    }else{
+                         listapelis = pelisactualesO.get(SM.results).getAsJsonArray();
+
+                    }
+
+                    for (JsonElement p : listapelis) {
+                        LJP = new LeerJsonPeli(p);
+                try {
+
+
+                    if (n == 1) {
+
+                        Controlador.getInstance().LISTASINICIAL.getListaFCartelera().add(LJP.getPeli());
+                    }
+                    if (n == 2) {
+                        Controlador.getInstance().LISTASINICIAL.getListaFGenero().add(LJP.getPeli());
+                    }
+                    if (n == 3) {
+                        Controlador.getInstance().LISTASINICIAL.getListaFpopulares().add(LJP.getPeli());
+                    }
+                    if (n == 4) {
+                        Controlador.getInstance().LISTASINICIAL.getListaFtoprated().add(LJP.getPeli());
+                    }
+                    if (n == 5) {
+                        Controlador.getInstance().LISTASINICIAL.getListaFestrenos().add(LJP.getPeli());
+                    }
+                    if (n == 6) {
+                        Controlador.getInstance().LISTASINICIAL.getListaFrecomendaciones().add(LJP.getPeli());
+                    }
+                    if (n == 7) {
+                        Controlador.getInstance().LISTASINICIAL.getListaFGenero().add(LJP.getPeli());
+                    }
+                    if (n == 8) {
+                        Controlador.getInstance().LISTASINICIAL.getListaFActores().add(LJP.getPeli());
+                    }
+                }catch(Exception e){
+                    continue;
+                        }
             }
-
-
-        }catch (Exception e){
-            Controlador.getInstance().NoConexion();
-        }
 
     }
 

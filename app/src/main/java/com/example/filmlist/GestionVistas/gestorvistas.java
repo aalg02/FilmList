@@ -128,6 +128,7 @@ public class gestorvistas {
                 Controlador.getInstance().adapter.getItem(3);
                 Controlador.getInstance().viewPager.setCurrentItem(3);
                 Controlador.getInstance().RefrescaValoraciones();
+                Controlador.getInstance().RefrescaActoresFav();
                 listenerscuandologueado();
                 framelayoueliminar(0);
                 framelayoutajustes(0);
@@ -171,6 +172,7 @@ public class gestorvistas {
                         framelayoutajustes(0);
                         listenersperfilusuario();
                         Controlador.getInstance().RefrescaValoraciones();
+                        Controlador.getInstance().RefrescaActoresFav();
                         framelayoueliminar(0);
                         break;
                     // Agregar casos para todas las páginas del ViewPager
@@ -238,7 +240,7 @@ public class gestorvistas {
     public void cargaInfoActor(Actor actor){
 
         TextView   titulo=mainActivity.findViewById(R.id.NombreActor);
-        TextView   valoracion=mainActivity.findViewById(R.id.Biografia);
+        TextView   valoracion=mainActivity.findViewById(R.id.Rol);
         ImageView  posterinfo=mainActivity.findViewById(R.id.FotoActor);
         Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.cargapelis);
 
@@ -582,8 +584,9 @@ public class gestorvistas {
             }
         });
     }
-    public void listenerActorinfo(){
+    public void listenerActorinfo(Actor actor){
         ImageView flecha=mainActivity.findViewById(R.id.flechatras2);
+        FloatingActionButton botonFavActor=mainActivity.findViewById(R.id.floatingActionButtonActoresFav);
         flecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -591,6 +594,18 @@ public class gestorvistas {
 
             }
         });
+
+
+        botonFavActor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Controlador.getInstance().controlActoresFav(actor);
+                Controlador.getInstance().RefrescaActoresFav();
+                Controlador.getInstance().firebaseDatabasesetdatos();
+            }
+        });
+
+
     }
 
 
@@ -624,6 +639,7 @@ public class gestorvistas {
         Button eliminarB2=mainActivity.findViewById(R.id.buttonSI2);
         Button NoB2=mainActivity.findViewById(R.id.buttonNO2);
         Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.expansion_estrella);
+
         eliminarB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -645,10 +661,15 @@ public class gestorvistas {
         eliminarB2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                framelayoueliminar(0);
-                Controlador.getInstance().eliminarpeli(opcion,n);
-                Controlador.getInstance().RefrescaValoraciones();
-
+                if(opcion=="ACTORESFAV"){
+                    framelayoueliminar(0);
+                    Controlador.getInstance().RefrescaActoresFav();
+                    Controlador.getInstance().eliminaractor(n);
+                }else {
+                    framelayoueliminar(0);
+                    Controlador.getInstance().eliminarpeli(opcion, n);
+                    Controlador.getInstance().RefrescaValoraciones();
+                }
             }
         });
 
@@ -656,6 +677,7 @@ public class gestorvistas {
             @Override
             public void onClick(View v) {
                 framelayoueliminar(0);
+
             }
         });
 
@@ -760,6 +782,7 @@ public class gestorvistas {
                     @Override
                     public void onClick(View v) {
 
+                        Glide.with( mainActivity).load(0).into((ImageView)mainActivity.findViewById(R.id.imagenbusqueda));
                         Controlador.getInstance().rellenarRVGeneros(n);
                         Controlador.getInstance().RefrescaGenero();
                     }

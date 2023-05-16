@@ -23,8 +23,11 @@ public class RVunion_A {
 
     public RVunion_A(MainActivity activity , LinkedList<Actor> Informe , String opcion) {
 
-
-        recyclerfilms =activity.findViewById(R.id.rvactores);
+        if (opcion=="ACTORES"){
+        recyclerfilms =activity.findViewById(R.id.rvactores);}
+        if(opcion=="ACTORESFAV"){
+            recyclerfilms =activity.findViewById(R.id.rvActoresFav);
+        }
 
 
         //genresfilms=activity.findViewById(R.id.genre_layout);

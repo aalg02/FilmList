@@ -15,18 +15,21 @@ public class LeerJsonPeli {
     StringManager stringManager=new StringManager();
     //ListaPelis listaP=new ListaPelis();
     public LeerJsonPeli(JsonElement json){
-        JsonElement json1= json;
-        JsonObject infopeli=json1.getAsJsonObject();
-        String id=infopeli.getAsJsonPrimitive(stringManager.id).getAsString();
-        String tittle= infopeli.getAsJsonPrimitive(stringManager.original_title).getAsString();
-        String description=infopeli.getAsJsonPrimitive(stringManager.overview).getAsString();
-        String valoration=infopeli.getAsJsonPrimitive(stringManager.vote_average).getAsString();
-        String img_path=infopeli.getAsJsonPrimitive(stringManager.poster_path).getAsString();
-        String date=infopeli.getAsJsonPrimitive(stringManager.release_date).getAsString();
+        try {
+            JsonElement json1 = json;
+            JsonObject infopeli = json1.getAsJsonObject();
+            String id = infopeli.getAsJsonPrimitive(stringManager.id).getAsString();
+            String tittle = infopeli.getAsJsonPrimitive(stringManager.original_title).getAsString();
+            String description = infopeli.getAsJsonPrimitive(stringManager.overview).getAsString();
+            String valoration = infopeli.getAsJsonPrimitive(stringManager.vote_average).getAsString();
+            String img_path = infopeli.getAsJsonPrimitive(stringManager.poster_path).getAsString();
+            String date = infopeli.getAsJsonPrimitive(stringManager.release_date).getAsString();
 
-        this.film = new Film(id,tittle,description,valoration,img_path,date,0);
-        //listaP.getListaF().add(getPeli());
+            this.film = new Film(id, tittle, description, valoration, img_path, date, 0);
+            //listaP.getListaF().add(getPeli());
+        }catch (Exception e){
 
+        }
     }
 
     public Film getPeli() {

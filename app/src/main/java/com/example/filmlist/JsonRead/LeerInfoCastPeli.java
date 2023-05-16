@@ -27,7 +27,6 @@ public class LeerInfoCastPeli {
                 Controlador.getInstance().LISTASACTORES.getListaActoresPeli().add(LJA.getActor());
             }
         } catch (Exception e) {
-            Toast.makeText(Controlador.getInstance().miActivity, "Este usuario no existe tio", Toast.LENGTH_SHORT).show();
 
         }
     }

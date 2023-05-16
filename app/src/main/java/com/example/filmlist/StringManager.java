@@ -25,7 +25,7 @@ public class StringManager {
 
     public String cast="cast";
     public String profile_path="profile_path";
-    public String biography="biography";
+    public String character="character";
 
     public String recommendations="/recommendations";
     public String busqueda="https://api.themoviedb.org/3/search/movie?api_key=18f552217e447f369638f70fa4f06a20&query=";
@@ -34,6 +34,7 @@ public class StringManager {
     public String urlcast="/credits?api_key=18f552217e447f369638f70fa4f06a20";
 
     public String urlactor="https://api.themoviedb.org/3/person/";
+    public String urlPliActores="/movie_credits?api_key=18f552217e447f369638f70fa4f06a20";
     //---------------------------gestion opciones rv------------------------------//
 
 
@@ -46,6 +47,8 @@ public class StringManager {
 
     public String GENERO="GENERO";
     public String ACTORES="ACTORES";
+    public String PELISACTORES="PELISACTORES";
+    public String ACTORESFAV="ACTORESFAV";
     //---------------------------//
 
     public String VISTAS="VISTAS";

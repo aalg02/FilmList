@@ -50,7 +50,13 @@ public class RVAdapter_A extends RecyclerView.Adapter<RVViewHolder_A> {
         //holder.titulo.setText(informe.getListaP().get(position).getName());
             setAnimation(holder.poster,position);
             Glide.with(context).load(informe.get(position).getProfile_path()).into(holder.poster);
-            Controlador.getInstance().ClickActor(holder.poster,informe.get(position));
+            if(opcion=="ACTORESFAV"){
+                Controlador.getInstance().ClickActor(holder.poster,informe.get(position));
+                Controlador.getInstance().MantenerActor(holder.poster,informe.get(position),position);
+            }else{
+                Controlador.getInstance().ClickActor(holder.poster,informe.get(position));
+            }
+
 
 
     }

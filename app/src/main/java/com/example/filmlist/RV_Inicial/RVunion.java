@@ -28,7 +28,7 @@ public class RVunion {
         if(opcion== "INICIAL"){
                 recyclerfilms =activity.findViewById(R.id.RV_films);}
         if(opcion=="BUSQUEDA"){
-                recyclerfilms =activity.findViewById(R.id.recycler_busqueda);}
+                recyclerfilms =activity.findViewById(R.id.generosrv);}
 
         if(opcion== "POPULARES"){
                 recyclerfilms =activity.findViewById(R.id.rv_populares);}
@@ -45,6 +45,8 @@ public class RVunion {
         }if(opcion== "GENERO"){
 
             recyclerfilms =activity.findViewById(R.id.generosrv);
+        }if(opcion=="PELISACTORES"){
+            recyclerfilms=activity.findViewById(R.id.pelisActorRV);
         }
 
 
@@ -64,7 +66,7 @@ public class RVunion {
         recyclerfilms.setLayoutManager(new LinearLayoutManager(activity));
         recyclerfilms.setAdapter(adaptador);
         LinearLayoutManager layoutManager = null;
-        if(opcion=="BUSQUEDA"){
+        if(opcion=="BUSQUEDA"||opcion=="GENERO"){
             layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
         }else{
             layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);}
