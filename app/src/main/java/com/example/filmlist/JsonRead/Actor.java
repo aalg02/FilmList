@@ -4,13 +4,21 @@ public class Actor {
     String nombre;
     String id;
     String profile_path="https://image.tmdb.org/t/p/original";
+    String Rol;
     String biografia;
-
-    public Actor(String nombre, String id, String path,String biografia) {
+    String cumpleaños;
+    public Actor(String nombre, String id, String path,String Rol) {
         this.nombre = nombre;
         this.id = id;
         this.profile_path = profile_path+path;
-        this.biografia=biografia;
+        this.Rol = Rol;
+    }
+    public Actor(String nombre, String id, String path,String biografia,String cumpleaños) {
+        this.nombre = nombre;
+        this.id = id;
+        this.profile_path = profile_path+path;
+        this.biografia = biografia;
+        this.cumpleaños=cumpleaños;
     }
     public Actor(String nombre, String id, String path) {
         this.nombre = nombre;
@@ -19,12 +27,12 @@ public class Actor {
 
     }
 
-    public String getBiografia() {
-        return biografia;
+    public String getRol() {
+        return Rol;
     }
 
-    public void setBiografia(String biografia) {
-        this.biografia = biografia;
+    public void setRol(String rol) {
+        this.Rol = rol;
     }
 
     public String getNombre() {

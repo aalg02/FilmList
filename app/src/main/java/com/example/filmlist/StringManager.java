@@ -26,6 +26,8 @@ public class StringManager {
     public String cast="cast";
     public String profile_path="profile_path";
     public String character="character";
+    public String biography="biography";
+    public String birthday="birthday";
 
     public String recommendations="/recommendations";
     public String busqueda="https://api.themoviedb.org/3/search/movie?api_key=18f552217e447f369638f70fa4f06a20&query=";

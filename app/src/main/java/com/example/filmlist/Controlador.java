@@ -229,7 +229,7 @@ public class Controlador {
 
     public void LeerActor(String json){
         JsonElement pelicula = JsonParser.parseString(json);
-        LeerJsonActor LJA=new LeerJsonActor(pelicula);
+        LeerJsonActor LJA=new LeerJsonActor(pelicula,stringManager.ACTORESFAV);
         LISTASACTORES.getListaActorFav().add(LJA.getActor());
 
 
@@ -238,6 +238,13 @@ public class Controlador {
 
         LPTP=new LeerJsonPelisCartelera(json,8);
         new RVunion(miActivity,LISTASINICIAL.getListaFActores(),stringManager.PELISACTORES);
+
+    }
+
+    public void LeerPeliculasActorFav(String json){
+
+        LPTP=new LeerJsonPelisCartelera(json,8);
+        new RVunion(miActivity,LISTASINICIAL.getListaFActores(),stringManager.ACTORESFAV);
 
     }
 
@@ -351,20 +358,24 @@ public class Controlador {
     }
 
 
-    public void ClickActor(View recycler,Actor actor){
+    public void ClickActor(View recycler,Actor actor,String opcion){
         ScrollView scrollview =miActivity.findViewById(R.id.scrollInfoActor);
 
         recycler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                OtrasPelisActor(actor.getId());
-                gestorvistas.listenerActorinfo(actor);
-                gestorvistas.framelayoutActor(1);
-                gestorvistas.cargaInfoActor(actor);
-
-
+                if(opcion=="ACTORES"){
+                    OtrasPelisActor(actor.getId());
+                    gestorvistas.listenerActorinfo(actor);
+                    gestorvistas.framelayoutActor(1);
+                    gestorvistas.cargaInfoActor(actor);
+                }
+                if(opcion=="ACTORESFAV"){
+                    OtrasPelisActorFav(actor.getId());
+                    gestorvistas.listenerActorinfo(actor);
+                    gestorvistas.framelayoutActorFav(1);
+                    gestorvistas.cargaInfoActorFav(actor);
+                }
             }
         });
     }
@@ -880,9 +891,14 @@ public class Controlador {
     }
 
     public void OtrasPelisActor(String idActor){
-        LISTASINICIAL.getListaFBusqueda().clear();
+
         LISTASINICIAL.getListaFActores().clear();
         getPrevision(miActivity,stringManager.urlactor+idActor+stringManager.urlPliActores,14);
+    }
+    public void OtrasPelisActorFav(String idActor){
+
+        LISTASINICIAL.getListaFActores().clear();
+        getPrevision(miActivity,stringManager.urlactor+idActor+stringManager.urlPliActores,15);
     }
 
 

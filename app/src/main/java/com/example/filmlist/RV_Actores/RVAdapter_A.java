@@ -51,10 +51,10 @@ public class RVAdapter_A extends RecyclerView.Adapter<RVViewHolder_A> {
             setAnimation(holder.poster,position);
             Glide.with(context).load(informe.get(position).getProfile_path()).into(holder.poster);
             if(opcion=="ACTORESFAV"){
-                Controlador.getInstance().ClickActor(holder.poster,informe.get(position));
+                Controlador.getInstance().ClickActor(holder.poster,informe.get(position),opcion);
                 Controlador.getInstance().MantenerActor(holder.poster,informe.get(position),position);
             }else{
-                Controlador.getInstance().ClickActor(holder.poster,informe.get(position));
+                Controlador.getInstance().ClickActor(holder.poster,informe.get(position),opcion);
             }
 
 

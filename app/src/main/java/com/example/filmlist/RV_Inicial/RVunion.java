@@ -47,7 +47,10 @@ public class RVunion {
             recyclerfilms =activity.findViewById(R.id.generosrv);
         }if(opcion=="PELISACTORES"){
             recyclerfilms=activity.findViewById(R.id.pelisActorRV);
+        }if(opcion=="ACTORESFAV"){
+            recyclerfilms=activity.findViewById(R.id.peliculasActorFav);
         }
+
 
 
 

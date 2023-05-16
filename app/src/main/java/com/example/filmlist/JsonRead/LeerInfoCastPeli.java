@@ -23,7 +23,7 @@ public class LeerInfoCastPeli {
 
 
             for (JsonElement p : listaActores) {
-                LJA = new LeerJsonActor(p);
+                LJA = new LeerJsonActor(p,stringManager.ACTORES);
                 Controlador.getInstance().LISTASACTORES.getListaActoresPeli().add(LJA.getActor());
             }
         } catch (Exception e) {

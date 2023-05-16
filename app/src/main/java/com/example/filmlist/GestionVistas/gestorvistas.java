@@ -2,12 +2,8 @@ package com.example.filmlist.GestionVistas;
 
 
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
@@ -26,14 +22,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.example.filmlist.Controlador;
 import com.example.filmlist.FragmentManager.MyPagerAdapter;
 import com.example.filmlist.JsonRead.Actor;
 import com.example.filmlist.JsonRead.Film;
 import com.example.filmlist.JsonRead.LeerJsonPelisCartelera;
-import com.example.filmlist.JsonRead.ListasPropias;
 import com.example.filmlist.MainActivity;
 import com.example.filmlist.R;
 import com.example.filmlist.SegundaActivity;
@@ -41,9 +34,6 @@ import com.example.filmlist.StringManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-
-import jp.wasabeef.glide.transformations.BlurTransformation;
-import retrofit2.http.Url;
 
 public class gestorvistas {
 
@@ -246,7 +236,24 @@ public class gestorvistas {
 
 
         titulo.setText(actor.getNombre());
-        valoracion.setText(actor.getBiografia());
+        valoracion.setText(actor.getRol());
+        posterinfo.startAnimation(animation);
+        Glide.with( mainActivity).load(actor.getProfile_path()).into(posterinfo);
+
+
+    }
+    public void cargaInfoActorFav(Actor actor){
+
+        TextView   titulo=mainActivity.findViewById(R.id.NombreActorFav);
+        TextView   genero=mainActivity.findViewById(R.id.generoActorFav);
+        TextView   biografia=mainActivity.findViewById(R.id.biografiaActorFav);
+        ImageView  posterinfo=mainActivity.findViewById(R.id.FotoActorFav);
+        Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.cargapelis);
+
+
+        titulo.setText(actor.getNombre());
+        genero.setText(actor.getRol());
+        biografia.setText(actor.getRol());
         posterinfo.startAnimation(animation);
         Glide.with( mainActivity).load(actor.getProfile_path()).into(posterinfo);
 
@@ -288,6 +295,23 @@ public class gestorvistas {
 
         }
 
+    }
+
+    public void framelayoutActorFav(int n){
+        FMI=mainActivity.findViewById(R.id.framelayoutActorfav);
+
+        if(n==0){
+            FMI.setVisibility(View.INVISIBLE);
+
+        }
+
+
+        if(n==1){
+            FMI.setVisibility(View.VISIBLE);
+
+
+
+        }
     }
 
     public void framelayoutFloatingB(int n){
@@ -586,6 +610,7 @@ public class gestorvistas {
     }
     public void listenerActorinfo(Actor actor){
         ImageView flecha=mainActivity.findViewById(R.id.flechatras2);
+        ImageView flecha2=mainActivity.findViewById(R.id.flechatras3);
         FloatingActionButton botonFavActor=mainActivity.findViewById(R.id.floatingActionButtonActoresFav);
         flecha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -594,7 +619,13 @@ public class gestorvistas {
 
             }
         });
+        flecha2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                framelayoutActorFav(0);
 
+            }
+        });
 
         botonFavActor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -661,7 +692,7 @@ public class gestorvistas {
         eliminarB2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(opcion=="ACTORESFAV"){
+                if(opcion=="ACTORES"){
                     framelayoueliminar(0);
                     Controlador.getInstance().RefrescaActoresFav();
                     Controlador.getInstance().eliminaractor(n);

@@ -18,7 +18,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/flechatras2"
+                android:id="@+id/flechatras3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -53,7 +53,7 @@
                         tools:ignore="MissingConstraints">
 
                         <ImageView
-                            android:id="@+id/FotoActor"
+                            android:id="@+id/FotoActorFav"
                             android:layout_width="130dp"
                             android:layout_height="wrap_content"
                             tools:srcCompat="@tools:sample/avatars" />
@@ -65,7 +65,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/NombreActor"
+                            android:id="@+id/NombreActorFav"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -76,18 +76,18 @@
                             android:textSize="35dp" />
 
                         <TextView
-                            android:id="@+id/FechaNActor"
+                            android:id="@+id/cumpleañosActorFav"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:fontFamily="@font/roboto_condensed_bold"
                             android:gravity="center"
-                            android:text="Interpreta a:"
+                            android:text=" "
                             android:textColor="#FFFFFF"
                             android:textSize="30dp" />
 
                         <TextView
-                            android:id="@+id/Rol"
+                            android:id="@+id/generoActorFav"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -105,17 +105,12 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <View
-                        android:id="@+id/view"
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/biografiaActorFav"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:text="TextView" />
 
-                    <View
-                        android:id="@+id/view2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
                 </LinearLayout>
 
                 <TextView
@@ -128,7 +123,7 @@
                     android:textSize="25dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/pelisActorRV"
+                    android:id="@+id/peliculasActorFav"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical" />
