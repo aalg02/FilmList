@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/circulo"
             android:backgroundTint="#E60000"
-            android:text="MODO" />
+            android:text="CERRAR APP" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

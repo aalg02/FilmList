@@ -117,11 +117,11 @@
         android:id="@+id/imagenbusqueda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="140dp"
         android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout"
         app:srcCompat="@drawable/iconopalomitas" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -132,5 +132,17 @@
             android:layout_height="match_parent" />
 
     </FrameLayout>
+    <FrameLayout
+        android:id="@+id/framelayoutActorfav"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
+        <include
+            layout="@layout/infoactorfav"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

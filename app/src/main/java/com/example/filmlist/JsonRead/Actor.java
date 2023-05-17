@@ -27,6 +27,15 @@ public class Actor {
 
     }
 
+
+    public String getBiografia() {
+        return biografia;
+    }
+
+    public String getCumpleaños() {
+        return cumpleaños;
+    }
+
     public String getRol() {
         return Rol;
     }

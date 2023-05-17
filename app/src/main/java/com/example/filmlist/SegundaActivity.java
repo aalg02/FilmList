@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.filmlist.FragmentManager.MyFragment;
 import com.example.filmlist.GestionVistas.gestorvistas;
 
-public class SegundaActivity extends AppCompatActivity {
+public class    SegundaActivity extends AppCompatActivity {
     gestorvistas gestor;
 
     @Override

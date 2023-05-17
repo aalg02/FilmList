@@ -157,40 +157,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/baseline_settings_24" />
 
-    <FrameLayout
-        android:id="@+id/framelayoutajustes"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible">
 
-        <include
-            layout="@layout/ajustes"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/framelayouteliminar2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible">
-
-        <include
-            layout="@layout/eliminar2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
-    <FrameLayout
-        android:id="@+id/framelayoutActorfav"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible">
-
-        <include
-            layout="@layout/infoactorfav"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

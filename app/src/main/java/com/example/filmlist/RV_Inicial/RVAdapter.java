@@ -51,38 +51,40 @@ public class RVAdapter extends RecyclerView.Adapter<RVViewHolder> {
         //holder.titulo.setText(informe.getListaP().get(position).getName());
             if(informe.get(position)==null){
                 informe.remove(position);
-                if(opcion== "INICIAL"){
-                    Controlador.getInstance().LISTASINICIAL.getListaFCartelera().remove(position);
-                    }
-                if(opcion=="BUSQUEDA"){
-                    Controlador.getInstance().LISTASINICIAL.getListaFBusqueda().remove(position);
-                    }
-
-                if(opcion== "POPULARES"){
-                    Controlador.getInstance().LISTASINICIAL.getListaFpopulares().remove(position);
-                   }
-
-                if(opcion== "TOPRATED"){
-                    Controlador.getInstance().LISTASINICIAL.getListaFtoprated().remove(position);
-                  }
-
-                if(opcion== "ESTRENOS"){
-                    Controlador.getInstance().LISTASINICIAL.getListaFestrenos().remove(position);
-
-                } if(opcion== "RECOMENDACIONES"){
-
-                    Controlador.getInstance().LISTASINICIAL.getListaFrecomendaciones().remove(position);
-                }if(opcion== "GENERO"){
-
-                    Controlador.getInstance().LISTASINICIAL.getListaFGenero().remove(position);
-                }if(opcion=="PELISACTORES"){
-                    Controlador.getInstance().LISTASINICIAL.getListaFActores()  .remove(position);
-                }
-            }else {
+//                if(opcion== "INICIAL"){
+//                    Controlador.getInstance().LISTASINICIAL.getListaFCartelera().remove(position);
+//                    }
+//                if(opcion=="BUSQUEDA"){
+//                    Controlador.getInstance().LISTASINICIAL.getListaFBusqueda().remove(position);
+//                    }
+//
+//                if(opcion== "POPULARES"){
+//                    Controlador.getInstance().LISTASINICIAL.getListaFpopulares().remove(position);
+//                   }
+//
+//                if(opcion== "TOPRATED"){
+//                    Controlador.getInstance().LISTASINICIAL.getListaFtoprated().remove(position);
+//                  }
+//
+//                if(opcion== "ESTRENOS"){
+//                    Controlador.getInstance().LISTASINICIAL.getListaFestrenos().remove(position);
+//
+//                } if(opcion== "RECOMENDACIONES"){
+//
+//                    Controlador.getInstance().LISTASINICIAL.getListaFrecomendaciones().remove(position);
+//                }if(opcion== "GENERO"){
+//
+//                    Controlador.getInstance().LISTASINICIAL.getListaFGenero().remove(position);
+//                }if(opcion=="PELISACTORES"){
+//                    Controlador.getInstance().LISTASINICIAL.getListaFActores().remove(position);
+//                }if(opcion=="ACTORESFAV"){
+//                    Controlador.getInstance().LISTASINICIAL.getListaFActores().remove(position);
+//                }
+            }
                 Controlador.getInstance().CliclckPelisola(holder.poster, informe.get(position));
                 setAnimation(holder.poster, position);
                 Glide.with(context).load(informe.get(position).getImg_path()).into(holder.poster);
-            }
+
 
     }
 

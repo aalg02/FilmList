@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         //miControlador.guardadatos();
         gestor.framelayoutinicio(0);
-        gestor.framelayoutajustes(0);
+
 
     }
 

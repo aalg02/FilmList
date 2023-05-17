@@ -3,18 +3,23 @@ package com.example.filmlist.GestionVistas;
 
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
@@ -79,7 +84,7 @@ public class gestorvistas {
                 Controlador.getInstance().viewPager.setCurrentItem(0);
                 Controlador.getInstance().RefrscaInicial();
                 Listenergeneros();
-                framelayoueliminar(0);
+
 
 
             }
@@ -92,7 +97,7 @@ public class gestorvistas {
                 Controlador.getInstance().ocultateclado();
                 Controlador.getInstance().adapter.getItem(1);
                 Controlador.getInstance().viewPager.setCurrentItem(1);
-                framelayoueliminar(0);
+
                 Controlador.getInstance().RefrescaVistas();
 
 
@@ -105,7 +110,7 @@ public class gestorvistas {
                 Controlador.getInstance().ocultateclado();
                 Controlador.getInstance().adapter.getItem(2);
                 Controlador.getInstance().viewPager.setCurrentItem(2);
-                framelayoueliminar(0);
+
                 listenersbusqueda();
             }
         });
@@ -120,8 +125,7 @@ public class gestorvistas {
                 Controlador.getInstance().RefrescaValoraciones();
                 Controlador.getInstance().RefrescaActoresFav();
                 listenerscuandologueado();
-                framelayoueliminar(0);
-                framelayoutajustes(0);
+
                 listenersperfilusuario();
             }
         });
@@ -136,7 +140,7 @@ public class gestorvistas {
                         Controlador.getInstance().adapter.getItem(0);
                         Listenergeneros();
                         Controlador.getInstance().RefrscaInicial();
-                        framelayoueliminar(0);
+
 
                         break;
 
@@ -145,8 +149,7 @@ public class gestorvistas {
                         // Actualizar información para la página 2
                         Controlador.getInstance().adapter.getItem(1);
                         Controlador.getInstance().RefrescaVistas();
-                        framelayoueliminar(0);
-                        framelayoueliminar(0);
+
 
                         break;
                     case 2:
@@ -159,11 +162,11 @@ public class gestorvistas {
                         Controlador.getInstance().ocultateclado();
                         Controlador.getInstance().adapter.getItem(3);
                         listenerscuandologueado();
-                        framelayoutajustes(0);
+
                         listenersperfilusuario();
                         Controlador.getInstance().RefrescaValoraciones();
                         Controlador.getInstance().RefrescaActoresFav();
-                        framelayoueliminar(0);
+
                         break;
                     // Agregar casos para todas las páginas del ViewPager
                 }
@@ -252,8 +255,8 @@ public class gestorvistas {
 
 
         titulo.setText(actor.getNombre());
-        genero.setText(actor.getRol());
-        biografia.setText(actor.getRol());
+        genero.setText(actor.getCumpleaños());
+        biografia.setText(actor.getBiografia());
         posterinfo.startAnimation(animation);
         Glide.with( mainActivity).load(actor.getProfile_path()).into(posterinfo);
 
@@ -314,22 +317,7 @@ public class gestorvistas {
         }
     }
 
-    public void framelayoutFloatingB(int n){
-        FrameLayout FM=mainActivity.findViewById(R.id.framelayoutFloatingB);
-        Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.mostrarbotones);
 
-        if(n==0){
-
-            FM.setVisibility(View.INVISIBLE);
-
-        }
-        if(n==1){
-            FM.startAnimation(animation);
-            FM.setVisibility(View.VISIBLE);
-
-        }
-
-    }
 
     public void framelayoutLogin(int n){
         FrameLayout FM=mainActivity.findViewById(R.id.framelayoutlogin);
@@ -348,65 +336,31 @@ public class gestorvistas {
 
     }
 
-    public void framelayoueliminar(int n){
-        FrameLayout FM=mainActivity.findViewById(R.id.framelayouteliminar);
-        FrameLayout FM1=mainActivity.findViewById(R.id.framelayouteliminar2);
-        Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.slide_up);
 
 
-        if(n==0){
 
-            FM.setVisibility(View.INVISIBLE);
-            FM1.setVisibility(View.INVISIBLE);
-        }
-        if(n==1){
-            FM.startAnimation(animation);
-            FM1.startAnimation(animation);
-            FM.setVisibility(View.VISIBLE);
-            FM1.setVisibility(View.VISIBLE);
-        }
-
-    }
-
-    //--------------------FRAMELAYOUT AJUSTES------------------------//
-
-    public void framelayoutajustes(int n){
-
-        FrameLayout FM=mainActivity.findViewById(R.id.framelayoutajustes);
-        Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.slide_up);
-        if(n==0){
-
-            FM.setVisibility(View.INVISIBLE);
-        }
-        if(n==1){
-            FM.startAnimation(animation);
-            FM.setVisibility(View.VISIBLE);
-        }
-    }
-    public void alternarFrameLayoutVisibility() {
-        FrameLayout FM = mainActivity.findViewById(R.id.framelayoutajustes);
-
-        if(FM.getVisibility() == View.VISIBLE) {
-            FM.setVisibility(View.INVISIBLE);
-        } else {
-            FM.setVisibility(View.VISIBLE);
-        }
-    }
 
 
     public void floatingMenu(Film f){
         FloatingActionButton fabMain = mainActivity.findViewById(R.id.floatingActionButton);
+        FloatingActionButton faT = mainActivity.findViewById(R.id.floatingActionButtonTrailer);
         Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.expansion_estrella);
-        framelayoutFloatingB(0);
+
 
         fabMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fabMain.startAnimation(animation);
                 Toast.makeText(mainActivity, "SELECIONA LA LISTA A LA QUE QUIERES AÑADIRLA", Toast.LENGTH_SHORT).show();
-                framelayoutFloatingB(1);
                 listenersMenu(f);
 
+
+            }
+        });
+        faT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Controlador.getInstance().BusquedaTrailer(f.getNombre());
 
             }
         });
@@ -425,9 +379,13 @@ public class gestorvistas {
 
     public void listenersMenu(Film f){
 
-        FloatingActionButton butonvistas = mainActivity.findViewById(R.id.FBvistas);
-        FloatingActionButton butonfavoritas = mainActivity.findViewById(R.id.FBfavoritas);
-        FloatingActionButton butonpendientes = mainActivity.findViewById(R.id.FBpendientes);
+        Dialog dialog = new Dialog(mainActivity);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.floating_menu);
+
+        FloatingActionButton butonvistas = dialog.findViewById(R.id.FBvistas);
+        FloatingActionButton butonfavoritas = dialog.findViewById(R.id.FBfavoritas);
+        FloatingActionButton butonpendientes = dialog.findViewById(R.id.FBpendientes);
 
 
         butonvistas.setOnClickListener(new View.OnClickListener() {
@@ -435,7 +393,7 @@ public class gestorvistas {
             public void onClick(View view) {
 
                 Controlador.getInstance().controlaPeliListaVistas(f);
-                framelayoutFloatingB(0);
+                dialog.dismiss();
                 Controlador.getInstance().firebaseDatabasesetdatos();
 
 
@@ -446,7 +404,7 @@ public class gestorvistas {
             public void onClick(View view) {
 
                 Controlador.getInstance().controlaPeliListaFavoritas(f);
-                framelayoutFloatingB(0);
+                dialog.dismiss();
                 Controlador.getInstance().firebaseDatabasesetdatos();
 
 
@@ -457,7 +415,7 @@ public class gestorvistas {
             public void onClick(View view) {
 
                 Controlador.getInstance().controlaPeliListaPendientes(f);
-                framelayoutFloatingB(0);
+                dialog.dismiss();
                 Controlador.getInstance().firebaseDatabasesetdatos();
 
 
@@ -465,7 +423,9 @@ public class gestorvistas {
         });
 
 
-
+      if(dialog!=null){
+          dialog.show();
+      }
     }
 
     public void listenersperfil(){
@@ -560,8 +520,7 @@ public class gestorvistas {
         ajustes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alternarFrameLayoutVisibility();
-                listenerajustes();
+                dialogAjustes().show();
             }
         });
 
@@ -576,10 +535,16 @@ public class gestorvistas {
 
 
 
-    public void listenerajustes(){
-        Button logout=mainActivity.findViewById(R.id.logoutB);
-        Button informacion=mainActivity.findViewById(R.id.informacionB);
-        Button modo=mainActivity.findViewById(R.id.cambiarModoB);
+    public Dialog dialogAjustes(){
+
+        Dialog dialog = new Dialog(mainActivity);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.ajustes);
+
+
+        Button logout=dialog.findViewById(R.id.logoutB);
+        Button informacion=dialog.findViewById(R.id.informacionB);
+        Button modo=dialog.findViewById(R.id.cambiarModoB);
 
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -587,8 +552,8 @@ public class gestorvistas {
             public void onClick(View v) {
                 framelayoutLogin(1);
                 Controlador.getInstance().authenticationlogout();
-
                 viewPager.setCurrentItem(0);
+
             }
         });
 
@@ -603,12 +568,15 @@ public class gestorvistas {
         modo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mainActivity, "ahora eres gay lo siento", Toast.LENGTH_LONG).show();
+               dialog.dismiss();
 
             }
         });
+        return dialog;
     }
     public void listenerActorinfo(Actor actor){
+
+
         ImageView flecha=mainActivity.findViewById(R.id.flechatras2);
         ImageView flecha2=mainActivity.findViewById(R.id.flechatras3);
         FloatingActionButton botonFavActor=mainActivity.findViewById(R.id.floatingActionButtonActoresFav);
@@ -664,42 +632,32 @@ public class gestorvistas {
     }
 
     //------------------------------------------------------//
-    public void listenereliminar(String opcion ,int n){
-        Button eliminarB=mainActivity.findViewById(R.id.buttonSI);
-        Button NoB=mainActivity.findViewById(R.id.buttonNO);
-        Button eliminarB2=mainActivity.findViewById(R.id.buttonSI2);
-        Button NoB2=mainActivity.findViewById(R.id.buttonNO2);
+    public void dialogEliminarPeli(String opcion ,int n){
+
+        Dialog dialog = new Dialog(mainActivity);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.eliminar2);
+
+        Button eliminarB2=dialog.findViewById(R.id.buttonSI2);
+        Button NoB2=dialog.findViewById(R.id.buttonNO2);
         Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.expansion_estrella);
 
-        eliminarB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                framelayoueliminar(0);
-                Controlador.getInstance().eliminarpeli(opcion,n);
-                Controlador.getInstance().RefrescaVistas();
-
-            }
-        });
-
-        NoB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                framelayoueliminar(0);
-            }
-        });
 
         eliminarB2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(opcion=="ACTORES"){
-                    framelayoueliminar(0);
+                if(opcion=="ACTORESFAV"){
+
                     Controlador.getInstance().RefrescaActoresFav();
                     Controlador.getInstance().eliminaractor(n);
+                    dialog.dismiss();
                 }else {
-                    framelayoueliminar(0);
+
                     Controlador.getInstance().eliminarpeli(opcion, n);
+                    Controlador.getInstance().RefrescaVistas();
                     Controlador.getInstance().RefrescaValoraciones();
+                    dialog.dismiss();
                 }
             }
         });
@@ -707,12 +665,14 @@ public class gestorvistas {
         NoB2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                framelayoueliminar(0);
+                dialog.dismiss();
 
             }
         });
 
-
+        if(dialog!=null){
+            dialog.show();
+        }
     }
 
 
@@ -823,6 +783,22 @@ public class gestorvistas {
 
 
 
+    }
+
+    public void putoDialogtrailer(String url){
+        Dialog dialog = new Dialog(mainActivity);
+        dialog.setContentView(R.layout.layoutreproduccionvideo);
+
+        WebView webView = dialog.findViewById(R.id.webviewtrailer);
+
+        // URL del video que deseas reproducir
+        String videoUrl =url;
+
+        // Configura el MediaController para controlar la reproducción del video
+        webView.loadUrl(videoUrl);
+
+
+         dialog.show();
     }
 
 

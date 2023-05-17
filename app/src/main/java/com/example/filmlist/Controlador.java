@@ -37,6 +37,7 @@ import com.example.filmlist.JsonRead.ListasPropias;
 import com.example.filmlist.PeticionWeb.peticion2;
 
 
+import com.example.filmlist.PeticionWeb.youtube;
 import com.example.filmlist.RV_Actores.RVunion_A;
 import com.example.filmlist.RV_Inicial.RVunion;
 
@@ -113,6 +114,7 @@ public class Controlador {
 
     public ListasActores LISTASACTORES=new ListasActores();
     Actor actoraso;
+    youtube youtube;
 
 
 
@@ -334,6 +336,7 @@ public class Controlador {
                 gestorvistas.cargainfopeli(f);
                 gestorvistas.framelayoutinicio(1);
                 gestorvistas.framelayoutActor(0);
+                gestorvistas.framelayoutActorFav(0);
                 gestorvistas.floatingMenu(f);
                 gestorvistas.listenerEstrellas(f);
 
@@ -347,9 +350,9 @@ public class Controlador {
         recycler.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                gestorvistas.listenereliminar(opcion,n);
+                gestorvistas.dialogEliminarPeli(opcion,n);
                 Toast.makeText(miActivity, f.getNombre(), Toast.LENGTH_SHORT).show();
-                gestorvistas.framelayoueliminar(1);
+
 
 
                 return true; // Retorna true para indicar que se ha manejado el evento correctamente
@@ -365,12 +368,14 @@ public class Controlador {
             @Override
             public void onClick(View v) {
                 if(opcion=="ACTORES"){
+
                     OtrasPelisActor(actor.getId());
                     gestorvistas.listenerActorinfo(actor);
                     gestorvistas.framelayoutActor(1);
                     gestorvistas.cargaInfoActor(actor);
                 }
                 if(opcion=="ACTORESFAV"){
+
                     OtrasPelisActorFav(actor.getId());
                     gestorvistas.listenerActorinfo(actor);
                     gestorvistas.framelayoutActorFav(1);
@@ -383,11 +388,8 @@ public class Controlador {
         recycler.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                gestorvistas.listenereliminar(stringManager.ACTORESFAV,n);
+                gestorvistas.dialogEliminarPeli(stringManager.ACTORESFAV,n);
                 Toast.makeText(miActivity, actor.getNombre(), Toast.LENGTH_SHORT).show();
-                gestorvistas.framelayoueliminar(1);
-
-
                 return true; // Retorna true para indicar que se ha manejado el evento correctamente
             }
         });
@@ -800,8 +802,8 @@ public class Controlador {
             }
         }
         if (miaubool) {
-            Toast.makeText(miActivity, "AÑADIDO A FAVORITOS", Toast.LENGTH_SHORT).show();
-            LISTASACTORES.getListaActorFav().add(actor);
+                Toast.makeText(miActivity, "AÑADIDO A FAVORITOS", Toast.LENGTH_SHORT).show();
+            busquedaActor(actor.getId());
         }
     }
 
@@ -882,23 +884,29 @@ public class Controlador {
 
     public void rellenarRVActores(String idPeli){
         LISTASACTORES.getListaActoresPeli().clear();
-        peticionapi.requestData(stringManager.apiUrl+idPeli+stringManager.urlcast,12);
+        peticionapi.requestData(stringManager.apiUrl+idPeli+stringManager.urlcast+stringManager.español,12);
     }
 
 
     public void busquedaActor(String idActor){
-        getPrevision(miActivity,stringManager.urlactor+idActor+stringManager.apiKey,13);
+        getPrevision(miActivity,stringManager.urlactor+idActor+stringManager.apiKey+stringManager.español,13);
     }
 
     public void OtrasPelisActor(String idActor){
 
         LISTASINICIAL.getListaFActores().clear();
-        getPrevision(miActivity,stringManager.urlactor+idActor+stringManager.urlPliActores,14);
+        getPrevision(miActivity,stringManager.urlactor+idActor+stringManager.urlPliActores+stringManager.español,14);
     }
     public void OtrasPelisActorFav(String idActor){
 
         LISTASINICIAL.getListaFActores().clear();
-        getPrevision(miActivity,stringManager.urlactor+idActor+stringManager.urlPliActores,15);
+        getPrevision(miActivity,stringManager.urlactor+idActor+stringManager.urlPliActores+stringManager.español,15);
+    }
+
+
+    public void BusquedaTrailer(String titulo){
+        youtube=new youtube();
+        youtube.busqueda(titulo);
     }
 
 
