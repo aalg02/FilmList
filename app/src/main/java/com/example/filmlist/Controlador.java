@@ -1,6 +1,5 @@
 package com.example.filmlist;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,20 +7,17 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
-import com.example.filmlist.FragmentManager.MyFragment;
+import com.example.filmlist.Firebase.DownloadImageTask;
 import com.example.filmlist.FragmentManager.MyPagerAdapter;
 import com.example.filmlist.GestionVistas.gestorvistas;
 import com.example.filmlist.JsonRead.Actor;
@@ -34,6 +30,7 @@ import com.example.filmlist.JsonRead.LeerJsonPelisCartelera;
 import com.example.filmlist.JsonRead.ListaPelis;
 import com.example.filmlist.JsonRead.ListasActores;
 import com.example.filmlist.JsonRead.ListasPropias;
+import com.example.filmlist.JsonRead.leerJsongaleriafotos;
 import com.example.filmlist.PeticionWeb.peticion2;
 
 
@@ -82,8 +79,7 @@ import com.google.firebase.storage.UploadTask;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Controlador {
@@ -115,6 +111,8 @@ public class Controlador {
     public ListasActores LISTASACTORES=new ListasActores();
     Actor actoraso;
     youtube youtube;
+    public ArrayList<String> fotospeli;
+
 
 
 
@@ -247,6 +245,13 @@ public class Controlador {
 
         LPTP=new LeerJsonPelisCartelera(json,8);
         new RVunion(miActivity,LISTASINICIAL.getListaFActores(),stringManager.ACTORESFAV);
+
+    }
+
+    public void LeerFotosGaleriaPeli(String json){
+
+        JsonElement pelicula = JsonParser.parseString(json);
+        leerJsongaleriafotos LJGF=new leerJsongaleriafotos(pelicula);
 
     }
 
@@ -907,6 +912,17 @@ public class Controlador {
     public void BusquedaTrailer(String titulo){
         youtube=new youtube();
         youtube.busqueda(titulo);
+    }
+
+    public void cargarGaleriapeli(Film f){
+        f.getFotospeli().clear();
+        getPrevision(miActivity,"https://api.themoviedb.org/3/movie/"+f.getId()+"/images?api_key=18f552217e447f369638f70fa4f06a20",16);
+        //gestorvistas.dialogGaleria(f);
+    }
+
+    public void descargarWallaper(String url){
+        DownloadImageTask downloadTask = new DownloadImageTask();
+        downloadTask.execute(url, "miau");
     }
 
 

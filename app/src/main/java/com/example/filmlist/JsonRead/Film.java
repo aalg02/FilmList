@@ -2,6 +2,9 @@ package com.example.filmlist.JsonRead;
 
 import android.net.Uri;
 
+import java.sql.Array;
+import java.util.ArrayList;
+
 public class Film {
 
 
@@ -15,6 +18,7 @@ public class Film {
     public String releasedate;
 
     public int mivaloracion;
+    public ArrayList<String> fotospeli=new ArrayList<>();
 
 
     public  Film(String id,String Name ,String description,String Valoration,String path,String releasedate,int mivaloracion){
@@ -25,6 +29,14 @@ public class Film {
       this.img_path=getImg_path()+path;
       this.releasedate=releasedate;
       this.mivaloracion=mivaloracion;
+    }
+
+    public ArrayList<String> getFotospeli() {
+        return fotospeli;
+    }
+
+    public void setFotospeli(ArrayList<String> fotospeli) {
+        this.fotospeli = fotospeli;
     }
 
     public int getMivaloracion() {

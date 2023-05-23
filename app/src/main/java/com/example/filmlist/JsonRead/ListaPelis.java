@@ -1,5 +1,6 @@
 package com.example.filmlist.JsonRead;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class ListaPelis {
@@ -14,6 +15,8 @@ public class ListaPelis {
     LinkedList<Film> ListaFConsultadas;
     LinkedList<Film> ListaFActores;
 
+    ArrayList<String> ListaFotosPeli;
+
     public ListaPelis(){
         ListaFCartelera=new LinkedList<>();
         ListaFBusqueda=new LinkedList<>();
@@ -24,6 +27,7 @@ public class ListaPelis {
         ListaFConsultadas=new LinkedList<>();
         ListaFGenero=new LinkedList<>();
         ListaFActores=new LinkedList<>();
+        ListaFotosPeli=new ArrayList<>();
     }
 
 
@@ -48,6 +52,14 @@ public class ListaPelis {
 
         }
         return null;
+    }
+
+    public ArrayList<String> getListaFotosPeli() {
+        return ListaFotosPeli;
+    }
+
+    public void setListaFotosPeli(ArrayList<String> listaFotosPeli) {
+        ListaFotosPeli = listaFotosPeli;
     }
 
     public LinkedList<Film> getListaFActores() {

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.filmlist.GestionVistas.gestorvistas;
+import com.example.filmlist.PeticionWeb.ChatBot;
 import com.google.firebase.FirebaseApp;
 //import com.example.filmlist.JsonRead.Film;
 //import com.google.auth.oauth2.GoogleCredentials;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     gestorvistas gestor;
   //  FirebaseFirestore firestore;
     SegundaActivity segundaActivity;
+    public ChatBot srpalomita;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         gestor.framelayoutinicio(0);
         miControlador.setVistamanager(gestor);
         miControlador.checkSavedCredentialsAndSignIn();
+        srpalomita=new ChatBot();
 
 
 

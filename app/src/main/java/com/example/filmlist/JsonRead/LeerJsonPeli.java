@@ -28,7 +28,12 @@ public class LeerJsonPeli {
             this.film = new Film(id, tittle, description, valoration, img_path, date, 0);
             //listaP.getListaF().add(getPeli());
         }catch (Exception e){
-
+            String id = " ";
+            String tittle = " ";
+            String description = "";
+            String valoration = " ";
+            String img_path = null;
+            String date = "";
         }
     }
 

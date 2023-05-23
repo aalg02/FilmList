@@ -97,6 +97,8 @@ public class peticion2 {
                            Controlador.getInstance().LeerPeliculasActor(respuesta);
                         }if(n==15){
                             Controlador.getInstance().LeerPeliculasActorFav(respuesta);
+                        } if(n==16){
+                            Controlador.getInstance().LeerFotosGaleriaPeli (respuesta);
                         }
 
                     }
