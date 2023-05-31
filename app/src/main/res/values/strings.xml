@@ -1,15 +1,76 @@
 <resources>
     <string name="app_name">FilmList</string>
     <string name="apiUrl">https://api.themoviedb.org/3/movie/</string>
-    <string name="apiKey">18f552217e447f369638f70fa4f06a20</string>
+    <string name="apiKey">api_key=18f552217e447f369638f70fa4f06a20</string>
     <string name="popular">popular</string>
     <string name="selecciona_opcion">si soy</string>
-
-    <string-array name="opciones_spinner">
-        <item>pendejo</item>
-        <item>miau</item>
-        <item>homero</item>
-        <item>me hice caca</item>
+    <string name="sinconexion">NO tienes conexion a Internet :(</string>
+    <string name="original_title">original_title</string>
+    <string name="overview">overview</string>
+    <string name="vote_average">vote_average</string>
+    <string name="poster_path">poster_path</string>
+    <string name="genres">genres</string>
+    <string name="id">id</string>
+    <string name="name">name</string>
+    <string name="results">results</string>
+    <string name="español">&amp;language=es</string>
+    <string name="release_date">release_date</string>
+    <string name="ingles">&amp;language=en</string>
+    <string name="now_playing">now_playing</string>
+    <string name="upcoming">upcoming</string>
+    <string name="top_rated">top_rated</string>
+    <string name="cast">cast</string>
+    <string name="profile_path">profile_path</string>
+    <string name="character">character</string>
+    <string name="biography">biography</string>
+    <string name="birthday">birthday</string>
+    <string name="recommendations">/recommendations</string>
+    <string name="busqueda">https://api.themoviedb.org/3/search/movie?api_key=18f552217e447f369638f70fa4f06a20&amp;query=</string>
+    <string name="urlgeneros">https://api.themoviedb.org/3/discover/movie?api_key=18f552217e447f369638f70fa4f06a20&amp;with_genres=</string>
+    <string name="urlcast">/credits?api_key=18f552217e447f369638f70fa4f06a20</string>
+    <string name="urlactor">https://api.themoviedb.org/3/person/</string>
+    <string name="urlPliActores">/movie_credits?api_key=18f552217e447f369638f70fa4f06a20</string>
+    <string name="INICIAL">INICIAL</string>
+    <string name="BUSQUEDA">BUSQUEDA</string>
+    <string name="POPULARES">POPULARES</string>
+    <string name="TOPRATED">TOPRATED</string>
+    <string name="ESTRENOS">ESTRENOS</string>
+    <string name="RECOMENDACIONES">RECOMENDACIONES</string>
+    <string name="GENERO">GENERO</string>
+    <string name="ACTORES">ACTORES</string>
+    <string name="PELISACTORES">PELISACTORES</string>
+    <string name="ACTORESFAV">ACTORESFAV</string>
+    <string name="VISTAS">VISTAS</string>
+    <string name="FAVORITAS">FAVORITAS</string>
+    <string name="VALORACIONES">VALORACIONES</string>
+    <string name="PENDIENTES">PENDIENTES</string>
+    <string-array name="IDGEN">
+            <item>28</item>
+            <item>12</item>
+            <item>16</item>
+            <item>35</item>
+            <item>80</item>
+            <item>99</item>
+            <item>18</item>
+            <item>10751</item>
+            <item>14</item>
+            <item>36</item>
+            <item>27</item>
+            <item>10402</item>
+            <item>9648</item>
+            <item>10749</item>
+            <item>878</item>
+            <item>53</item>
+            <item>10752</item>
+            <item>37</item>
     </string-array>
+
+
+
+
+
+
+
+
 
 </resources>

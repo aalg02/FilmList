@@ -219,7 +219,7 @@
                             android:layout_weight="1"
                             android:clickable="true"
                             app:backgroundTint="#FF0000"
-                            app:srcCompat="@android:drawable/ic_dialog_info" />
+                            app:srcCompat="@drawable/baseline_insert_photo_24" />
                     </LinearLayout>
 
                     <TextView

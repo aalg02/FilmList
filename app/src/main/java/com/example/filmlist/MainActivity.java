@@ -1,21 +1,17 @@
 package com.example.filmlist;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.filmlist.GestionVistas.gestorvistas;
-import com.example.filmlist.PeticionWeb.ChatBot;
+import com.example.filmlist.CONTROLADOR.Controlador;
+import com.example.filmlist.VISTA.GestionVistas.gestorvistas;
 import com.google.firebase.FirebaseApp;
 //import com.example.filmlist.JsonRead.Film;
 //import com.google.auth.oauth2.GoogleCredentials;
@@ -25,18 +21,15 @@ import com.google.firebase.FirebaseApp;
 //import com.google.firebase.cloud.FirestoreClient;
 //import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int PERMISSION_REQUEST_CODE = 1;
     protected Controlador miControlador;
     // public  FirebaseApp firebase;
     gestorvistas gestor;
   //  FirebaseFirestore firestore;
     SegundaActivity segundaActivity;
-    public ChatBot srpalomita;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         gestor.framelayoutinicio(0);
         miControlador.setVistamanager(gestor);
         miControlador.checkSavedCredentialsAndSignIn();
-        srpalomita=new ChatBot();
+
 
 
 
@@ -106,6 +99,21 @@ public class MainActivity extends AppCompatActivity {
             // hacer algo con la imagen seleccionada, por ejemplo, mostrarla en un ImageView
             Controlador.getInstance().storageFirebase(imageUri);
             gestor.ponerfoto(imageUri.toString());
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            // Verificar si los permisos fueron concedidos
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Los permisos fueron concedidos, puedes realizar las operaciones necesarias
+
+            } else {
+                // Los permisos fueron denegados, muestra un mensaje de error o realiza otra acción
+                Toast.makeText(this, "Los permisos fueron denegados.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

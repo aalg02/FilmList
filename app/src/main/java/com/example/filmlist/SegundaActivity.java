@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.filmlist.FragmentManager.MyFragment;
-import com.example.filmlist.GestionVistas.gestorvistas;
+import com.example.filmlist.VISTA.FragmentManager.MyFragment;
+import com.example.filmlist.VISTA.GestionVistas.gestorvistas;
 
 public class    SegundaActivity extends AppCompatActivity {
     gestorvistas gestor;
