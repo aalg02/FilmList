@@ -26,13 +26,14 @@ public class RVAdapter extends RecyclerView.Adapter<RVViewHolder> {
     public StringManager SM;
     Context context;
     String opcion;
+    Controlador controlador;
 
-    public RVAdapter(Context context, LinkedList<Film> informe, String opcion) {
+    public RVAdapter(Context context,Controlador controlador, LinkedList<Film> informe, String opcion) {
         this.informe=informe;
         this.context=context;
         this.opcion=opcion;
         SM=new StringManager();
-
+        this.controlador=controlador;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -51,37 +52,37 @@ public class RVAdapter extends RecyclerView.Adapter<RVViewHolder> {
             if(informe.get(position)==null||informe.get(position).getImg_path()==null){
                 //informe.remove(position);
                 if(opcion.equals("INICIAL")){
-                    Controlador.getInstance().LISTASINICIAL.getListaFCartelera().remove(position);
+                    controlador.LISTASINICIAL.getListaFCartelera().remove(position);
                     }
                 if(opcion.equals("BUSQUEDA")){
-                    Controlador.getInstance().LISTASINICIAL.getListaFBusqueda().remove(position);
+                    controlador.LISTASINICIAL.getListaFBusqueda().remove(position);
                     }
 
                 if(opcion.equals( "POPULARES")){
-                    Controlador.getInstance().LISTASINICIAL.getListaFpopulares().remove(position);
+                    controlador.LISTASINICIAL.getListaFpopulares().remove(position);
                    }
 
                 if(opcion.equals("TOPRATED")){
-                    Controlador.getInstance().LISTASINICIAL.getListaFtoprated().remove(position);
+                    controlador.LISTASINICIAL.getListaFtoprated().remove(position);
                   }
 
                 if(opcion.equals("ESTRENOS")){
-                    Controlador.getInstance().LISTASINICIAL.getListaFestrenos().remove(position);
+                    controlador.LISTASINICIAL.getListaFestrenos().remove(position);
 
                 } if(opcion.equals("RECOMENDACIONES")){
 
-                    Controlador.getInstance().LISTASINICIAL.getListaFrecomendaciones().remove(position);
+                    controlador.LISTASINICIAL.getListaFrecomendaciones().remove(position);
                 }if(opcion.equals("GENERO")){
 
-                    Controlador.getInstance().LISTASINICIAL.getListaFGenero().remove(position);
+                    controlador.LISTASINICIAL.getListaFGenero().remove(position);
                 }if(opcion.equals("PELISACTORES")){
-                    Controlador.getInstance().LISTASINICIAL.getListaFActores().remove(position);
+                   controlador.LISTASINICIAL.getListaFActores().remove(position);
 
                 }if(opcion.equals("ACTORESFAV")){
-                    Controlador.getInstance().LISTASINICIAL.getListaFActores().remove(position);
+                    controlador.LISTASINICIAL.getListaFActores().remove(position);
                 }
             }else{
-                Controlador.getInstance().CliclckPelisola(holder.poster, informe.get(position));
+                controlador.CliclckPelisola(holder.poster, informe.get(position));
                 setAnimation(holder.poster, position);
                 Glide.with(context).load(informe.get(position).getImg_path()).into(holder.poster);
 

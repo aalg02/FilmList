@@ -35,10 +35,9 @@ import com.example.filmlist.MODELO.usuarios.guardardatos;
 import com.example.filmlist.MODELO.usuarios.usuario;
 import com.example.filmlist.MainActivity;
 import com.example.filmlist.R;
-import com.example.filmlist.SegundaActivity;
 import com.example.filmlist.StringManager;
 import com.example.filmlist.VISTA.FragmentManager.MyPagerAdapter;
-import com.example.filmlist.VISTA.GestionVistas.gestorvistas;
+import com.example.filmlist.VISTA.GestionVistas.gestorVistasGeneral;
 import com.example.filmlist.VISTA.RV_Actores.RVunion_A;
 import com.example.filmlist.VISTA.RV_Inicial.RVunion;
 import com.example.filmlist.VISTA.RV_listaVistas.RVunion_LV;
@@ -76,31 +75,41 @@ public class Controlador {
     public LeerJsonPelisCartelera LPP;
     public LeerJsonPelisCartelera LPE;
     public LeerJsonPelisCartelera LPTP;
-    public MainActivity miActivity;
-    public guardardatos guardar = new guardardatos();
+
+
     public ViewPager viewPager;
     public MyPagerAdapter adapter;
-    public gestorvistas gestorvistas;
-    public SegundaActivity miau = new SegundaActivity();
+    public gestorVistasGeneral gestorVistasGeneral;
+
     public ListaPelis LISTASINICIAL = new ListaPelis();
     public ListasPropias LISTAS = new ListasPropias();
     public usuario usuario1;
-    public usuario usuario = new usuario();
+    public usuario usuario;
     public ListasActores LISTASACTORES = new ListasActores();
     public ArrayList<String> fotospeli;
     LeerJsonGenerosPelis LJGP;
     StringManager stringManager = new StringManager();
-    peticion2 peticionapi = new peticion2();
+
     Actor actoraso;
     youtube youtube;
     private RecyclerView mRecyclerView;
 
-    public static Controlador getInstance() {
-        if (miControlador == null) miControlador = new Controlador();
-        return miControlador;
-    }
+    //----------------------------------------
+    public MainActivity miActivity;
+    public ControladorFirebase controladorFirebase;
+    peticion2 peticionapi ;
+
 
     //-----------------LANZA LA PETICION------------------//
+
+
+    public Controlador(MainActivity miActivity) {
+        this.miActivity = miActivity;
+        controladorFirebase=new ControladorFirebase(miActivity,this);
+        peticionapi = new peticion2(this);
+        usuario = new usuario();
+
+    }
 
     public void getPrevision(MainActivity fromActivity, String url, int n) {
 
@@ -116,14 +125,8 @@ public class Controlador {
 
     public void setActivity(MainActivity act) {
         miActivity = act;
+        gestorVistasGeneral =new gestorVistasGeneral(miActivity,this);
     }
-
-    public void setVistamanager(gestorvistas miau) {
-        gestorvistas = miau;
-    }
-//   // public void setFirebaseapp(FirebaseApp miau) {
-//         this.Firebase= miau;
-//    }
 
 
     //---------DISTINTAS BUSQUEDAS QUE SE VAN A USAR-------------//
@@ -132,43 +135,48 @@ public class Controlador {
     public void LeerPeliculasCartelera(String json) {
 
         LJPC = new LeerJsonPelisCartelera(json, 1);
-
+        LISTASINICIAL.setListaFCartelera(LJPC.getListaPeli());
     }
 
     public void LeerPeliculasBusqueda(String json) {
 
         LJPC = new LeerJsonPelisCartelera(json, 2);
+        LISTASINICIAL.setListaFGenero(LJPC.getListaPeli());
     }
 
     public void LeerPeliculaspopulares(String json) {
 
         LPP = new LeerJsonPelisCartelera(json, 3);
+        LISTASINICIAL.setListaFpopulares(LPP.getListaPeli());
 
     }
 
     public void LeerPeliculasestrenos(String json) {
 
         LPE = new LeerJsonPelisCartelera(json, 4);
-
+        LISTASINICIAL.setListaFtoprated(LPE.getListaPeli());
     }
 
     public void LeerPeliculasToprated(String json) {
 
         LPTP = new LeerJsonPelisCartelera(json, 5);
+        LISTASINICIAL.setListaFestrenos(LPTP.getListaPeli());
 
     }
 
     public void LeerPeliculasRecomendaciones(String json) {
 
         LPTP = new LeerJsonPelisCartelera(json, 6);
-        new RVunion(miActivity, LISTASINICIAL.getListaFrecomendaciones(), stringManager.RECOMENDACIONES);
+        LISTASINICIAL.setListaFrecomendaciones(LPTP.getListaPeli());
+        new RVunion(miActivity, this,LISTASINICIAL.getListaFrecomendaciones(), stringManager.RECOMENDACIONES);
 
     }
 
     public void LeerPeligenero(String json) {
 
         LPTP = new LeerJsonPelisCartelera(json, 7);
-        new RVunion(miActivity, LISTASINICIAL.getListaFGenero(), stringManager.GENERO);
+        LISTASINICIAL.setListaFGenero(LPTP.getListaPeli());
+        new RVunion(miActivity,this, LISTASINICIAL.getListaFGenero(), stringManager.GENERO);
 
     }
 
@@ -199,7 +207,8 @@ public class Controlador {
 
     public void LeerActoresPeli(String json) {
         LeerInfoCastPeli LJCP = new LeerInfoCastPeli(json);
-        new RVunion_A(miActivity, LISTASACTORES.getListaActoresPeli(), stringManager.ACTORES);
+        new RVunion_A(miActivity,this, LISTASACTORES.getListaActoresPeli(), stringManager.ACTORES);
+        LISTASACTORES.setListaActoresPeli(LJCP.getListaActore());
 
     }
 
@@ -214,14 +223,16 @@ public class Controlador {
     public void LeerPeliculasActor(String json) {
 
         LPTP = new LeerJsonPelisCartelera(json, 8);
-        new RVunion(miActivity, LISTASINICIAL.getListaFActores(), stringManager.PELISACTORES);
+        LISTASINICIAL.setListaFActores(LPTP.getListaPeli());
+        new RVunion(miActivity,this, LISTASINICIAL.getListaFActores(), stringManager.PELISACTORES);
 
     }
 
     public void LeerPeliculasActorFav(String json) {
 
         LPTP = new LeerJsonPelisCartelera(json, 8);
-        new RVunion(miActivity, LISTASINICIAL.getListaFActores(), stringManager.ACTORESFAV);
+        LISTASINICIAL.setListaFActores(LPTP.getListaPeli());
+        new RVunion(miActivity,this, LISTASINICIAL.getListaFActores(), stringManager.ACTORESFAV);
 
     }
 
@@ -229,7 +240,7 @@ public class Controlador {
 
         JsonElement pelicula = JsonParser.parseString(json);
         leerJsongaleriafotos LJGF = new leerJsongaleriafotos(pelicula);
-
+        gestorVistasGeneral.gestorinfopeli.dialogGaleria(LJGF.getMaiu());
     }
 
 
@@ -243,7 +254,7 @@ public class Controlador {
     //---------------------------Si NO tenemos conexion a internet------------------------//
     public void NoConexion() {
 
-        gestorvistas.NoConexion();
+        gestorVistasGeneral.NoConexion();
     }
 
 
@@ -252,7 +263,7 @@ public class Controlador {
     public void controlViewpage() {
 
         viewPager = miActivity.findViewById(R.id.viewpage);
-        adapter = new MyPagerAdapter(miActivity.getSupportFragmentManager(), miActivity);
+        adapter = new MyPagerAdapter(miActivity.getSupportFragmentManager(), miActivity,this);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(4);
         adapter.notifyDataSetChanged();
@@ -273,7 +284,7 @@ public class Controlador {
         adapter.getItem(2);
         LISTASINICIAL.getListaFBusqueda().clear();
         LISTASINICIAL.getListaFGenero().clear();
-        new RVunion(miActivity, LISTASINICIAL.getListaFBusqueda(), miActivity.getString(R.string.BUSQUEDA));
+        new RVunion(miActivity,this, LISTASINICIAL.getListaFBusqueda(), miActivity.getString(R.string.BUSQUEDA));
 
     }
 
@@ -305,12 +316,12 @@ public class Controlador {
                 recomendacion(f);
                 rellenarRVActores(f.idFilm);
                 scrollview.smoothScrollTo(0, 0);
-                gestorvistas.cargainfopeli(f);
-                gestorvistas.framelayoutinicio(1);
-                gestorvistas.framelayoutActor(0);
-                gestorvistas.framelayoutActorFav(0);
-                gestorvistas.floatingMenu(f);
-                gestorvistas.listenerEstrellas(f);
+                gestorVistasGeneral.gestorinfopeli.cargainfopeli(f);
+                gestorVistasGeneral.gestorinfopeli.framelayoutPelis(1);
+                gestorVistasGeneral.gestorLayoutInfoActor.framelayoutActor(0);
+                gestorVistasGeneral.gestorLayoutInfoActor.framelayoutActorFav(0);
+                gestorVistasGeneral.gestorinfopeli.floatingMenu(f);
+                gestorVistasGeneral.gestorinfopeli.listenerEstrellas(f);
 
             }
         });
@@ -321,7 +332,7 @@ public class Controlador {
         recycler.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                gestorvistas.dialogEliminarPeli(opcion, n);
+                gestorVistasGeneral.dialogEliminar(opcion, n);
                 Toast.makeText(miActivity, f.getNombre(), Toast.LENGTH_SHORT).show();
 
 
@@ -337,19 +348,19 @@ public class Controlador {
         recycler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (opcion == "ACTORES") {
+                if (opcion.equals("ACTORES")) {
 
                     OtrasPelisActor(actor.getId());
-                    gestorvistas.listenerActorinfo(actor);
-                    gestorvistas.framelayoutActor(1);
-                    gestorvistas.cargaInfoActor(actor);
+                    gestorVistasGeneral.gestorLayoutInfoActor.listenerActorinfo(actor);
+                    gestorVistasGeneral.gestorLayoutInfoActor.framelayoutActor(1);
+                    gestorVistasGeneral.gestorLayoutInfoActor.cargaInfoActor(actor);
                 }
-                if (opcion == "ACTORESFAV") {
+                if (opcion.equals("ACTORESFAV")) {
 
                     OtrasPelisActorFav(actor.getId());
-                    gestorvistas.listenerActorinfo(actor);
-                    gestorvistas.framelayoutActorFav(1);
-                    gestorvistas.cargaInfoActorFav(actor);
+                    gestorVistasGeneral.gestorLayoutInfoActor.listenerActorinfo(actor);
+                    gestorVistasGeneral.gestorLayoutInfoActor.framelayoutActorFav(1);
+                    gestorVistasGeneral.gestorLayoutInfoActor.cargaInfoActorFav(actor);
                 }
             }
         });
@@ -359,7 +370,7 @@ public class Controlador {
         recycler.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                gestorvistas.dialogEliminarPeli(stringManager.ACTORESFAV, n);
+                gestorVistasGeneral.dialogEliminar(stringManager.ACTORESFAV, n);
                 Toast.makeText(miActivity, actor.getNombre(), Toast.LENGTH_SHORT).show();
                 return true; // Retorna true para indicar que se ha manejado el evento correctamente
             }
@@ -373,34 +384,34 @@ public class Controlador {
         HorizontalScrollView scrollgeneros = miActivity.findViewById(R.id.scrollgeneros);
         scrollgeneros.smoothScrollTo(0, 0);
 
-        new RVunion(miActivity, LISTASINICIAL.getListaFCartelera(), stringManager.INICIAL);
-        new RVunion(miActivity, LISTASINICIAL.getListaFBusqueda(), stringManager.BUSQUEDA);
-        new RVunion(miActivity, LISTASINICIAL.getListaFpopulares(), stringManager.POPULARES);
-        new RVunion(miActivity, LISTASINICIAL.getListaFestrenos(), stringManager.ESTRENOS);
-        new RVunion(miActivity, LISTASINICIAL.getListaFtoprated(), stringManager.TOPRATED);
+        new RVunion(miActivity, this,LISTASINICIAL.getListaFCartelera(), stringManager.INICIAL);
+        new RVunion(miActivity,this, LISTASINICIAL.getListaFBusqueda(), stringManager.BUSQUEDA);
+        new RVunion(miActivity,this, LISTASINICIAL.getListaFpopulares(), stringManager.POPULARES);
+        new RVunion(miActivity, this,LISTASINICIAL.getListaFestrenos(), stringManager.ESTRENOS);
+        new RVunion(miActivity, this,LISTASINICIAL.getListaFtoprated(), stringManager.TOPRATED);
         RefrescaGenero();
     }
 
     public void RefrescaVistas() {
 
-        new RVunion_LV(miActivity, LISTAS.getListaFvistas(), 1, stringManager.VISTAS);
-        new RVunion_LV(miActivity, LISTAS.getListaFfavoritas(), 2, stringManager.FAVORITAS);
-        new RVunion_LV(miActivity, LISTAS.getListaFpendientes(), 3, stringManager.PENDIENTES);
+        new RVunion_LV(miActivity,this, LISTAS.getListaFvistas(), 1, stringManager.VISTAS);
+        new RVunion_LV(miActivity,this, LISTAS.getListaFfavoritas(), 2, stringManager.FAVORITAS);
+        new RVunion_LV(miActivity,this, LISTAS.getListaFpendientes(), 3, stringManager.PENDIENTES);
 
     }
 
 
     public void RefrescaValoraciones() {
-        new RVunion_LV(miActivity, LISTAS.getListaFvaloradas(), 4, stringManager.VALORACIONES);
+        new RVunion_LV(miActivity,this, LISTAS.getListaFvaloradas(), 4, stringManager.VALORACIONES);
     }
 
     public void RefrescaGenero() {
-        new RVunion(miActivity, LISTASINICIAL.getListaFGenero(), stringManager.GENERO);
+        new RVunion(miActivity, this,LISTASINICIAL.getListaFGenero(), stringManager.GENERO);
 
     }
 
     public void RefrescaActoresFav() {
-        new RVunion_A(miActivity, LISTASACTORES.getListaActorFav(), stringManager.ACTORESFAV);
+        new RVunion_A(miActivity,this, LISTASACTORES.getListaActorFav(), stringManager.ACTORESFAV);
 
     }
 
@@ -419,64 +430,6 @@ public class Controlador {
     //---------------------------------Guardar datos y movidas------------------------//
 
 
-    public void firebaseDatabasesetdatos() {
-
-        guardar.guardalistasusuarios();
-        int arrobaPosicion = usuario.getGmail().indexOf('@');
-        String nombreUsuario = usuario.getGmail().substring(0, arrobaPosicion);
-        if (nombreUsuario.contains(".")) {
-            nombreUsuario = nombreUsuario.replace(".", "");
-        }
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://filmlist-ed9e7-default-rtdb.europe-west1.firebasedatabase.app").getReference(nombreUsuario);
-        mDatabase.setValue(null);
-        mDatabase.setValue(usuario);
-
-
-    }
-
-    public void registroDatabase(String gmail, String contraseña) {
-        guardar.guardarusuario(gmail, contraseña);
-        int arrobaPosicion = gmail.indexOf('@');
-
-        String nombreUsuario = gmail.substring(0, arrobaPosicion);
-        if (nombreUsuario.contains(".")) {
-            nombreUsuario = nombreUsuario.replace(".", "");
-        }
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://filmlist-ed9e7-default-rtdb.europe-west1.firebasedatabase.app").getReference();
-        mDatabase.child(nombreUsuario).setValue(usuario);
-    }
-
-    public void firebaseDatabasegetdatos(String gmail, String contraseña) {
-
-
-        int arrobaPosicion = gmail.indexOf('@');
-        String nombreUsuario = gmail.substring(0, arrobaPosicion);
-        if (nombreUsuario.contains(".")) {
-            nombreUsuario = nombreUsuario.replace(".", "");
-        }
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://filmlist-ed9e7-default-rtdb.europe-west1.firebasedatabase.app").getReference(nombreUsuario);
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                usuario1 = dataSnapshot.getValue(usuario.class);
-                if (usuario1 == null) {
-                    Toast.makeText(miActivity, "Este usuario no existe tio", Toast.LENGTH_SHORT).show();
-                } else {
-                    usuario.setGmail(usuario1.getGmail());
-                    usuario.setContraseña(usuario1.getContraseña());
-                    usuario.setFotoperfil(usuario1.getFotoperfil());
-                    usuario.setValoraciones(usuario1.getValoraciones());
-
-                    recuperarpelis();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Manejar errores
-            }
-        });
-    }
 
     public void login() {
 
@@ -487,11 +440,7 @@ public class Controlador {
     //------------------------RECUPERAR DATOS----------------------------//
 
     public void recuperarpelis() {
-        usuario.setListavistas(usuario1.getListavistas());
-        usuario.setListafavoritas(usuario1.getListafavoritas());
-        usuario.setListapendientes(usuario1.getListapendientes());
-        usuario.setListavaloradas(usuario1.getListavaloradas());
-        usuario.setListaActores(usuario1.getListaActores());
+
         LISTAS.getListaFvistas().clear();
         LISTAS.getListaFfavoritas().clear();
         LISTAS.getListaFpendientes().clear();
@@ -535,139 +484,6 @@ public class Controlador {
 
     //------------AUTHENTICATION----------------------//
 
-
-    public void authenticationRegistro(String gmail, String contraseña) {
-
-
-        if (gmail == null || contraseña == null) {
-            Toast.makeText(miActivity, "faltan campos", Toast.LENGTH_LONG).show();
-
-        } else if (gmail.contains(".")) {
-            gmail.replace(".", "");
-        } else {
-
-
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            mAuth.createUserWithEmailAndPassword(gmail, contraseña).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    // Registro exitoso
-                    registroDatabase(gmail, contraseña);
-                    gestorvistas.framelayoutLogin(0);
-                } else {
-                    // Registro fallido
-                    try {
-                        throw task.getException();
-                    } catch (FirebaseAuthWeakPasswordException e) {
-                        String errorMessage = "La contraseña es demasiado corta (mínimo " + "6" + " caracteres)";
-                        Toast.makeText(miActivity, errorMessage, Toast.LENGTH_LONG).show();
-                    } catch (FirebaseAuthInvalidCredentialsException e) {
-                        Toast.makeText(miActivity, "Credenciales de autenticación inválidas", Toast.LENGTH_LONG).show();
-                    } catch (FirebaseAuthUserCollisionException e) {
-                        Toast.makeText(miActivity, "El usuario ya existe", Toast.LENGTH_LONG).show();
-                    } catch (FirebaseNetworkException e) {
-                        Toast.makeText(miActivity, "Error de red", Toast.LENGTH_LONG).show();
-                    } catch (DatabaseException e) {
-                        Toast.makeText(miActivity, "Has puesto un caracter que no esta permitido '.', '#', '$', '[', or ']'", Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        Toast.makeText(miActivity, "Error al crear la cuenta: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
-        }
-    }
-
-    public void authenticationLogin(String gmail, String contraseña) {
-
-
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword(gmail, contraseña).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                firebaseDatabasegetdatos(gmail, contraseña);
-                gestorvistas.framelayoutLogin(0);
-            } else {
-                try {
-                    throw task.getException();
-
-                } catch (FirebaseAuthInvalidCredentialsException e) {
-                    Toast.makeText(miActivity, "la contraseña no coincide con la del correo ", Toast.LENGTH_SHORT).show();
-                } catch (FirebaseAuthInvalidUserException e) {
-
-                    Toast.makeText(miActivity, "El correo no esta registrado", Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    Toast.makeText(miActivity, "Error al crear la cuenta: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-    }
-
-
-    public void authenticationlogout() {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.signOut();
-    }
-
-
-    public void storageFirebase(Uri uri) {
-        eliminarstorage();
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
-        StorageReference carpetaRef = storageRef.child(usuario.getGmail());
-        String nombreArchivo = uri.getLastPathSegment();
-        StorageReference imagenRef = carpetaRef.child(nombreArchivo);
-        StorageMetadata metadata = new StorageMetadata.Builder().setContentType("image/jpeg").build();
-        UploadTask uploadTask = imagenRef.putFile(uri, metadata);
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Task<Uri> downloadUrl = taskSnapshot.getStorage().getDownloadUrl();
-                downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-
-                        String imageUrl = uri.toString();
-                        usuario.setFotoperfil(imageUrl);
-                        firebaseDatabasesetdatos();
-                    }
-                });
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Ocurrió un error al subir el archivo
-            }
-        });
-    }
-
-    public void eliminarstorage() {
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = null;
-        try {
-            storageRef = storage.getReferenceFromUrl(usuario.getFotoperfil());
-        } catch (IllegalArgumentException a) {
-
-        }
-
-
-// Elimina el archivo
-        if (storageRef == null) {
-
-        } else {
-            storageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Ha ocurrido un error al eliminar la imagen
-                }
-            });
-        }
-    }
 
 
     //--------------------------------------------------//
@@ -786,40 +602,27 @@ public class Controlador {
     }
 
 
-    //--------------mantener sesion iniciada---------------//
-
-
-    public void checkSavedCredentialsAndSignIn() {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            firebaseDatabasegetdatos(currentUser.getEmail(), "");
-            gestorvistas.framelayoutLogin(0);
-        } else {
-            gestorvistas.framelayoutLogin(1);
-        }
-    }
 
     //------------------------eliminar peli-------------//
 
     public void eliminarpeli(String opcion, int n) {
         if (opcion == stringManager.VISTAS) {
             LISTAS.getListaFvistas().remove(n);
-            firebaseDatabasesetdatos();
+            controladorFirebase.firebaseDatabasesetdatos();
         }
         if (opcion == stringManager.FAVORITAS) {
             LISTAS.getListaFfavoritas().remove(n);
-            firebaseDatabasesetdatos();
+            controladorFirebase.firebaseDatabasesetdatos();
         }
         if (opcion == stringManager.PENDIENTES) {
             LISTAS.getListaFpendientes().remove(n);
-            firebaseDatabasesetdatos();
+            controladorFirebase.firebaseDatabasesetdatos();
 
         }
         if (opcion == stringManager.VALORACIONES) {
             usuario.getValoraciones().remove(LISTAS.getListaFvaloradas().get(n).getId());
             LISTAS.getListaFvaloradas().remove(n);
-            firebaseDatabasesetdatos();
+            controladorFirebase.firebaseDatabasesetdatos();
 
         }
 
@@ -829,7 +632,7 @@ public class Controlador {
     public void eliminaractor(int n) {
         usuario.getListaActores().remove(LISTASACTORES.ListaActorFav.get(n).getId());
         LISTASACTORES.getListaActorFav().remove(n);
-        firebaseDatabasesetdatos();
+        controladorFirebase.firebaseDatabasesetdatos();
     }
 
     public int rellenaValoraciones(int n) {
@@ -867,7 +670,7 @@ public class Controlador {
 
 
     public void BusquedaTrailer(String titulo) {
-        youtube = new youtube();
+        youtube = new youtube(this);
         youtube.busqueda(titulo);
     }
 
@@ -878,7 +681,7 @@ public class Controlador {
     }
 
     public void descargarWallaper(String url) {
-        DownloadImageTask downloadTask = new DownloadImageTask();
+        DownloadImageTask downloadTask = new DownloadImageTask(this);
         downloadTask.execute(url, "miau");
     }
 

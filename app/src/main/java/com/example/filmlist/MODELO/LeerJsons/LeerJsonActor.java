@@ -15,12 +15,12 @@ public class LeerJsonActor {
     public LeerJsonActor(JsonElement json,String opcion) {
         JsonElement json1 = json;
         JsonObject infoactor = json1.getAsJsonObject();
-        String id = infoactor.getAsJsonPrimitive(Controlador.getInstance().miActivity.getString(R.string.id)).getAsString();
-        String name = infoactor.getAsJsonPrimitive(Controlador.getInstance().miActivity.getString(R.string.name)).getAsString();
-        String img_path = infoactor.getAsJsonPrimitive(Controlador.getInstance().miActivity.getString(R.string.profile_path)).getAsString();
+        String id = infoactor.getAsJsonPrimitive(stringManager.id).getAsString();
+        String name = infoactor.getAsJsonPrimitive(stringManager.name).getAsString();
+        String img_path = infoactor.getAsJsonPrimitive(stringManager.profile_path).getAsString();
         if(opcion.equals("ACTORES")){
             try{
-                String Rol = infoactor.getAsJsonPrimitive(Controlador.getInstance().miActivity.getString(R.string.character)).getAsString();
+                String Rol = infoactor.getAsJsonPrimitive(stringManager.character).getAsString();
                 actor=new Actor(name , id,img_path,Rol);
             }catch (Exception e){
                 actor=new Actor(name , id,img_path);
@@ -28,8 +28,8 @@ public class LeerJsonActor {
         }
         if (opcion.equals("ACTORESFAV")) {
             try{
-                String Biografia = infoactor.getAsJsonPrimitive(Controlador.getInstance().miActivity.getString(R.string.biography)).getAsString();
-                String birthday = infoactor.getAsJsonPrimitive(Controlador.getInstance().miActivity.getString(R.string.birthday)).getAsString();
+                String Biografia = infoactor.getAsJsonPrimitive(stringManager.biography).getAsString();
+                String birthday = infoactor.getAsJsonPrimitive(stringManager.birthday).getAsString();
                 actor=new Actor(name,id,img_path,Biografia,birthday);
             }catch (Exception e){
                 actor=new Actor(name , id,img_path);

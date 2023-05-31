@@ -8,13 +8,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class guardardatos {
-    ArrayList<String> listavistas=new ArrayList<>();
-    ArrayList<String>  listafavoritas=new ArrayList<>();
-    ArrayList<String>  listapendientes=new ArrayList<>();
-    ArrayList<String>  listavaloradas=new ArrayList<>();
-    ArrayList<String>   listaactores=new ArrayList<>();
+    ArrayList<String> listavistas;
+    ArrayList<String>  listafavoritas;
+    ArrayList<String>  listapendientes;
+    ArrayList<String>  listavaloradas;
+    ArrayList<String>   listaactores;
 
-    HashMap<String, Integer> valoraciones=new HashMap<>();
+    HashMap<String, Integer> valoraciones;
+    Controlador controlador;
+    
+    
+    
+    public guardardatos(Controlador controlador){
+        this.controlador=controlador;
+        listavistas=new ArrayList<>();
+        listafavoritas=new ArrayList<>();
+        listapendientes=new ArrayList<>();
+        listavaloradas=new ArrayList<>();
+        listaactores=new ArrayList<>();
+        valoraciones=new HashMap<>();
+    }
 
     public void guardalistasusuarios(){
 
@@ -27,21 +40,21 @@ public class guardardatos {
 
 
 
-        for(Film f:Controlador.getInstance().LISTAS.getListaFvistas()){
+        for(Film f:controlador.LISTAS.getListaFvistas()){
             listavistas.add(f.getId());
         }
-        for(Film f:Controlador.getInstance().LISTAS.getListaFfavoritas()){
+        for(Film f:controlador.LISTAS.getListaFfavoritas()){
             listafavoritas.add(f.getId());
         }
-        for(Film f:Controlador.getInstance().LISTAS.getListaFpendientes()){
+        for(Film f:controlador.LISTAS.getListaFpendientes()){
             listapendientes.add(f.getId());
         }
-        for(Film f:Controlador.getInstance().LISTAS.getListaFvaloradas()){
+        for(Film f:controlador.LISTAS.getListaFvaloradas()){
             listavaloradas.add(f.getId());
-            valoraciones=Controlador.getInstance().usuario.valoraciones;
+            valoraciones=controlador.usuario.valoraciones;
 
         }
-        for(Actor a:Controlador.getInstance().LISTASACTORES.getListaActorFav()){
+        for(Actor a:controlador.LISTASACTORES.getListaActorFav()){
             listaactores.add(a.getId());
         }
 
@@ -53,12 +66,12 @@ public class guardardatos {
 
 
 
-        Controlador.getInstance().usuario.setListavistas(listavistas);
-        Controlador.getInstance().usuario.setListafavoritas(listafavoritas);
-        Controlador.getInstance().usuario.setListapendientes(listapendientes);
-        Controlador.getInstance().usuario.setListavaloradas(listavaloradas);
-        Controlador.getInstance().usuario.setValoraciones(valoraciones);
-        Controlador.getInstance().usuario.setListaActores(listaactores);
+        controlador.usuario.setListavistas(listavistas);
+        controlador.usuario.setListafavoritas(listafavoritas);
+        controlador.usuario.setListapendientes(listapendientes);
+        controlador.usuario.setListavaloradas(listavaloradas);
+        controlador.usuario.setValoraciones(valoraciones);
+        controlador.usuario.setListaActores(listaactores);
 
 
 
@@ -68,14 +81,14 @@ public class guardardatos {
 
     public void guardarusuario(String gmail , String contraseña){
 
-        Controlador.getInstance().usuario.setGmail(gmail);
-        Controlador.getInstance().usuario.setContraseña(contraseña);
+        controlador.usuario.setGmail(gmail);
+        controlador.usuario.setContraseña(contraseña);
 
     }
 
     public void invitado(){
-        Controlador.getInstance().usuario.setGmail("invitado");
-        Controlador.getInstance().usuario.setContraseña("invitado");
+        controlador.usuario.setGmail("invitado");
+        controlador.usuario.setContraseña("invitado");
 
     }
 }

@@ -23,6 +23,11 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     private static final String TAG = "DownloadImageTask";
     private static final String IMAGE_DIRECTORY = "/FilmList/Wallapers/";
     String nombre;
+    Controlador controlador;
+
+    public DownloadImageTask (Controlador controlador){
+        this.controlador=controlador;
+    }
     @Override
     protected Bitmap doInBackground(String... params) {
         String imageUrl = params[0];
@@ -56,7 +61,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         values.put(MediaStore.Images.Media.DISPLAY_NAME, nombre);
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
 
-        ContentResolver resolver = Controlador.getInstance().miActivity.getContentResolver();
+        ContentResolver resolver = controlador.miActivity.getContentResolver();
         Uri uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         try {
             OutputStream outputStream = resolver.openOutputStream(uri);
@@ -64,12 +69,12 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
                 outputStream.flush();
                 outputStream.close();
-                Toast.makeText(Controlador.getInstance().miActivity, "Imagen guardada en la galería", Toast.LENGTH_SHORT).show();
+                Toast.makeText(controlador.miActivity, "Imagen guardada en la galería", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(Controlador.getInstance().miActivity, "No se pudo guardar la imagen", Toast.LENGTH_SHORT).show();
+                Toast.makeText(controlador.miActivity, "No se pudo guardar la imagen", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
-            Toast.makeText(Controlador.getInstance().miActivity, "Error al guardar la imagen", Toast.LENGTH_SHORT).show();
+            Toast.makeText(controlador.miActivity, "Error al guardar la imagen", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
 

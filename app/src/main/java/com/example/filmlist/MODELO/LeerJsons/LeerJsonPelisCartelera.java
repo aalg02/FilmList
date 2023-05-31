@@ -15,6 +15,7 @@ public class LeerJsonPelisCartelera {
     LeerJsonPeli LJP;
     ListaPelis listaP;
     StringManager SM=new StringManager();
+    LinkedList<Film> listaPeli=new LinkedList<>();
 
     public LeerJsonPelisCartelera(String json , int n){
 
@@ -36,32 +37,8 @@ public class LeerJsonPelisCartelera {
                         LJP = new LeerJsonPeli(p);
                 try {
 
+                    listaPeli.add(LJP.getPeli());
 
-                    if (n == 1) {
-
-                        Controlador.getInstance().LISTASINICIAL.getListaFCartelera().add(LJP.getPeli());
-                    }
-                    if (n == 2) {
-                        Controlador.getInstance().LISTASINICIAL.getListaFGenero().add(LJP.getPeli());
-                    }
-                    if (n == 3) {
-                        Controlador.getInstance().LISTASINICIAL.getListaFpopulares().add(LJP.getPeli());
-                    }
-                    if (n == 4) {
-                        Controlador.getInstance().LISTASINICIAL.getListaFtoprated().add(LJP.getPeli());
-                    }
-                    if (n == 5) {
-                        Controlador.getInstance().LISTASINICIAL.getListaFestrenos().add(LJP.getPeli());
-                    }
-                    if (n == 6) {
-                        Controlador.getInstance().LISTASINICIAL.getListaFrecomendaciones().add(LJP.getPeli());
-                    }
-                    if (n == 7) {
-                        Controlador.getInstance().LISTASINICIAL.getListaFGenero().add(LJP.getPeli());
-                    }
-                    if (n == 8) {
-                        Controlador.getInstance().LISTASINICIAL.getListaFActores().add(LJP.getPeli());
-                    }
                 }catch(Exception e){
                     continue;
                         }
@@ -70,7 +47,7 @@ public class LeerJsonPelisCartelera {
     }
 
 
-
-
-
+    public LinkedList<Film> getListaPeli() {
+        return listaPeli;
+    }
 }

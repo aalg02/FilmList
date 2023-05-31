@@ -24,12 +24,9 @@ import okhttp3.Response;
  *
  */
 public class peticion2 {
-    //ESTADO
-    //Clase utilidad que no necesita nada más que poner a funcionar la peticion HTTPs
-
-    //COMPORTAMIENTO
-    public peticion2() {
-
+   Controlador controlador;
+    public peticion2(Controlador controlador) {
+         this.controlador=controlador;
     }
 
     public void requestData(String URL,int n) {
@@ -59,43 +56,43 @@ public class peticion2 {
                     public void run() {
                         // Code will be executed on the main threadnn
                        if(n==1) {
-                           Controlador.getInstance().LeerPeliculasCartelera(respuesta);
-                           Controlador.getInstance().RefrscaInicial();
+                           controlador.LeerPeliculasCartelera(respuesta);
+                           controlador.RefrscaInicial();
                        }if(n==2){
-                           Controlador.getInstance().LeerPeliculasBusqueda(respuesta);
-                            Controlador.getInstance().RefrscaInicial();
+                           controlador.LeerPeliculasBusqueda(respuesta);
+                            controlador.RefrscaInicial();
                         }if(n==3){
-                            Controlador.getInstance().LeerPeliculaspopulares(respuesta);
-                            Controlador.getInstance().RefrscaInicial();
+                            controlador.LeerPeliculaspopulares(respuesta);
+                            controlador.RefrscaInicial();
 
                         }if(n==4){
-                            Controlador.getInstance().LeerPeliculasestrenos(respuesta);
-                            Controlador.getInstance().RefrscaInicial();
+                            controlador.LeerPeliculasestrenos(respuesta);
+                            controlador.RefrscaInicial();
                         }if(n==5){
-                            Controlador.getInstance().LeerPeliculasToprated(respuesta);
-                            Controlador.getInstance().RefrscaInicial();
+                            controlador.LeerPeliculasToprated(respuesta);
+                            controlador.RefrscaInicial();
                         }if(n==6){
-                            Controlador.getInstance().LeerPeliculasRecomendaciones(respuesta);
+                            controlador.LeerPeliculasRecomendaciones(respuesta);
                         }if(n==7){
-                           Controlador.getInstance().LeerPeliVistas(respuesta);
+                           controlador.LeerPeliVistas(respuesta);
                         }if(n==8){
-                            Controlador.getInstance().LeerPeliFav(respuesta);
+                            controlador.LeerPeliFav(respuesta);
                         }if(n==9){
-                            Controlador.getInstance().LeerPeliPendiente(respuesta);
+                            controlador.LeerPeliPendiente(respuesta);
                         }if(n==10) {
-                            Controlador.getInstance().LeerPelivaloradas(respuesta);
+                            controlador.LeerPelivaloradas(respuesta);
                         }if(n==11){
-                                Controlador.getInstance().LeerPeligenero(respuesta);
+                                controlador.LeerPeligenero(respuesta);
                        }if(n==12){
-                            Controlador.getInstance().LeerActoresPeli(respuesta);
+                            controlador.LeerActoresPeli(respuesta);
                         }if(n==13){
-                           Controlador.getInstance().LeerActor(respuesta);
+                           controlador.LeerActor(respuesta);
                         }if(n==14){
-                           Controlador.getInstance().LeerPeliculasActor(respuesta);
+                           controlador.LeerPeliculasActor(respuesta);
                         }if(n==15){
-                            Controlador.getInstance().LeerPeliculasActorFav(respuesta);
+                            controlador.LeerPeliculasActorFav(respuesta);
                         } if(n==16){
-                            Controlador.getInstance().LeerFotosGaleriaPeli (respuesta);
+                            controlador.LeerFotosGaleriaPeli (respuesta);
                         }
 
                     }
@@ -115,21 +112,21 @@ public class peticion2 {
                         // Code will be executed on the main thread
 
                         if(n==1) {
-                            Controlador.getInstance().LeerPeliculasCartelera(respuesta);
+                            controlador.LeerPeliculasCartelera(respuesta);
                         }if(n==2){
-                            Controlador.getInstance().LeerPeliculasBusqueda(respuesta);
+                            controlador.LeerPeliculasBusqueda(respuesta);
                         }if(n==3){
-                            Controlador.getInstance().LeerPeliculaspopulares(respuesta);
+                            controlador.LeerPeliculaspopulares(respuesta);
                         }if(n==4){
-                            Controlador.getInstance().LeerPeliculasestrenos(respuesta);
+                            controlador.LeerPeliculasestrenos(respuesta);
                         }if(n==5){
-                            Controlador.getInstance().LeerPeliculasToprated(respuesta);
+                            controlador.LeerPeliculasToprated(respuesta);
                         }if(n==6){
-                            Controlador.getInstance().LeerPeliculasRecomendaciones(respuesta);
+                            controlador.LeerPeliculasRecomendaciones(respuesta);
                         }
 
-                        Controlador.getInstance().NoConexion();
-                        //Controlador.getInstance().leerjson(respuesta);
+                        controlador.NoConexion();
+                        //controlador.leerjson(respuesta);
                     }
                 });
             }

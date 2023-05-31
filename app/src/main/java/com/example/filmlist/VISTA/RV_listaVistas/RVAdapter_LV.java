@@ -23,12 +23,14 @@ public class RVAdapter_LV extends RecyclerView.Adapter<RVViewHolder_LV> {
     private final LayoutInflater mInflater;
     Context context;
     String opcion;
+    Controlador controlador;
 
-    public RVAdapter_LV(Context context, LinkedList<Film> vistas,String opcion) {
+    public RVAdapter_LV(Context context,Controlador controlador, LinkedList<Film> vistas,String opcion) {
         this.vistas=vistas;
         this.context=context;
         this.opcion=opcion;
         mInflater = LayoutInflater.from(context);
+        this.controlador=controlador;
     }
 
     @NonNull
@@ -50,14 +52,14 @@ public class RVAdapter_LV extends RecyclerView.Adapter<RVViewHolder_LV> {
         if(opcion.equals("VALORACIONES")){
             setAnimation(holder.posterVal,position);
             Glide.with(context).load(vistas.get(position).getImg_path()).into(holder.posterVal);
-            holder.valoracion.setText(""+Controlador.getInstance(). rellenaValoraciones(position));
-            Controlador.getInstance().CliclckPelisola(holder.posterVal,vistas.get(position));
-            Controlador.getInstance().MantenerPelicula(holder.posterVal, opcion, position,vistas.get(position));
+            holder.valoracion.setText(""+controlador. rellenaValoraciones(position));
+            controlador.CliclckPelisola(holder.posterVal,vistas.get(position));
+            controlador.MantenerPelicula(holder.posterVal, opcion, position,vistas.get(position));
 
         }else {
             setAnimation(holder.poster,position);
-            Controlador.getInstance().CliclckPelisola(holder.poster,vistas.get(position));
-            Controlador.getInstance().MantenerPelicula(holder.poster, opcion, position,vistas.get(position));
+           controlador.CliclckPelisola(holder.poster,vistas.get(position));
+           controlador.MantenerPelicula(holder.poster, opcion, position,vistas.get(position));
             Glide.with(context).load(vistas.get(position).getImg_path()).into(holder.poster);
         }
 

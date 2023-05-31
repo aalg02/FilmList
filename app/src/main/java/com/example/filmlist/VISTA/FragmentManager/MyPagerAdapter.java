@@ -31,12 +31,13 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
 
 
     String url2="";
+    Controlador controlador;
 
 
-    public MyPagerAdapter(FragmentManager fragmentManager, MainActivity main) {
+    public MyPagerAdapter(FragmentManager fragmentManager, MainActivity main,Controlador controlador) {
         super(fragmentManager);
         this.main=main;
-
+        this.controlador=controlador;
     }
 
     @SuppressLint("ResourceType")
@@ -45,21 +46,21 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
         // Crea una nueva instancia del fragmento correspondiente
         switch (position) {
             case 0:
-                Controlador.getInstance().LISTASINICIAL.getListaFCartelera().clear();
-                Controlador.getInstance().LISTASINICIAL.getListaFpopulares().clear();
-                Controlador.getInstance().LISTASINICIAL.getListaFestrenos().clear();
-                Controlador.getInstance().LISTASINICIAL.getListaFtoprated().clear();
-                Controlador.getInstance().getPrevision(main,url3,3);
-                Controlador.getInstance().getPrevision(main,url4,4);
-                Controlador.getInstance().getPrevision(main,url1,1);
-                Controlador.getInstance().getPrevision(main,url5,5);
+                controlador.LISTASINICIAL.getListaFCartelera().clear();
+                controlador.LISTASINICIAL.getListaFpopulares().clear();
+                controlador.LISTASINICIAL.getListaFestrenos().clear();
+                controlador.LISTASINICIAL.getListaFtoprated().clear();
+                controlador.getPrevision(main,url3,3);
+                controlador.getPrevision(main,url4,4);
+                controlador.getPrevision(main,url1,1);
+                controlador.getPrevision(main,url5,5);
 
                 return Fragment1=new MyFragment(R.layout.inicio_layout);
             case 1:
 
                 return new MyFragment(R.layout.listas_layout);
             case 2:
-                Controlador.getInstance().getPrevision(main,url2,2);
+                controlador.getPrevision(main,url2,2);
                 return Fragment2= new MyFragment(R.layout.busqueda_layout);
 
             case 3:

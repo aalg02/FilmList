@@ -25,13 +25,14 @@ public class RVAdapter_A extends RecyclerView.Adapter<RVViewHolder_A> {
     public StringManager SM;
     Context context;
     String opcion;
+    Controlador controlador;
 
-    public RVAdapter_A(Context context, LinkedList<Actor> informe, String opcion) {
+    public RVAdapter_A(Context context,Controlador controlador, LinkedList<Actor> informe, String opcion) {
         this.informe=informe;
         this.context=context;
         this.opcion=opcion;
         SM=new StringManager();
-
+        this.controlador=controlador;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -51,10 +52,10 @@ public class RVAdapter_A extends RecyclerView.Adapter<RVViewHolder_A> {
             Glide.with(context).load(informe.get(position).getProfile_path()).into(holder.poster);
 
             if(opcion.equals("ACTORESFAV")){
-                Controlador.getInstance().ClickActor(holder.poster,informe.get(position),opcion);
-                Controlador.getInstance().MantenerActor(holder.poster,informe.get(position),position);
+                controlador.ClickActor(holder.poster,informe.get(position),opcion);
+                controlador.MantenerActor(holder.poster,informe.get(position),position);
             }else{
-                Controlador.getInstance().ClickActor(holder.poster,informe.get(position),opcion);
+                controlador.ClickActor(holder.poster,informe.get(position),opcion);
             }
 
 

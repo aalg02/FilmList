@@ -5,6 +5,7 @@ package com.example.filmlist.VISTA.RV_Inicial;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.filmlist.CONTROLADOR.Controlador;
 import com.example.filmlist.MODELO.objetos.Film;
 import com.example.filmlist.MainActivity;
 import com.example.filmlist.R;
@@ -20,7 +21,7 @@ public class RVunion {
 
 
 
-    public RVunion(MainActivity activity , LinkedList<Film> Informe , String opcion) {
+    public RVunion(MainActivity activity , Controlador controlador, LinkedList<Film> Informe , String opcion) {
 
 
         if(opcion.equals( "INICIAL")){
@@ -61,7 +62,7 @@ public class RVunion {
 //        ((TextView) activity.findViewById(R.id.fecha1)).setText(informe.getPrediccion().getInicio());
 //        ((TextView) activity.findViewById(R.id.fecha2)).setText(informe.getPrediccion().getFin());
 
-        adaptador = new RVAdapter(activity, informe,opcion);
+        adaptador = new RVAdapter(activity,controlador, informe,opcion);
 
         //adaptadorGeneros=new AdapterGenres(activity,)
         recyclerfilms.setLayoutManager(new LinearLayoutManager(activity));

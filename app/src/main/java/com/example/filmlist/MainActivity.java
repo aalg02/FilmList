@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.filmlist.CONTROLADOR.Controlador;
-import com.example.filmlist.VISTA.GestionVistas.gestorvistas;
+import com.example.filmlist.VISTA.GestionVistas.gestorVistasGeneral;
 import com.google.firebase.FirebaseApp;
 //import com.example.filmlist.JsonRead.Film;
 //import com.google.auth.oauth2.GoogleCredentials;
@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 1;
     protected Controlador miControlador;
     // public  FirebaseApp firebase;
-    gestorvistas gestor;
+    gestorVistasGeneral gestor;
   //  FirebaseFirestore firestore;
-    SegundaActivity segundaActivity;
+
 
 
     @Override
@@ -38,16 +38,14 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         setContentView(R.layout.activity_main);
-        miControlador = Controlador.getInstance();
+        miControlador = new Controlador(this);
         miControlador.setActivity(this);
         miControlador.controlViewpage();
-        gestor=new gestorvistas();
-        gestor.setActivity(this);
-        gestor.listeners();
-        gestor.listenersperfil();
-        gestor.framelayoutinicio(0);
-        miControlador.setVistamanager(gestor);
-        miControlador.checkSavedCredentialsAndSignIn();
+        gestor=new gestorVistasGeneral(this,miControlador);
+        gestor.menuPrincipalApp();
+        gestor.listenersInicioSesion();
+        gestor.gestorinfopeli.framelayoutPelis(0);
+        miControlador.controladorFirebase.checkSavedCredentialsAndSignIn();
 
 
 
@@ -66,17 +64,17 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
 
         super.onStart();
-        gestor.Listenergeneros();
+        gestor.gestorVentanaBusqueda.Listenergeneros();
     };
     public void onResume() {
 
         super.onResume();
-        gestor.Listenergeneros();
+        gestor.gestorVentanaBusqueda.Listenergeneros();
     }
     @Override
     public void onBackPressed() {
         //miControlador.guardadatos();
-        gestor.framelayoutinicio(0);
+        gestor.gestorinfopeli.framelayoutPelis(0);
 
 
     }
@@ -84,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //Controlador.getInstance().guardadatos();
+        //controlador.guardadatos();
 
     }
 
@@ -97,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
             Uri imageUri = data.getData();
 
             // hacer algo con la imagen seleccionada, por ejemplo, mostrarla en un ImageView
-            Controlador.getInstance().storageFirebase(imageUri);
-            gestor.ponerfoto(imageUri.toString());
+            miControlador.controladorFirebase.storageFirebase(imageUri);
+            gestor.gestorVentanaPerfil.ponerfoto(imageUri.toString());
         }
     }
     @Override

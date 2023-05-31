@@ -100,4 +100,40 @@ public class ListaPelis {
     public Film getListaFI(int id) {
         return ListaFCartelera.get(id);
     }
+
+    public void setListaFCartelera(LinkedList<Film> listaFCartelera) {
+        ListaFCartelera = listaFCartelera;
+    }
+
+    public void setListaFBusqueda(LinkedList<Film> listaFBusqueda) {
+        ListaFBusqueda = listaFBusqueda;
+    }
+
+    public void setListaFpopulares(LinkedList<Film> listaFpopulares) {
+        ListaFpopulares = listaFpopulares;
+    }
+
+    public void setListaFestrenos(LinkedList<Film> listaFestrenos) {
+        ListaFestrenos = listaFestrenos;
+    }
+
+    public void setListaFtoprated(LinkedList<Film> listaFtoprated) {
+        ListaFtoprated = listaFtoprated;
+    }
+
+    public void setListaFrecomendaciones(LinkedList<Film> listaFrecomendaciones) {
+        ListaFrecomendaciones = listaFrecomendaciones;
+    }
+
+    public void setListaFGenero(LinkedList<Film> listaFGenero) {
+        ListaFGenero = listaFGenero;
+    }
+
+    public void setListaFConsultadas(LinkedList<Film> listaFConsultadas) {
+        ListaFConsultadas = listaFConsultadas;
+    }
+
+    public void setListaFActores(LinkedList<Film> listaFActores) {
+        ListaFActores = listaFActores;
+    }
 }

@@ -18,6 +18,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class youtube {
+    Controlador controlador;
+    public youtube(Controlador controlador){
+        this.controlador=controlador;
+    }
     public  void busqueda(String titulo) {
         String busqueda = titulo+"+trailer+español";
         OkHttpClient client = new OkHttpClient();
@@ -80,7 +84,7 @@ public class youtube {
            }
 
     private  void reproducirVideo(String videoUrl) {
-        Controlador.getInstance().gestorvistas.putoDialogtrailer(videoUrl);
+        controlador.gestorVistasGeneral.gestorinfopeli.putoDialogtrailer(videoUrl);
     }
 
 
