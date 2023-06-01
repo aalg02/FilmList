@@ -1,6 +1,5 @@
 package com.example.filmlist.MODELO.LeerJsons;
 
-import com.example.filmlist.CONTROLADOR.Controlador;
 import com.example.filmlist.MODELO.objetos.Film;
 import com.example.filmlist.MODELO.Listas.ListaPelis;
 import com.example.filmlist.StringManager;

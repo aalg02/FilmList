@@ -10,7 +10,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.filmlist.CONTROLADOR.Controlador;
+import com.example.filmlist.CONTROLADOR.Controladores.Controlador;
 
 import java.io.IOException;
 import java.io.InputStream;

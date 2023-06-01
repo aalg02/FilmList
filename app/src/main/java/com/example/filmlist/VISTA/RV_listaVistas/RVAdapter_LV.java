@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.filmlist.CONTROLADOR.Controlador;
+import com.example.filmlist.CONTROLADOR.Controladores.Controlador;
 import com.example.filmlist.MODELO.objetos.Film;
 import com.example.filmlist.R;
 
@@ -53,13 +53,13 @@ public class RVAdapter_LV extends RecyclerView.Adapter<RVViewHolder_LV> {
             setAnimation(holder.posterVal,position);
             Glide.with(context).load(vistas.get(position).getImg_path()).into(holder.posterVal);
             holder.valoracion.setText(""+controlador. rellenaValoraciones(position));
-            controlador.CliclckPelisola(holder.posterVal,vistas.get(position));
-            controlador.MantenerPelicula(holder.posterVal, opcion, position,vistas.get(position));
+            controlador.controladorPeliculas.CliclckPelisola(holder.posterVal,vistas.get(position));
+            controlador.controladorPeliculas.MantenerPelicula(holder.posterVal, opcion, position,vistas.get(position));
 
         }else {
             setAnimation(holder.poster,position);
-           controlador.CliclckPelisola(holder.poster,vistas.get(position));
-           controlador.MantenerPelicula(holder.poster, opcion, position,vistas.get(position));
+           controlador.controladorPeliculas.CliclckPelisola(holder.poster,vistas.get(position));
+           controlador.controladorPeliculas.MantenerPelicula(holder.poster, opcion, position,vistas.get(position));
             Glide.with(context).load(vistas.get(position).getImg_path()).into(holder.poster);
         }
 

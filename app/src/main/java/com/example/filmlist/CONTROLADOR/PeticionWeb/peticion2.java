@@ -4,7 +4,7 @@ package com.example.filmlist.CONTROLADOR.PeticionWeb;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.example.filmlist.CONTROLADOR.Controlador;
+import com.example.filmlist.CONTROLADOR.Controladores.Controlador;
 
 import java.io.IOException;
 
@@ -54,47 +54,8 @@ public class peticion2 {
                 manejador.post(new Runnable() {
                     @Override
                     public void run() {
-                        // Code will be executed on the main threadnn
-                       if(n==1) {
-                           controlador.LeerPeliculasCartelera(respuesta);
-                           controlador.RefrscaInicial();
-                       }if(n==2){
-                           controlador.LeerPeliculasBusqueda(respuesta);
-                            controlador.RefrscaInicial();
-                        }if(n==3){
-                            controlador.LeerPeliculaspopulares(respuesta);
-                            controlador.RefrscaInicial();
-
-                        }if(n==4){
-                            controlador.LeerPeliculasestrenos(respuesta);
-                            controlador.RefrscaInicial();
-                        }if(n==5){
-                            controlador.LeerPeliculasToprated(respuesta);
-                            controlador.RefrscaInicial();
-                        }if(n==6){
-                            controlador.LeerPeliculasRecomendaciones(respuesta);
-                        }if(n==7){
-                           controlador.LeerPeliVistas(respuesta);
-                        }if(n==8){
-                            controlador.LeerPeliFav(respuesta);
-                        }if(n==9){
-                            controlador.LeerPeliPendiente(respuesta);
-                        }if(n==10) {
-                            controlador.LeerPelivaloradas(respuesta);
-                        }if(n==11){
-                                controlador.LeerPeligenero(respuesta);
-                       }if(n==12){
-                            controlador.LeerActoresPeli(respuesta);
-                        }if(n==13){
-                           controlador.LeerActor(respuesta);
-                        }if(n==14){
-                           controlador.LeerPeliculasActor(respuesta);
-                        }if(n==15){
-                            controlador.LeerPeliculasActorFav(respuesta);
-                        } if(n==16){
-                            controlador.LeerFotosGaleriaPeli (respuesta);
-                        }
-
+                        // wow
+                         controlador.LeerOpcionyRefrescar(n,respuesta);
                     }
                 });
 
@@ -111,19 +72,7 @@ public class peticion2 {
                     public void run() {
                         // Code will be executed on the main thread
 
-                        if(n==1) {
-                            controlador.LeerPeliculasCartelera(respuesta);
-                        }if(n==2){
-                            controlador.LeerPeliculasBusqueda(respuesta);
-                        }if(n==3){
-                            controlador.LeerPeliculaspopulares(respuesta);
-                        }if(n==4){
-                            controlador.LeerPeliculasestrenos(respuesta);
-                        }if(n==5){
-                            controlador.LeerPeliculasToprated(respuesta);
-                        }if(n==6){
-                            controlador.LeerPeliculasRecomendaciones(respuesta);
-                        }
+                        controlador.LeerOpcionyRefrescar(n,respuesta);
 
                         controlador.NoConexion();
                         //controlador.leerjson(respuesta);

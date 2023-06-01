@@ -13,52 +13,46 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.filmlist.CONTROLADOR.Controlador;
+import com.example.filmlist.CONTROLADOR.Controladores.Controlador;
 import com.example.filmlist.MODELO.LeerJsons.LeerJsonPelisCartelera;
 import com.example.filmlist.MODELO.objetos.Film;
 import com.example.filmlist.MainActivity;
 import com.example.filmlist.R;
-import com.example.filmlist.VISTA.GestionVistas.gestorVistasGeneral;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 public class gestorLayoutInfoPeli {
+    public FrameLayout FMI;
     MainActivity mainActivity;
     gestorVistasGeneral gestorVistasGeneral;
-    public FrameLayout FMI;
     ArrayList<ImageView> estrellas;
     Controlador controlador;
     int n;
 
-        public gestorLayoutInfoPeli(MainActivity mainActivity, Controlador controlador,gestorVistasGeneral gestorVistasGeneral){
-            this.mainActivity=mainActivity;
-            this.gestorVistasGeneral = gestorVistasGeneral;
-            this.controlador=controlador;
-            n=0;
+    public gestorLayoutInfoPeli(MainActivity mainActivity, Controlador controlador, gestorVistasGeneral gestorVistasGeneral) {
+        this.mainActivity = mainActivity;
+        this.gestorVistasGeneral = gestorVistasGeneral;
+        this.controlador = controlador;
+        n = 0;
+    }
+
+
+    //------------------------
+    public void framelayoutPelis(int n) {
+        FMI = mainActivity.findViewById(R.id.framelayoutpelis);
+
+        if (n == 0) {
+            FMI.setVisibility(View.INVISIBLE);
         }
 
-
-        //------------------------
-        public void framelayoutPelis(int n) {
-            FMI = mainActivity.findViewById(R.id.framelayoutpelis);
-
-            if (n == 0) {
-                FMI.setVisibility(View.INVISIBLE);
-                controlador.adapter.Fragment1.setMenuVisibility(true);
-            }
-
-
-            if (n == 1) {
-                FMI.setVisibility(View.VISIBLE);
-                controlador.adapter.Fragment1.setMenuVisibility(false);
-
-
-            }
-
+        if (n == 1) {
+            FMI.setVisibility(View.VISIBLE);
         }
 
-   //----------------------MENU TRES FLOATINGBUTTONS (Trailer , listas , Wallpapers)-------------------//
+    }
+
+    //----------------------MENU TRES FLOATINGBUTTONS (Trailer , listas , Wallpapers)-------------------//
 
     public void floatingMenu(Film f) {
         FloatingActionButton fabMain = mainActivity.findViewById(R.id.floatingActionButton);
@@ -80,7 +74,7 @@ public class gestorLayoutInfoPeli {
         faT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controlador.BusquedaTrailer(f.getNombre());
+                controlador.controladorPeticiones.BusquedaTrailer(f.getNombre());
 
             }
         });
@@ -88,7 +82,7 @@ public class gestorLayoutInfoPeli {
         Galeriafotos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                controlador.cargarGaleriapeli(f);
+                controlador.controladorPeticiones.cargarGaleriapeli(f);
 
             }
         });
@@ -119,7 +113,7 @@ public class gestorLayoutInfoPeli {
             @Override
             public void onClick(View view) {
 
-                controlador.controlaPeliListaVistas(f);
+                controlador.controladorListas.controlaPeliListaVistas(f);
                 dialog.dismiss();
                 controlador.controladorFirebase.firebaseDatabasesetdatos();
 
@@ -130,7 +124,7 @@ public class gestorLayoutInfoPeli {
             @Override
             public void onClick(View view) {
 
-                controlador.controlaPeliListaFavoritas(f);
+                controlador.controladorListas.controlaPeliListaFavoritas(f);
                 dialog.dismiss();
                 controlador.controladorFirebase.firebaseDatabasesetdatos();
 
@@ -141,7 +135,7 @@ public class gestorLayoutInfoPeli {
             @Override
             public void onClick(View view) {
 
-                controlador.controlaPeliListaPendientes(f);
+                controlador.controladorListas.controlaPeliListaPendientes(f);
                 dialog.dismiss();
                 controlador.controladorFirebase.firebaseDatabasesetdatos();
 
@@ -227,7 +221,7 @@ public class gestorLayoutInfoPeli {
         }
         if (f != null) {
             f.setMivaloracion(n);
-            controlador.controlPelisVaolradas(f);
+            controlador.controladorListas.controlPelisVaolradas(f);
             controlador.usuario.getValoraciones().put(f.idFilm, n);
             controlador.controladorFirebase.firebaseDatabasesetdatos();
         }
@@ -261,6 +255,7 @@ public class gestorLayoutInfoPeli {
 
         dialog.show();
     }
+
     public void dialogGaleria(ArrayList<String> lista) {
         Toast.makeText(mainActivity, "Manten el Wallpaper que quieras descargar", Toast.LENGTH_SHORT).show();
 
@@ -284,14 +279,14 @@ public class gestorLayoutInfoPeli {
             // Carga la imagen utilizando Glide y establece las opciones deseadas
             RequestOptions options = new RequestOptions().override(800, 800); // Tamaño personalizado
             Glide.with(mainActivity)
-                    .load("https://image.tmdb.org/t/p/original"+imageUrl)
+                    .load("https://image.tmdb.org/t/p/original" + imageUrl)
                     .apply(options)
                     .into(imageView);
             imageView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    controlador.descargarWallaper("https://image.tmdb.org/t/p/original"+imageUrl);
-                    return  true;
+                    controlador.controladorImagenes.descargarWallaper("https://image.tmdb.org/t/p/original" + imageUrl);
+                    return true;
                 }
             });
             // Agrega el ImageView al contenedor de imágenes
@@ -302,25 +297,25 @@ public class gestorLayoutInfoPeli {
         dialog.show();
     }
 
-//-------------------------------CARGAR INFOPELI--------------------------------------//
-public void cargainfopeli(Film pelichula) {
+    //-------------------------------CARGAR INFOPELI--------------------------------------//
+    public void cargainfopeli(Film pelichula) {
 
-    TextView titulo = mainActivity.findViewById(R.id.nombrepeli);
-    TextView valoracion = mainActivity.findViewById(R.id.valoracionpeli);
-    TextView sinopsis = mainActivity.findViewById(R.id.sinopsispeli);
-    TextView añosalida = mainActivity.findViewById(R.id.fechasalidapeli);
-    ImageView posterinfo = mainActivity.findViewById(R.id.FotoPosterInfo);
-    Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.cargapelis);
+        TextView titulo = mainActivity.findViewById(R.id.nombrepeli);
+        TextView valoracion = mainActivity.findViewById(R.id.valoracionpeli);
+        TextView sinopsis = mainActivity.findViewById(R.id.sinopsispeli);
+        TextView añosalida = mainActivity.findViewById(R.id.fechasalidapeli);
+        ImageView posterinfo = mainActivity.findViewById(R.id.FotoPosterInfo);
+        Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.cargapelis);
 
-    LeerJsonPelisCartelera miau = controlador.LJPC;
+        LeerJsonPelisCartelera miau = controlador.LJPC;
 
-    titulo.setText(pelichula.getNombre());
-    valoracion.setText(pelichula.getValoration());
-    sinopsis.setText(pelichula.getSinopsis());
-    añosalida.setText(pelichula.getReleasedate());
-    posterinfo.startAnimation(animation);
-    Glide.with(mainActivity).load(pelichula.getImg_path()).into(posterinfo);
+        titulo.setText(pelichula.getNombre());
+        valoracion.setText(pelichula.getValoration());
+        sinopsis.setText(pelichula.getSinopsis());
+        añosalida.setText(pelichula.getReleasedate());
+        posterinfo.startAnimation(animation);
+        Glide.with(mainActivity).load(pelichula.getImg_path()).into(posterinfo);
 
 
-}
+    }
 }

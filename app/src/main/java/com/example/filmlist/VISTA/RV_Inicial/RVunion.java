@@ -5,7 +5,7 @@ package com.example.filmlist.VISTA.RV_Inicial;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.filmlist.CONTROLADOR.Controlador;
+import com.example.filmlist.CONTROLADOR.Controladores.Controlador;
 import com.example.filmlist.MODELO.objetos.Film;
 import com.example.filmlist.MainActivity;
 import com.example.filmlist.R;

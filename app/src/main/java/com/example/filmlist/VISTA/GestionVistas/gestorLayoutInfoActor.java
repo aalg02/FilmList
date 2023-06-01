@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.filmlist.CONTROLADOR.Controlador;
+import com.example.filmlist.CONTROLADOR.Controladores.Controlador;
 import com.example.filmlist.MODELO.objetos.Actor;
 import com.example.filmlist.MainActivity;
 import com.example.filmlist.R;
@@ -53,7 +53,7 @@ public class gestorLayoutInfoActor {
         botonFavActor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                controlador.controlActoresFav(actor);
+                controlador.controladorListas.controlActoresFav(actor);
                 controlador.RefrescaActoresFav();
                 controlador.controladorFirebase.firebaseDatabasesetdatos();
             }

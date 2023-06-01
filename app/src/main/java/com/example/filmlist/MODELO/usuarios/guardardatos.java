@@ -1,6 +1,6 @@
 package com.example.filmlist.MODELO.usuarios;
 
-import com.example.filmlist.CONTROLADOR.Controlador;
+import com.example.filmlist.CONTROLADOR.Controladores.Controlador;
 import com.example.filmlist.MODELO.objetos.Actor;
 import com.example.filmlist.MODELO.objetos.Film;
 

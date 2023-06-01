@@ -17,10 +17,9 @@ import android.widget.Toast;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
-import com.example.filmlist.CONTROLADOR.Controlador;
+import com.example.filmlist.CONTROLADOR.Controladores.Controlador;
 import com.example.filmlist.MainActivity;
 import com.example.filmlist.R;
-import com.example.filmlist.StringManager;
 import com.example.filmlist.VISTA.FragmentManager.MyPagerAdapter;
 
 public class gestorVistasGeneral {
@@ -281,11 +280,11 @@ public class gestorVistasGeneral {
                 if (opcion == "ACTORESFAV") {
 
                     controlador.RefrescaActoresFav();
-                    controlador.eliminaractor(n);
+                    controlador.controladorActores.eliminaractor(n);
                     dialog.dismiss();
                 } else {
 
-                    controlador.eliminarpeli(opcion, n);
+                    controlador.controladorPeliculas.eliminarpeli(opcion, n);
                     controlador.RefrescaVistas();
                     controlador.RefrescaValoraciones();
                     dialog.dismiss();

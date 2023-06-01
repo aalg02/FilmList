@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.filmlist.CONTROLADOR.Controlador;
+import com.example.filmlist.CONTROLADOR.Controladores.Controlador;
 import com.example.filmlist.MODELO.objetos.Actor;
 import com.example.filmlist.R;
 import com.example.filmlist.StringManager;
@@ -52,10 +52,10 @@ public class RVAdapter_A extends RecyclerView.Adapter<RVViewHolder_A> {
             Glide.with(context).load(informe.get(position).getProfile_path()).into(holder.poster);
 
             if(opcion.equals("ACTORESFAV")){
-                controlador.ClickActor(holder.poster,informe.get(position),opcion);
-                controlador.MantenerActor(holder.poster,informe.get(position),position);
+                controlador.controladorActores.ClickActor(holder.poster,informe.get(position),opcion);
+                controlador.controladorActores.MantenerActor(holder.poster,informe.get(position),position);
             }else{
-                controlador.ClickActor(holder.poster,informe.get(position),opcion);
+                controlador.controladorActores.ClickActor(holder.poster,informe.get(position),opcion);
             }
 
 

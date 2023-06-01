@@ -10,7 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.filmlist.CONTROLADOR.Controlador;
+import com.example.filmlist.CONTROLADOR.Controladores.Controlador;
 import com.example.filmlist.VISTA.GestionVistas.gestorVistasGeneral;
 import com.google.firebase.FirebaseApp;
 //import com.example.filmlist.JsonRead.Film;

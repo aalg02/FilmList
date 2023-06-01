@@ -1,8 +1,6 @@
 package com.example.filmlist.MODELO.LeerJsons;
 
-import com.example.filmlist.CONTROLADOR.Controlador;
 import com.example.filmlist.MODELO.objetos.Actor;
-import com.example.filmlist.R;
 import com.example.filmlist.StringManager;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

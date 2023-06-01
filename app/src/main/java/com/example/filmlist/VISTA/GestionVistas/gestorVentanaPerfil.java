@@ -8,11 +8,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.example.filmlist.CONTROLADOR.Controlador;
-import com.example.filmlist.CONTROLADOR.ControladorFirebase;
+import com.example.filmlist.CONTROLADOR.Controladores.Controlador;
 import com.example.filmlist.MainActivity;
 import com.example.filmlist.R;
-import com.example.filmlist.VISTA.GestionVistas.gestorVistasGeneral;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class gestorVentanaPerfil {
@@ -83,7 +81,7 @@ public class gestorVentanaPerfil {
         fotoperfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                controlador.galeria();
+                controlador.controladorImagenes.galeria();
             }
         });
     }

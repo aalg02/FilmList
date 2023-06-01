@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
-import com.example.filmlist.CONTROLADOR.Controlador;
+import com.example.filmlist.CONTROLADOR.Controladores.Controlador;
 import com.example.filmlist.MODELO.objetos.Film;
 import com.example.filmlist.R;
 import com.example.filmlist.StringManager;
@@ -82,7 +82,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVViewHolder> {
                     controlador.LISTASINICIAL.getListaFActores().remove(position);
                 }
             }else{
-                controlador.CliclckPelisola(holder.poster, informe.get(position));
+                controlador.controladorPeliculas.CliclckPelisola(holder.poster, informe.get(position));
                 setAnimation(holder.poster, position);
                 Glide.with(context).load(informe.get(position).getImg_path()).into(holder.poster);
 

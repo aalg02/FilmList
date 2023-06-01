@@ -6,10 +6,9 @@ import android.widget.ImageView;
 import androidx.cardview.widget.CardView;
 
 import com.bumptech.glide.Glide;
-import com.example.filmlist.CONTROLADOR.Controlador;
+import com.example.filmlist.CONTROLADOR.Controladores.Controlador;
 import com.example.filmlist.MainActivity;
 import com.example.filmlist.R;
-import com.example.filmlist.VISTA.GestionVistas.gestorVistasGeneral;
 
 public class gestorVentanaBusqueda {
     MainActivity mainActivity;
@@ -35,7 +34,7 @@ public class gestorVentanaBusqueda {
                     public void onClick(View v) {
 
                         Glide.with(mainActivity).load(0).into((ImageView) mainActivity.findViewById(R.id.imagenbusqueda));
-                        controlador.rellenarRVGeneros(n);
+                        controlador.controladorPeticiones.rellenarRVGeneros(n);
                         controlador.RefrescaGenero();
                     }
                 });
