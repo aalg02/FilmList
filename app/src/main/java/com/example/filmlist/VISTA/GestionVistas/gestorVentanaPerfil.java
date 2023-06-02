@@ -43,6 +43,7 @@ public class gestorVentanaPerfil {
                 controlador.controladorFirebase.authenticationlogout();
                 gestorVistasGeneral.viewPager.setCurrentItem(0);
                 dialog.dismiss();
+                controlador.borrarDatosUser();
             }
         });
 

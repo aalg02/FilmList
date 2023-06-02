@@ -48,21 +48,23 @@ public class RVAdapter_LV extends RecyclerView.Adapter<RVViewHolder_LV> {
     @Override
     public void onBindViewHolder(@NonNull RVViewHolder_LV holder, int position) {
         //holder.titulo.setText(informe.getListaP().get(position).getName());
+       try {
+           if (opcion.equals("VALORACIONES")) {
+               setAnimation(holder.posterVal, position);
+               Glide.with(context).load(vistas.get(position).getImg_path()).into(holder.posterVal);
+               holder.valoracion.setText("" + controlador.rellenaValoraciones(position));
+               controlador.controladorPeliculas.CliclckPelisola(holder.posterVal, vistas.get(position));
+               controlador.controladorPeliculas.MantenerPelicula(holder.posterVal, opcion, position, vistas.get(position));
 
-        if(opcion.equals("VALORACIONES")){
-            setAnimation(holder.posterVal,position);
-            Glide.with(context).load(vistas.get(position).getImg_path()).into(holder.posterVal);
-            holder.valoracion.setText(""+controlador. rellenaValoraciones(position));
-            controlador.controladorPeliculas.CliclckPelisola(holder.posterVal,vistas.get(position));
-            controlador.controladorPeliculas.MantenerPelicula(holder.posterVal, opcion, position,vistas.get(position));
+           } else {
+               setAnimation(holder.poster, position);
+               controlador.controladorPeliculas.CliclckPelisola(holder.poster, vistas.get(position));
+               controlador.controladorPeliculas.MantenerPelicula(holder.poster, opcion, position, vistas.get(position));
+               Glide.with(context).load(vistas.get(position).getImg_path()).into(holder.poster);
+           }
+       }catch (Exception e){
 
-        }else {
-            setAnimation(holder.poster,position);
-           controlador.controladorPeliculas.CliclckPelisola(holder.poster,vistas.get(position));
-           controlador.controladorPeliculas.MantenerPelicula(holder.poster, opcion, position,vistas.get(position));
-            Glide.with(context).load(vistas.get(position).getImg_path()).into(holder.poster);
-        }
-
+       }
 
     }
     private void setAnimation(View viewToAnimate, int position) {

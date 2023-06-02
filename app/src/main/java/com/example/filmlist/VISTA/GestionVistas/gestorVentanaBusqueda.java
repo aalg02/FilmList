@@ -1,6 +1,8 @@
 package com.example.filmlist.VISTA.GestionVistas;
 
+import android.print.PrintAttributes;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.cardview.widget.CardView;
@@ -24,6 +26,7 @@ public class gestorVentanaBusqueda {
 
     public void Listenergeneros() {
         CardView card = mainActivity.findViewById(R.id.mau0);
+        ImageView fotoPalomita=mainActivity.findViewById(R.id.imagenbusqueda);
         for (int i = 0; i <= 17; i++) {
             int n = i;
             int id = mainActivity.getResources().getIdentifier("mau" + i, "id", mainActivity.getPackageName());
@@ -33,7 +36,7 @@ public class gestorVentanaBusqueda {
                     @Override
                     public void onClick(View v) {
 
-                        Glide.with(mainActivity).load(0).into((ImageView) mainActivity.findViewById(R.id.imagenbusqueda));
+                        Glide.with(mainActivity).load(0).into(fotoPalomita);
                         controlador.controladorPeticiones.rellenarRVGeneros(n);
                         controlador.RefrescaGenero();
                     }

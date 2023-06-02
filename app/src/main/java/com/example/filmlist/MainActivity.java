@@ -46,18 +46,7 @@ public class MainActivity extends AppCompatActivity {
         gestor.listenersInicioSesion();
         gestor.gestorinfopeli.framelayoutPelis(0);
         miControlador.controladorFirebase.checkSavedCredentialsAndSignIn();
-
-
-
-
-
         FirebaseApp.initializeApp(this);
-
-
-
-        // gestor=gestorvistas.getInstance();
-
-        // miControlador.cargarRV(this);
 
 
     }

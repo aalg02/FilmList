@@ -16,8 +16,11 @@ public class usuario {
 
     HashMap<String,Integer>valoraciones;
 
+    public usuario(String fotoperfil) {
+        this.fotoperfil = fotoperfil;
+    }
 
-    public usuario(String gmail, String contraseña, ArrayList<String> listavistas, ArrayList<String> listafavoritas, ArrayList<String> listapendientes,ArrayList<String >listavaloradas,String fotoperfil,HashMap<String,Integer>valoraciones,ArrayList<String> listaActores) {
+    public usuario(String gmail, String contraseña, ArrayList<String> listavistas, ArrayList<String> listafavoritas, ArrayList<String> listapendientes, ArrayList<String >listavaloradas, String fotoperfil, HashMap<String,Integer>valoraciones, ArrayList<String> listaActores) {
         this.gmail = gmail;
         this.contraseña = contraseña;
         this.listavistas = listavistas;

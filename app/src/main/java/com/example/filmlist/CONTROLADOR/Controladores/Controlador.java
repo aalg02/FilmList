@@ -38,6 +38,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Controlador {
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -88,7 +89,7 @@ public class Controlador {
         controladorActores=new ControladorActores(miActivity,this);
         controladorListas = new ControladorListas(miActivity,this);
         controladorImagenes = new ControladorImagenes(miActivity,this);
-        usuario = new usuario();
+        usuario = new usuario("https://firebasestorage.googleapis.com/v0/b/filmlist-ed9e7.appspot.com/o/usuario.png?alt=media&token=65e20f64-6750-40de-adc4-385f7c86ec3e");
 
     }
 
@@ -394,25 +395,30 @@ public class Controlador {
 
     //------------------------RELLENA VALORACION-------------------------------//
     public int rellenaValoraciones(int n) {
+        try {
+            return (usuario.getValoraciones().get(usuario.getListavaloradas().get(n)) + 1);
 
-        return (usuario.getValoraciones().get(usuario.getListavaloradas().get(n)) + 1);
+        }catch (Exception e){
+
+        }
+        return  0;
     }
 
 
+    //----------------------BORRAR INFO USUARIO---------------------------------//
+
+    public void borrarDatosUser(){
+
+        try {
+          usuario=new usuario("invitado@gmail.com","123456",new ArrayList<String>(),new ArrayList<String>(),new ArrayList<String>(),new ArrayList<String>(),"https://firebasestorage.googleapis.com/v0/b/filmlist-ed9e7.appspot.com/o/usuario.png?alt=media&token=65e20f64-6750-40de-adc4-385f7c86ec3e",new HashMap<>(),new ArrayList<>());
+          LISTAS.getListaFpendientes().clear();
+          LISTAS.getListaFvaloradas().clear();
+          LISTAS.getListaFfavoritas().clear();
+          LISTAS.getListaFvistas().clear();
+          LISTASACTORES.ListaActorFav.clear();
+        }catch (Exception e){
+
+        }
+
+        }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

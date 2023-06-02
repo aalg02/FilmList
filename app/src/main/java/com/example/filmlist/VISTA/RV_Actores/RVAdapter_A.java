@@ -48,16 +48,19 @@ public class RVAdapter_A extends RecyclerView.Adapter<RVViewHolder_A> {
     @Override
     public void onBindViewHolder(@NonNull RVViewHolder_A holder, int position) {
         //holder.titulo.setText(informe.getListaP().get(position).getName());
-            setAnimation(holder.poster,position);
+        try {
+            setAnimation(holder.poster, position);
             Glide.with(context).load(informe.get(position).getProfile_path()).into(holder.poster);
 
-            if(opcion.equals("ACTORESFAV")){
-                controlador.controladorActores.ClickActor(holder.poster,informe.get(position),opcion);
-                controlador.controladorActores.MantenerActor(holder.poster,informe.get(position),position);
-            }else{
-                controlador.controladorActores.ClickActor(holder.poster,informe.get(position),opcion);
+            if (opcion.equals("ACTORESFAV")) {
+                controlador.controladorActores.ClickActor(holder.poster, informe.get(position), opcion);
+                controlador.controladorActores.MantenerActor(holder.poster, informe.get(position), position);
+            } else {
+                controlador.controladorActores.ClickActor(holder.poster, informe.get(position), opcion);
             }
+        }catch (Exception e){
 
+        }
 
 
     }

@@ -34,6 +34,8 @@ public class ControladorFirebase {
     MainActivity miActivity;
     Controlador controlador;
     public guardardatos guardar;
+    String gmailN="";
+    Boolean punto;
 
     usuario usuario1;
 
@@ -115,21 +117,29 @@ public class ControladorFirebase {
 
     // ------------------------REGISTRAR A UN USUARIO EN FIREBASE AUTHENTICATION-----------------------//
     public void authenticationRegistro(String gmail, String contraseña) {
-
+        punto=false;
 
         if (gmail == null || contraseña == null) {
             Toast.makeText(miActivity, "faltan campos", Toast.LENGTH_LONG).show();
 
-        } else if (gmail.contains(".")) {
-            gmail.replace(".", "");
-        } else {
+
+
+        }
+        else {
+
+            if(gmail.contains(".")){
+                gmailN=gmail.replace(".","");
+                punto=true;
+            }
 
 
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             mAuth.createUserWithEmailAndPassword(gmail, contraseña).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    // Registro exitoso
-                    registroDatabase(gmail, contraseña);
+                    if(punto){
+                        registroDatabase(gmailN, contraseña);
+                    }else{
+                    registroDatabase(gmail, contraseña);}
                     controlador.gestorVistasGeneral.framelayoutLogin(0);
                 } else {
                     // Registro fallido
@@ -157,12 +167,19 @@ public class ControladorFirebase {
 
     //------------------------LOGEAR A  UN USUARIO EN FIREBASE AUTHENTICATION--------------------------------//
     public void authenticationLogin(String gmail, String contraseña) {
-
-
+        punto=false;
+        if(gmail.contains(".")){
+            gmailN=gmail.replace(".","");
+            punto=true;
+        }
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword(gmail, contraseña).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                firebaseDatabasegetdatos(gmail, contraseña);
+                if(punto){
+                    firebaseDatabasegetdatos(gmailN, contraseña);
+                }else {
+                    firebaseDatabasegetdatos(gmail, contraseña);
+                }
                 controlador.gestorVistasGeneral.framelayoutLogin(0);
             } else {
                 try {
