@@ -1,6 +1,11 @@
 package com.example.filmlist.CONTROLADOR.Controladores;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -392,6 +397,29 @@ public class Controlador {
         }
     }
 
+    //---------------------ABRIR INSTAGRAM---------------------------//
+    public void abrirInstagram() {
+        Uri uri = Uri.parse("http://instagram.com/_u/alvero__02"); //
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+        intent.setPackage("com.instagram.android");
+
+        try {
+            miActivity.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            // La aplicación de Instagram no está instalada, puedes manejar este caso si lo deseas
+        }
+    }
+
+
+    //-------------------ABRIR GITHUB----------------------------------//
+
+    public void abrirGithub(){
+        String url = "https://github.com/aalg02"; // URL de GitHub
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        miActivity.startActivity(intent);
+    }
 
     //------------------------RELLENA VALORACION-------------------------------//
     public int rellenaValoraciones(int n) {

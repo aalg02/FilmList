@@ -51,6 +51,7 @@ public class gestorVentanaPerfil {
             @Override
             public void onClick(View v) {
 
+             dialogInfo().show();
             }
         });
 
@@ -58,6 +59,7 @@ public class gestorVentanaPerfil {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                mainActivity.finish();
 
             }
         });
@@ -105,6 +107,37 @@ public class gestorVentanaPerfil {
     public void ponerfoto(String url) {
         ImageView fotoperfil = mainActivity.findViewById(R.id.profile_image);
         Glide.with(mainActivity).load(url).transform(new CircleCrop()).into(fotoperfil);
+    }
+
+
+    public Dialog dialogInfo() {
+
+        Dialog dialog = new Dialog(mainActivity);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.dialoginfo);
+
+
+        ImageView instagram = dialog.findViewById(R.id.instagram);
+        ImageView github = dialog.findViewById(R.id.github);
+
+
+        instagram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               controlador.abrirInstagram();
+            }
+        });
+
+        github.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+             controlador.abrirGithub();
+
+            }
+        });
+
+        return dialog;
     }
 
 }
