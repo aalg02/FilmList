@@ -38,7 +38,7 @@ public class ControladorPeticiones {
 
     public void rellenarRVGeneros(int n) {
         controlador.LISTASINICIAL.getListaFGenero().clear();
-        peticionaWeb(miActivity,stringManager.urlgeneros + stringManager.IDGEN[n], 11);
+        peticionaWeb(miActivity,stringManager.urlgeneros + stringManager.IDGEN[n]+stringManager.español, 11);
 
     }
 
@@ -67,7 +67,13 @@ public class ControladorPeticiones {
 
     public void BusquedaTrailer(String titulo) {
         youtube = new youtube(controlador);
-        youtube.busqueda(titulo);
+        youtube.busqueda(titulo,"TRAILER");
+    }
+
+    public void BusquedaSoundtrack(String titulo){
+        youtube = new youtube(controlador);
+        youtube.busqueda(titulo,"MUSICA");
+
     }
 
     public void cargarGaleriapeli(Film f) {

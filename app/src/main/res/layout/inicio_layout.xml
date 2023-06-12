@@ -32,7 +32,8 @@
                     android:gravity="center"
                     android:text="AHORA EN CINES"
                     android:textColor="#FFFFFF"
-                    android:textSize="40dp" />
+                    android:textSize="40dp"
+                    tools:ignore="DuplicateIds" />
 
 
                 <LinearLayout
@@ -66,7 +67,8 @@
                     android:gravity="center"
                     android:text="POPULARES AHORA"
                     android:textColor="#FFFFFF"
-                    android:textSize="40dp" />
+                    android:textSize="40dp"
+                    tools:ignore="DuplicateIds" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -96,7 +98,8 @@
                     android:gravity="center"
                     android:text=" HISTORICOS"
                     android:textColor="#FFFFFF"
-                    android:textSize="40dp" />
+                    android:textSize="40dp"
+                    tools:ignore="DuplicateIds" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -126,7 +129,8 @@
                     android:gravity="center"
                     android:text=" ESTRENOS"
                     android:textColor="#FFFFFF"
-                    android:textSize="40dp" />
+                    android:textSize="40dp"
+                    tools:ignore="DuplicateIds" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

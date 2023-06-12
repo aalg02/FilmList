@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.filmlist.CONTROLADOR.Controladores.Controlador;
 import com.example.filmlist.MainActivity;
 import com.example.filmlist.R;
+
 import com.example.filmlist.VISTA.FragmentManager.MyPagerAdapter;
 
 public class gestorVistasGeneral {
@@ -57,6 +58,7 @@ public class gestorVistasGeneral {
         InicioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
                 controlador.adapter.getItem(0);
                 controlador.viewPager.setCurrentItem(0);
@@ -212,14 +214,14 @@ public class gestorVistasGeneral {
     //-----------------------LISTENERS GENERALES------------------//
 
     public void listenersInicioSesion() {
-        Button boton = mainActivity.findViewById(R.id.logoutB);
+        Button loginB = mainActivity.findViewById(R.id.logoutB);
         Button registro = mainActivity.findViewById(R.id.informacionB);
-        Button guardarlistas = mainActivity.findViewById(R.id.cambiarModoB);
+        Button Invitadob = mainActivity.findViewById(R.id.cambiarModoB);
         EditText nombret = mainActivity.findViewById(R.id.editTextTextEmailAddress);
         EditText pasword = mainActivity.findViewById(R.id.editTextTextPassword);
 
 
-        boton.setOnClickListener(new View.OnClickListener() {
+        loginB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -227,6 +229,7 @@ public class gestorVistasGeneral {
                     Toast.makeText(mainActivity, "faltan campos", Toast.LENGTH_LONG).show();
 
                 } else {
+
                     gestorVentanaPerfil.ponerfoto("android.resource://com.example.filmlist/" + R.drawable.iconoperfil);
                     controlador.ocultateclado();
                     controlador.controladorFirebase.authenticationLogin(nombret.getText().toString(), pasword.getText().toString());
@@ -249,15 +252,16 @@ public class gestorVistasGeneral {
                 }
             }
         });
-        guardarlistas.setOnClickListener(new View.OnClickListener() {
+        Invitadob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 framelayoutLogin(0);
+
                 controlador.usuario.setGmail("invitado@gmail.com");
                 controlador.usuario.setContraseña("invitado");
                 gestorVentanaPerfil.ponerfoto("https://www.google.com/url?sa=i&url=https%3A%2F%2Fgenius.com%2FMamberroi-kiki-du-yu-lofmi-lyrics&psig=AOvVaw2y1dTc43M9v1Y1V_PbxUSj&ust=1685716215568000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCKDPxbKkov8CFQAAAAAdAAAAABAF");
-
+                controlador.showNotification(mainActivity,"HAS ENTRADO COMO INVITADO...","Create una cuenta y guarda tus listas de peliculas , actores favoritos y valoraciones que hagas!!");
             }
         });
 

@@ -61,8 +61,8 @@
 
             <ImageView
                 android:id="@+id/instagram"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_margin="10dp"
                 android:clipToOutline="true"
                 android:padding="2dp"
@@ -70,13 +70,22 @@
 
             <ImageView
                 android:id="@+id/github"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_margin="10dp"
                 android:clipToOutline="true"
                 android:padding="2dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/github3" />
+            <ImageView
+                android:id="@+id/linkedin"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="10dp"
+                android:clipToOutline="true"
+                android:padding="2dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/linkedin2" />
         </LinearLayout>
 
     </LinearLayout>

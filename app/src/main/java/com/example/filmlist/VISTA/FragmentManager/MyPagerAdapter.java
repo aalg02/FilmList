@@ -56,6 +56,7 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
                 controlador.controladorPeticiones.peticionaWeb(main,url5,5);
 
                 return Fragment1=new MyFragment(R.layout.inicio_layout,controlador);
+
             case 1:
 
                 return new MyFragment(R.layout.listas_layout,controlador);

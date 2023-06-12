@@ -120,7 +120,8 @@
                         android:clickable="true"
                         app:backgroundTint="#FF0000"
                         app:rippleColor="#F80202"
-                        app:srcCompat="@drawable/baseline_valorar" />
+                        app:srcCompat="@drawable/baseline_valorar"
+                        android:contentDescription="TODO" />
 
                     <View
                         android:id="@+id/view2"

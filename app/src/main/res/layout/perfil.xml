@@ -140,7 +140,8 @@
         app:backgroundTint="#FF0F0F"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/baseline_settings_24" />
+        app:srcCompat="@drawable/baseline_settings_24"
+        android:contentDescription="TODO" />
 
 
 

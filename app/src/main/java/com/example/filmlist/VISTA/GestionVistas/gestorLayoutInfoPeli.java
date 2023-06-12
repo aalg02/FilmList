@@ -58,6 +58,8 @@ public class gestorLayoutInfoPeli {
         FloatingActionButton fabMain = mainActivity.findViewById(R.id.floatingActionButton);
         FloatingActionButton faT = mainActivity.findViewById(R.id.floatingActionButtonTrailer);
         FloatingActionButton Galeriafotos = mainActivity.findViewById(R.id.floatingActionButtongaleria);
+        FloatingActionButton Soundtrack = mainActivity.findViewById(R.id.floatinButtonSoundtrack);
+
         Animation animation = AnimationUtils.loadAnimation(mainActivity, R.anim.expansion_estrella);
 
 
@@ -86,6 +88,16 @@ public class gestorLayoutInfoPeli {
 
             }
         });
+
+        Soundtrack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controlador.controladorPeticiones.BusquedaSoundtrack(f.getNombre());
+
+
+            }
+        });
+
         ImageView flecha = mainActivity.findViewById(R.id.flechatras);
         flecha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,10 +232,14 @@ public class gestorLayoutInfoPeli {
 
         }
         if (f != null) {
-            f.setMivaloracion(n);
-            controlador.controladorListas.controlPelisVaolradas(f);
-            controlador.usuario.getValoraciones().put(f.idFilm, n);
-            controlador.controladorFirebase.firebaseDatabasesetdatos();
+            try {
+                f.setMivaloracion(n);
+                controlador.controladorListas.controlPelisVaolradas(f);
+                controlador.usuario.getValoraciones().put(f.idFilm, n);
+                controlador.controladorFirebase.firebaseDatabasesetdatos();
+            }catch (Exception e){
+
+            }
         }
 
     }

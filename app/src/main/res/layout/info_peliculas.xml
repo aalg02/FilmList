@@ -220,6 +220,22 @@
                             android:clickable="true"
                             app:backgroundTint="#FF0000"
                             app:srcCompat="@drawable/baseline_insert_photo_24" />
+                        <Space
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/floatinButtonSoundtrack"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:clickable="true"
+                            app:backgroundTint="#FF0000"
+                            app:rippleColor="#ECE8E8"
+                            app:srcCompat="@drawable/baseline_library_music_24" />
                     </LinearLayout>
 
                     <TextView

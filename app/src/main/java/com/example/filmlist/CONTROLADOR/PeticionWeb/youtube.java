@@ -22,13 +22,19 @@ public class youtube {
     public youtube(Controlador controlador){
         this.controlador=controlador;
     }
-    public  void busqueda(String titulo) {
-        String busqueda = titulo+"+trailer+español";
+    public  void busqueda(String titulo,String opcion) {
+        String busquedaTrailer = titulo+"+trailer+español";
+        String busquedaSoundtrack = titulo+"+soundtrack";
         OkHttpClient client = new OkHttpClient();
-
+        String url=busquedaTrailer;
+        if(opcion.equals("TRAILER")){
+            url=busquedaTrailer;
+        }else if (opcion.equals("MUSICA")){
+            url=busquedaSoundtrack;
+        }
         // Realiza una solicitud GET a la URL de búsqueda de YouTube
         Request request = new Request.Builder()
-                .url("https://www.youtube.com/results?search_query=" + busqueda)
+                .url("https://www.youtube.com/results?search_query=" + url)
                 .get()
                 .addHeader("cache-control", "no-cache")
                 .build();
@@ -52,12 +58,14 @@ public class youtube {
                 manejador.post(new Runnable() {
                     @Override
                     public void run() {
-
-                        // Extrae la URL del primer video de los resultados de búsqueda
+                        if(opcion=="TRAILER"){
                         String videoUrl = extractVideoUrl(respuesta);
-
-                        // Llama a un método para reproducir el video utilizando la URL
                         reproducirVideo(videoUrl);
+                        }
+                        if(opcion=="MUSICA"){
+                            String playlistUrl = extractPlaylistUrl(respuesta);
+                            reproducirPlaylist(playlistUrl);
+                        }
 
                     }
                 });
@@ -85,6 +93,23 @@ public class youtube {
 
     private  void reproducirVideo(String videoUrl) {
         controlador.gestorVistasGeneral.gestorinfopeli.putoDialogtrailer(videoUrl);
+    }
+
+
+
+    private String extractPlaylistUrl(String html) {
+        // Utiliza una expresión regular para extraer la URL de la primera lista de reproducción de los resultados de búsqueda
+        Pattern pattern = Pattern.compile("\"url\":\"\\/playlist\\?list=(.*?)\"");
+        Matcher matcher = pattern.matcher(html);
+        if (matcher.find()) {
+            String playlistId = matcher.group(1);
+            return "https://www.youtube.com/playlist?list=" + playlistId;
+        }
+        return null;
+    }
+
+    private void reproducirPlaylist(String playlistUrl) {
+        controlador.gestorVistasGeneral.gestorinfopeli.putoDialogtrailer(playlistUrl);
     }
 
 

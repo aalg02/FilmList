@@ -60,6 +60,9 @@ public class gestorVentanaPerfil {
             public void onClick(View v) {
                 dialog.dismiss();
                 mainActivity.finish();
+                controlador.showNotification(mainActivity,"ADIOSS, VUELVE PRONTRO","¿Ya te vas "+controlador.usuario.getGmail()+"?... Vuelve pronto !!");
+
+
 
             }
         });
@@ -119,6 +122,8 @@ public class gestorVentanaPerfil {
 
         ImageView instagram = dialog.findViewById(R.id.instagram);
         ImageView github = dialog.findViewById(R.id.github);
+        ImageView linkedin = dialog.findViewById(R.id.linkedin);
+
 
 
         instagram.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +141,15 @@ public class gestorVentanaPerfil {
 
             }
         });
+        linkedin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                controlador.abrirLinkedin();
+
+            }
+        });
+
 
         return dialog;
     }

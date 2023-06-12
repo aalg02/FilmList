@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected Controlador miControlador;
     // public  FirebaseApp firebase;
     gestorVistasGeneral gestor;
+
   //  FirebaseFirestore firestore;
 
 

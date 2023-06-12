@@ -56,10 +56,10 @@ public class ControladorFirebase {
         if (nombreUsuario.contains(".")) {
             nombreUsuario = nombreUsuario.replace(".", "");
         }
+
         DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://filmlist-ed9e7-default-rtdb.europe-west1.firebasedatabase.app").getReference(nombreUsuario);
         mDatabase.setValue(null);
         mDatabase.setValue(controlador.usuario);
-
 
     }
 
@@ -73,6 +73,7 @@ public class ControladorFirebase {
         }
         DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://filmlist-ed9e7-default-rtdb.europe-west1.firebasedatabase.app").getReference();
         mDatabase.child(nombreUsuario).setValue(controlador.usuario);
+        controlador.showNotification(miActivity,"REGISTRADO CON EXITO","Enhorabuena, "+gmail+" te has registrado con exito");
     }
 
 
@@ -177,10 +178,14 @@ public class ControladorFirebase {
             if (task.isSuccessful()) {
                 if(punto){
                     firebaseDatabasegetdatos(gmailN, contraseña);
+
                 }else {
                     firebaseDatabasegetdatos(gmail, contraseña);
                 }
+
                 controlador.gestorVistasGeneral.framelayoutLogin(0);
+                controlador.showNotification(miActivity,"BIENVENIDO DE VUELTA","Bienvenido de vuelta a FilmList "+gmail+" !!!");
+
             } else {
                 try {
                     throw task.getException();

@@ -2,10 +2,13 @@ package com.example.filmlist.CONTROLADOR.Controladores;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -14,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -399,15 +403,20 @@ public class Controlador {
 
     //---------------------ABRIR INSTAGRAM---------------------------//
     public void abrirInstagram() {
-        Uri uri = Uri.parse("http://instagram.com/_u/alvero__02"); //
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 
-        intent.setPackage("com.instagram.android");
 
         try {
+            Uri uri = Uri.parse("http://instagram.com/_u/alvero__02"); //
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setPackage("com.instagram.android");
             miActivity.startActivity(intent);
+
         } catch (ActivityNotFoundException e) {
-            // La aplicación de Instagram no está instalada, puedes manejar este caso si lo deseas
+
+            String url = "http://instagram.com/_u/alvero__02"; // URL de GitHub
+            Intent intent2 = new Intent(Intent.ACTION_VIEW);
+            intent2.setData(Uri.parse(url));
+            miActivity.startActivity(intent2);
         }
     }
 
@@ -415,10 +424,41 @@ public class Controlador {
     //-------------------ABRIR GITHUB----------------------------------//
 
     public void abrirGithub(){
-        String url = "https://github.com/aalg02"; // URL de GitHub
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(url));
-        miActivity.startActivity(intent);
+
+        try {
+            Uri uri = Uri.parse("https://github.com/aalg02"); //
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setPackage("com.github.android");
+            miActivity.startActivity(intent);
+
+        } catch (ActivityNotFoundException e) {
+
+            String url = "https://github.com/aalg02"; // URL de GitHub
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            miActivity.startActivity(intent);
+        }
+
+    }
+
+
+    //------------------------ABRIR LINKEDIN--------------------------------//
+    public void abrirLinkedin(){
+
+        try {
+            Uri uri = Uri.parse("https://www.linkedin.com/in/%C3%A1lvaro-algarra-a2662b213/"); //
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setPackage("com.linkedin.android");
+            miActivity.startActivity(intent);
+
+        } catch (ActivityNotFoundException e) {
+
+            String url = "https://www.linkedin.com/in/%C3%A1lvaro-algarra-a2662b213/"; // URL de GitHub
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            miActivity.startActivity(intent);
+        }
+
     }
 
     //------------------------RELLENA VALORACION-------------------------------//
@@ -448,5 +488,37 @@ public class Controlador {
 
         }
 
+    }
+    public void showNotification(Context context, String title, String message) {
+        // Crea un identificador único para la notificación
+        int notificationId = 1;
+
+        // Crea un canal de notificación para versiones de Android superiores a Oreo
+        String channelId = "channel_id";
+        String channelName = "Channel Name";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
         }
+
+        // Crea el constructor de la notificación
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(R.drawable.iconopalomitas)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        // Crea la notificación y la muestra
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(notificationId, builder.build());
+    }
+
+
+
+    //-----------------------------------------------//
+
+
+
+
 }
