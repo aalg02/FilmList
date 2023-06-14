@@ -60,7 +60,8 @@ public class gestorVentanaPerfil {
             public void onClick(View v) {
                 dialog.dismiss();
                 mainActivity.finish();
-                controlador.showNotification(mainActivity,"ADIOSS, VUELVE PRONTRO","¿Ya te vas "+controlador.usuario.getGmail()+"?... Vuelve pronto !!");
+
+                controlador.showNotification(mainActivity,"ADIOS, VUELVE PRONTO!","¿Ya te vas "+controlador.usuario.getGmail()+"?... Vuelve pronto !!");
 
 
 

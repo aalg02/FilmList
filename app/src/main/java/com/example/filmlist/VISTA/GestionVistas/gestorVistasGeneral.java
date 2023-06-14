@@ -240,13 +240,12 @@ public class gestorVistasGeneral {
         registro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mainActivity, "WOW", Toast.LENGTH_LONG).show();
 
                 if (TextUtils.isEmpty(nombret.getText().toString()) || TextUtils.isEmpty(pasword.getText().toString())) {
                     Toast.makeText(mainActivity, "faltan campos", Toast.LENGTH_LONG).show();
 
                 } else {
-                    gestorVentanaPerfil.ponerfoto("https://www.google.com/url?sa=i&url=https%3A%2F%2Fgenius.com%2FMamberroi-kiki-du-yu-lofmi-lyrics&psig=AOvVaw2y1dTc43M9v1Y1V_PbxUSj&ust=1685716215568000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCKDPxbKkov8CFQAAAAAdAAAAABAF");
+                    gestorVentanaPerfil.ponerfoto("https://firebasestorage.googleapis.com/v0/b/filmlist-ed9e7.appspot.com/o/usuario.png?alt=media&token=65e20f64-6750-40de-adc4-385f7c86ec3e");
                     controlador.ocultateclado();
                     controlador.controladorFirebase.authenticationRegistro(nombret.getText().toString(), pasword.getText().toString());
                 }
@@ -260,7 +259,7 @@ public class gestorVistasGeneral {
 
                 controlador.usuario.setGmail("invitado@gmail.com");
                 controlador.usuario.setContraseña("invitado");
-                gestorVentanaPerfil.ponerfoto("https://www.google.com/url?sa=i&url=https%3A%2F%2Fgenius.com%2FMamberroi-kiki-du-yu-lofmi-lyrics&psig=AOvVaw2y1dTc43M9v1Y1V_PbxUSj&ust=1685716215568000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCKDPxbKkov8CFQAAAAAdAAAAABAF");
+                gestorVentanaPerfil.ponerfoto("https://firebasestorage.googleapis.com/v0/b/filmlist-ed9e7.appspot.com/o/usuario.png?alt=media&token=65e20f64-6750-40de-adc4-385f7c86ec3e");
                 controlador.showNotification(mainActivity,"HAS ENTRADO COMO INVITADO...","Create una cuenta y guarda tus listas de peliculas , actores favoritos y valoraciones que hagas!!");
             }
         });
